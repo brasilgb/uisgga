@@ -17,7 +17,7 @@ export const SBoxContainer = ({ children }: Props) => {
 export const SBoxHeader = ({ children }: Props) => {
     return (
         <Fragment>
-            <div className='py-4 bg-gray-50 border-b border-gray-200'>
+            <div className='flex items-center justify-between p-2 bg-gray-50 border-b border-gray-200'>
                 {children}
             </div>
         </Fragment>
@@ -27,7 +27,7 @@ export const SBoxHeader = ({ children }: Props) => {
 export const SBoxMain = ({ children }: Props) => {
     return (
         <Fragment>
-            <div className='py-4 bg-gray-50'>
+            <div className='p-2 bg-gray-50'>
                 {children}
             </div>
         </Fragment>
@@ -37,7 +37,7 @@ export const SBoxMain = ({ children }: Props) => {
 export const SBoxFooter = ({ children }: Props) => {
     return (
         <Fragment>
-            <div className='py-4 bg-gray-50 border-t border-gray-200'>
+            <div className='p-2 bg-gray-50 border-t border-gray-200'>
                 {children}
             </div>
         </Fragment>
