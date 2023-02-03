@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const SideBar = () => {
 
@@ -22,9 +23,9 @@ const SideBar = () => {
             <div className="sidebar-content px-4 py-6">
                 <ul className="flex flex-col w-full">
                     <li className="my-px">
-                        <a
-                            href="#"
-                            className="flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 bg-gray-100"
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) => isActive ? 'flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 bg-gray-100' : "flex flex-row items-center h-10 px-3 rounded-lg"}
                         >
                             <span className="flex items-center justify-center text-lg text-gray-600">
                                 <svg
@@ -42,12 +43,12 @@ const SideBar = () => {
                                 </svg>
                             </span>
                             <span className="ml-3">Dashboard</span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li className="my-px">
-                        <a
-                            href="#"
-                            className="flex flex-row items-center h-10 px-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-700"
+                        <NavLink
+                            to="/ciclos"
+                            className={({ isActive }) => isActive ? 'flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 bg-gray-100' : "flex flex-row items-center h-10 px-3 rounded-lg"}
                         >
                             <span className="flex items-center justify-center text-lg text-gray-600">
                                 <svg
@@ -65,7 +66,7 @@ const SideBar = () => {
                                 </svg>
                             </span>
                             <span className="ml-3">Ciclos</span>
-                        </a>
+                        </NavLink>
                     </li>
                     <li className="my-px">
                         <a
