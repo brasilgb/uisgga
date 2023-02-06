@@ -2,42 +2,21 @@ import React from 'react';
 
 interface PropsTable {
     children: JSX.Element;
+    bgColor?: string;
 }
 
 export const STable = ({ children }: PropsTable) => {
     return (
-        <table>
-            { children }
+        <table className='min-w-full'>
+            {children}
         </table>
     )
 };
 
-export const SThead = ({ children }: PropsTable) => {
+export const STr = ({ bgColor, children }: PropsTable) => {
     return (
-        <thead>
-            { children }
-        </thead>
-    )
-};
-export const STbody = ({ children }: PropsTable) => {
-    return (
-        <tbody>
-            { children }
-        </tbody>
-    )
-};
-
-export const STfoot = ({ children }: PropsTable) => {
-    return (
-        <tfoot>
-            { children }
-        </tfoot>
-    )
-};
-export const STr = ({ children }: PropsTable) => {
-    return (
-        <tr>
-            { children }
+        <tr className={`${bgColor} border-b transition duration-300 ease-in-out hover:bg-gray-50`}>
+            {children}
         </tr>
     )
 };
@@ -45,16 +24,18 @@ export const STr = ({ children }: PropsTable) => {
 
 export const STh = ({ children }: PropsTable) => {
     return (
-        <th>
-            { children }
+        <th className='text-base font-normal text-gray-900 px-6 py-4 text-left'>
+            {children}
         </th>
     )
 };
 
 export const STd = ({ children }: PropsTable) => {
     return (
-        <td>
-            { children }
+        <td className='text-base text-gray-900 font-normal px-6 py-2'>
+            <div className=''>
+                {children}
+            </div>
         </td>
     )
 };

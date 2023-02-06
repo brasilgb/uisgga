@@ -1,10 +1,10 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
-import { SBoxContainer, SBoxFooter, SBoxHeader, SBoxMain } from '../../Components/Boxes';
-import SAddButtom from '../../Components/Buttons';
+import { SAddButtom, SDlButtom, SEdButtom } from '../../Components/Buttons';
 import SFormSearch from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
+import Pagination from '../../Components/Pagination';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
-import { STable, STbody, STd, STh, SThead, STr } from '../../Components/Tables';
+import { STable, STd, STh, STr } from '../../Components/Tables';
 import { AuthContext } from '../../Context/AuthContext';
 import api from '../../Services/api';
 
@@ -17,7 +17,8 @@ const Ciclos = () => {
   // setTimeout(() => {
   //   setLoading(false);
   // }, 500);
-  // },[])
+  // },[]);
+
   useEffect(() => {
     setLoading(true);
     const getAllCiclos = async () => {
@@ -40,6 +41,7 @@ const Ciclos = () => {
       {loading &&
         <SLoading />
       }
+
       <SubBar>
         <>
           <SubBarLeft>
@@ -47,11 +49,9 @@ const Ciclos = () => {
           </SubBarLeft>
           <SubBarRight>
 
-            <div className="flex items-center py-4 overflow-x-auto whitespace-nowrap">
+            <div className="flex items-center py-4">
               <span className="text-gray-600 ">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                </svg>
+
               </span>
 
               <span className="mx-2 text-gray-500 ">/</span>
@@ -63,65 +63,71 @@ const Ciclos = () => {
           </SubBarRight>
         </>
       </SubBar>
+      <div className="flex items-center justify-between">
+        <div>
+          <SAddButtom link='/22' />
+        </div>
+        <div>
+          <SFormSearch />
+        </div>
+      </div>
+      <div>
+        <div className="flex flex-col md:px-6 lg:px-8">
+          <div className="overflow-x-auto  bg-gray-50 border border-white md:rounded-lg p-2 shadow-md">
+            <div className="inline-block min-w-full align-middle">
+              <div className="overflow-hidden rounded-t-lg">
+                <STable>
+                  <>
+                    <thead className='bg-gray-200'>
 
-      <SBoxContainer>
-        <>
-          <SBoxHeader>
-            <>
-              <div>
-                <SAddButtom link='/22' />
+                      <STr bgColor="bg-gray-200">
+                        <>
+                          <STh><span>#ID</span></STh>
+                          <STh><span>Data inicial</span></STh>
+                          <STh><span>Data final</span></STh>
+                          <STh><span>Semana inicial</span></STh>
+                          <STh><span>Semana atual</span></STh>
+                          <STh><span>Semanas percorridas</span></STh>
+                          <STh><span>-</span></STh>
+                        </>
+                      </STr>
+
+                    </thead>
+
+                    <tbody>
+                      {allCiclos.map((ciclo: any, index: any) => (
+                        <STr key={index} bgColor="bg-white">
+                          <>
+                            <STd>{ciclo.idCiclo}</STd>
+                            <STd>{ciclo.dataInicial}</STd>
+                            <STd>{ciclo.dataFinal}</STd>
+                            <STd>{ciclo.semanaInicial}</STd>
+                            <STd>{ciclo.metas.length}</STd>
+                            <STd>{ciclo.metas.length}</STd>
+                            <STd>
+                              <div className='flex items-center justify-end'>
+                                <SEdButtom link='' />
+                                <SDlButtom link='' />
+                              </div>
+
+                            </STd>
+                          </>
+                        </STr>
+                      ))}
+                    </tbody>
+                  </>
+                </STable>
+
               </div>
               <div>
-                <SFormSearch />
+
+                <Pagination items={allCiclos} />
+
               </div>
-            </>
-          </SBoxHeader>
-          <SBoxMain>
-
-            <STable>
-              <>
-                <SThead>
-
-                  <STr>
-                    <>
-                      <STh><span>#ID</span></STh>
-                      <STh><span>Data inicial</span></STh>
-                      <STh><span>Data final</span></STh>
-                      <STh><span>Semana inicial</span></STh>
-                      <STh><span>Semana atual</span></STh>
-                      <STh><span>Semanas percorridas</span></STh>
-                    </>
-                  </STr>
-
-                </SThead>
-
-                <STbody>
-                  {allCiclos.map((ciclo: any, index: any) => (
-                    <STr key={index}>
-                      <>
-                        <STd>{ciclo.idCiclo}</STd>
-                        <STd>{ciclo.dataInicial}</STd>
-                        <STd>{ciclo.dataFinal}</STd>
-                        <STd>{ciclo.semanaInicial}</STd>
-                        <STd>{ciclo.metas.length}</STd>
-                        <STd>{ciclo.metas.length}</STd>
-                      </>
-                    </STr>
-                  ))}
-                </STbody>
-
-              </>
-            </STable>
-
-          </SBoxMain>
-          <SBoxFooter>
-            <>
-              FooterSBoxFooter
-            </>
-          </SBoxFooter>
-        </>
-      </SBoxContainer>
-
+            </div>
+          </div>
+        </div>
+      </div>
     </Fragment>
   )
 }

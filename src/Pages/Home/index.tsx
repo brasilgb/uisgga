@@ -1,19 +1,18 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
-import { SBoxContainer, SBoxFooter, SBoxHeader, SBoxMain } from '../../Components/Boxes';
-import SAddButtom from '../../Components/Buttons';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
+import { SAddButtom } from '../../Components/Buttons';
 import SFormSearch from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
 import { AuthContext } from '../../Context/AuthContext';
 
 const Home = () => {
-    const { setLoading, loading, bostinha } = useContext(AuthContext);
+  const { setLoading, loading, bostinha } = useContext(AuthContext);
 
-    useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 500);
-    },[])
+  }, [])
 
   return (
     <Fragment>
@@ -54,29 +53,27 @@ const Home = () => {
         </>
       </SubBar>
 
-      <SBoxContainer>
-        <>
-          <SBoxHeader>
-            <>
-              <div>
-                <SAddButtom link='/22' />
-              </div>
-              <div>
-                <SFormSearch />
-              </div>
-            </>
-          </SBoxHeader>
-          <SBoxMain>
-            <>
-              MainSBoxMain
-            </>
-          </SBoxMain>
-          <SBoxFooter>
-            <>FooterSBoxFooter</>
+      <div>
 
-          </SBoxFooter>
-        </>
-      </SBoxContainer>
+        <div>
+
+          <div>
+            <SAddButtom link='/22' />
+          </div>
+          <div>
+            <SFormSearch />
+          </div>
+
+        </div>
+        <div>
+
+          Maindiv
+
+        </div>
+        <div>
+          Footerdiv
+        </div>
+      </div>
 
     </Fragment>
   )
