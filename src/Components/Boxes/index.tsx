@@ -7,7 +7,7 @@ interface Props {
 export const SBoxContainer = ({ children }: Props) => {
     return (
         <Fragment>
-            <div className='mx-4 mb-4 bg-gray-50 rounded-md border border-white shadow'>
+            <div className='relative mx-4 mb-4 bg-gray-50 rounded-md border border-white shadow'>
                 {children}
             </div>
         </Fragment>

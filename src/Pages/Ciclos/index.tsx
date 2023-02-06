@@ -1,19 +1,32 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { SBoxContainer, SBoxFooter, SBoxHeader, SBoxMain } from '../../Components/Boxes';
 import SAddButtom from '../../Components/Buttons';
 import SFormSearch from '../../Components/Form/FormSearch';
+import SLoading from '../../Components/Loading';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
+import { STable, STbody, STd, STh, SThead, STr } from '../../Components/Tables';
+import { AuthContext } from '../../Context/AuthContext';
 import api from '../../Services/api';
 
 const Ciclos = () => {
 
   const [allCiclos, setAllCiclos] = useState<any>([]);
+  const { setLoading, loading } = useContext(AuthContext);
 
+  // useEffect(() => {
+  // setTimeout(() => {
+  //   setLoading(false);
+  // }, 500);
+  // },[])
   useEffect(() => {
+    setLoading(true);
     const getAllCiclos = async () => {
       await api.get('ciclos')
         .then((response) => {
-          console.log(response.data.data);
+          setTimeout(() => {
+            setLoading(false);
+            setAllCiclos(response.data.data);
+          }, 500)
         })
         .catch((err) => {
           console.log(err);
@@ -23,6 +36,10 @@ const Ciclos = () => {
   }, [])
   return (
     <Fragment>
+
+      {loading &&
+        <SLoading />
+      }
       <SubBar>
         <>
           <SubBarLeft>
@@ -60,7 +77,41 @@ const Ciclos = () => {
             </>
           </SBoxHeader>
           <SBoxMain>
-            <>{ }</>
+
+            <STable>
+              <>
+                <SThead>
+
+                  <STr>
+                    <>
+                      <STh><span>#ID</span></STh>
+                      <STh><span>Data inicial</span></STh>
+                      <STh><span>Data final</span></STh>
+                      <STh><span>Semana inicial</span></STh>
+                      <STh><span>Semana atual</span></STh>
+                      <STh><span>Semanas percorridas</span></STh>
+                    </>
+                  </STr>
+
+                </SThead>
+
+                <STbody>
+                  {allCiclos.map((ciclo: any, index: any) => (
+                    <STr key={index}>
+                      <>
+                        <STd>{ciclo.idCiclo}</STd>
+                        <STd>{ciclo.dataInicial}</STd>
+                        <STd>{ciclo.dataFinal}</STd>
+                        <STd>{ciclo.semanaInicial}</STd>
+                        <STd>{ciclo.metas.length}</STd>
+                        <STd>{ciclo.metas.length}</STd>
+                      </>
+                    </STr>
+                  ))}
+                </STbody>
+
+              </>
+            </STable>
 
           </SBoxMain>
           <SBoxFooter>

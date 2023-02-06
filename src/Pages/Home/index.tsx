@@ -1,12 +1,27 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { SBoxContainer, SBoxFooter, SBoxHeader, SBoxMain } from '../../Components/Boxes';
 import SAddButtom from '../../Components/Buttons';
 import SFormSearch from '../../Components/Form/FormSearch';
+import SLoading from '../../Components/Loading';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
+import { AuthContext } from '../../Context/AuthContext';
 
 const Home = () => {
+    const { setLoading, loading, bostinha } = useContext(AuthContext);
+
+    useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    },[])
+
   return (
     <Fragment>
+
+      {loading &&
+        <SLoading />
+      }
+
       <SubBar>
         <>
           <SubBarLeft>
