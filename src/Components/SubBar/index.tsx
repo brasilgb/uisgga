@@ -9,7 +9,7 @@ interface Props {
 export const SubBar = ( { children }: Props ) => {
     return (
       <Fragment>
-          <div className='flex items-center justify-between px-4 py-5'>
+          <div className='flex items-center justify-between px-8 py-5'>
               { children }
           </div>
       </Fragment>

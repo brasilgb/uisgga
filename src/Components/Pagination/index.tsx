@@ -1,34 +1,42 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import ReactDom from 'react-dom';
-import ReactPaginate from 'react-paginate';
 
 interface PaginateProps {
-    items: any;
+    setCurrentPage: any;
+    currentPage: any;
+    pages: any;
 }
 
-const MAX_ITEMS = 0;
-const MAX_LEFT = (MAX_ITEMS - 1) / 2;
+const Pagination = (props: PaginateProps) => {
 
-const Pagination = ({ items }: PaginateProps) => {
-
-    const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [currentPage, setCurrentPage] = useState(0);
-
-    const pages = Math.ceil(items.length / itemsPerPage);
-    const startIndex = currentPage * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage * itemsPerPage;
-    const currentItems = items.slice(startIndex, endIndex);
-
-
+    const handleNextPage = () => {
+        props.setCurrentPage(props.currentPage + 1);
+    }
+    const handlePrevPage = () => {
+        props.setCurrentPage(props.currentPage - 1);
+    }
     return (
         <Fragment>
-            <div>
-                
-            </div>
-            <div>
-                {Array.from(Array(pages), (item: any, index: any) => {
-                    return <button>{index + 1}</button>
+            <div className='flex items-center justify-center'>
+                <button
+                disabled={props.currentPage === (props.pages - props.currentPage) - 1 ? true : false}
+                    className='py-2 px-4 mr-1 bg-gray-50 border border-gray-200 rounded-md'
+                    onClick={() => handlePrevPage()}
+                >
+                    {props.currentPage} Anterior {props.pages - 1}
+                </button>
+                {Array.from(Array(props.pages), (item: any, index: any) => {
+                    return <button
+                        className='py-2 px-4 mr-1 bg-gray-50 border border-gray-200 rounded-md'
+                        value={index} onClick={(e: any) => props.setCurrentPage(e.target.value)}>{index + 1}</button>
                 })}
+                <button
+                    disabled={props.currentPage === props.pages - 1 ? true : false}
+                    className='py-2 px-4 mr-1 bg-gray-50 border border-gray-200 rounded-md'
+                    onClick={() => handleNextPage()}
+                >
+                    Próximo
+                </button>
             </div>
         </Fragment>
     )
