@@ -58,10 +58,10 @@ const Home = () => {
         <div>
 
           <div>
-            <SAddButtom link='/22' />
+            <SAddButtom onClick='/22' />
           </div>
           <div>
-            <SFormSearch />
+            {/* <SFormSearch /> */}
           </div>
 
         </div>

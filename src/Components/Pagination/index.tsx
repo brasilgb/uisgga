@@ -3,39 +3,58 @@ import ReactDom from 'react-dom';
 
 interface PaginateProps {
     setCurrentPage: any;
-    currentPage: any;
-    pages: any;
+    currentPage: number;
+    pages: number;
+    itemsPerPage: number;
 }
 
-const Pagination = (props: PaginateProps) => {
+const Pagination = ({
+    setCurrentPage,
+    currentPage,
+    pages,
+    itemsPerPage
+}: PaginateProps) => {
 
-    const handleNextPage = () => {
-        props.setCurrentPage(props.currentPage + 1);
-    }
     const handlePrevPage = () => {
-        props.setCurrentPage(props.currentPage - 1);
+        setCurrentPage(currentPage - 1);
     }
+    useEffect(() => {
+        function handleNextPage(){
+            setCurrentPage(currentPage + 1);
+        };
+        handleNextPage();
+    }, [])
+    function handleNextPage(): void {
+        throw new Error('Function not implemented.');
+    }
+
     return (
         <Fragment>
             <div className='flex items-center justify-center'>
                 <button
-                disabled={props.currentPage === (props.pages - props.currentPage) - 1 ? true : false}
+                    disabled={currentPage == 0 ? true : false}
                     className='py-2 px-4 mr-1 bg-gray-50 border border-gray-200 rounded-md'
-                    onClick={() => handlePrevPage()}
+                    onClick={() => setCurrentPage(currentPage - 1)}
                 >
-                    {props.currentPage} Anterior {props.pages - 1}
+                    {currentPage} Anterior {pages - 1}
                 </button>
-                {Array.from(Array(props.pages), (item: any, index: any) => {
-                    return <button
-                        className='py-2 px-4 mr-1 bg-gray-50 border border-gray-200 rounded-md'
-                        value={index} onClick={(e: any) => props.setCurrentPage(e.target.value)}>{index + 1}</button>
-                })}
+                {Array.from(Array(pages), (item: any, index: any) =>
+                (
+                    <button
+                        className={`${index == currentPage ? 'bg-gray-500' : 'bg-gray-50'} py-2 px-4 mr-1 border border-gray-200 rounded-md`}
+                        value={index}
+                        onClick={(e: any) => setCurrentPage(e.target.value)}
+                    >
+                        {index + 1}
+                    </button>
+                )
+                )}
                 <button
-                    disabled={props.currentPage === props.pages - 1 ? true : false}
+                    disabled={currentPage == (pages - 1) ? true : false}
                     className='py-2 px-4 mr-1 bg-gray-50 border border-gray-200 rounded-md'
-                    onClick={() => handleNextPage()}
+                    onClick={() => setCurrentPage(currentPage + 1)}
                 >
-                    Próximo
+                    Próximo {currentPage + '===' + (pages - 1)}
                 </button>
             </div>
         </Fragment>

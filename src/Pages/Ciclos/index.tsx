@@ -1,19 +1,31 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
+
 import { IconContext } from 'react-icons';
-import { IoHome, IoHomeOutline, IoTimer, IoTimerOutline } from 'react-icons/io5';
-import { SAddButtom, SDlButtom, SEdButtom } from '../../Components/Buttons';
+import { IoArrowBack, IoArrowForward, IoCheckbox, IoCheckmark, IoClose, IoHome, IoTimer } from 'react-icons/io5';
+import { SAddButtom, SDlButtom } from '../../Components/Buttons';
 import SFormSearch from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
-import Pagination from '../../Components/Pagination';
+import ReactPaginate from 'react-paginate';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
 import { STable, STd, STh, STr } from '../../Components/Tables';
 import { AuthContext } from '../../Context/AuthContext';
+import 'animate.css';
 import api from '../../Services/api';
+import { ModalDelete, ModalConfirm } from '../../Components/ModalDelete';
+import { CgSpinnerTwo } from 'react-icons/cg';
+import moment from 'moment';
 
 const Ciclos = () => {
 
-  const [allCiclos, setAllCiclos] = useState<any>([]);
   const { setLoading, loading } = useContext(AuthContext);
+  const [allCiclos, setAllCiclos] = useState<any>([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [idDelete, setIdDelete] = useState();
+  const [idCiclo, setIdCiclo] = useState();
+  const [loadingActive, setLoadingActive] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [newSearch, setNewSearch] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +34,7 @@ const Ciclos = () => {
         .then((response) => {
           setTimeout(() => {
             setLoading(false);
-            setAllCiclos(response.data.data);
+            setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo < b.idCiclo)));
           }, 500)
         })
         .catch((err) => {
@@ -32,15 +44,121 @@ const Ciclos = () => {
     getAllCiclos();
   }, [])
 
-  // --> Pagination
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(0);
-  const pages = Math.ceil(allCiclos.length / itemsPerPage);
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = allCiclos.slice(startIndex, endIndex);
-  // Pagination -->
-  
+  const toggleDelete = (id: any) => {
+    setShowDeleteModal(!showDeleteModal);
+    setIdDelete(id);
+  }
+
+  // delete ciclos
+  const deleteRow = (async (id: any) => {
+    await api.delete('ciclos', {
+      data: { idCiclo: id },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        // 'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(res => {
+        const cic = allCiclos.filter((item: any) => item.idCiclo !== id);
+        setAllCiclos(cic);
+        setShowDeleteModal(false);
+        setShowConfirmModal(true);
+      }).catch(err => {
+        console.log(err.response.data);
+      });
+  });
+
+  // edita ciclos
+  const updateCiclo = (async (id: any, ativo: any, data: any, semana: any) => {
+    setIdCiclo(id);
+    setLoadingActive(true);
+    await api.patch('ciclos', {
+      idCiclo: id,
+      ativo: ativo ? false : true,
+      dataInicial: data,
+      semanaInicial: semana
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        // 'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(res => {
+        api.get('ciclos')
+          .then((response) => {
+            setLoading(true);
+            setTimeout(() => {
+              setLoadingActive(false);
+              setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo < b.idCiclo)));
+            }, 1000)
+          })
+      }).catch(err => {
+        console.log(err.response.data);
+      });
+  });
+
+  // Pagination
+  const [newCiclo, setNewCiclo] = useState(allCiclos.slice(0, 50));
+  useEffect(() => {
+    setNewCiclo(allCiclos.slice(0, 50));
+  }, [allCiclos])
+  const [pageNumber, setPageNumber] = useState(0);
+  const itemsPerPage = 10;
+  const pagesVisited = pageNumber * itemsPerPage;
+  const pageCount = Math.ceil(allCiclos.length / itemsPerPage);
+  const changePage = ({ selected }: any) => {
+    setPageNumber(selected);
+  };
+  const DisplayItems = newCiclo
+    .slice(pagesVisited, pagesVisited + itemsPerPage)
+    .map((ciclo: any, index: any) => (
+      <STr key={index} head={true} colorRow={index % 2}>
+        <>
+          <STd>{ciclo.idCiclo}</STd>
+          <STd>{ciclo.dataInicial}</STd>
+          <STd>{ciclo.dataFinal}</STd>
+          <STd>{ciclo.semanaInicial}</STd>
+          <STd>{ciclo.metas.length}</STd>
+          <STd>{ciclo.metas.length}</STd>
+          <STd>
+            <div className='flex items-center justify-end'>
+              <button
+                onClick={() => updateCiclo(ciclo.idCiclo, ciclo.ativo, ciclo.dataInicial, ciclo.semanaInicial)}
+              >
+                {ciclo.ativo
+                  ? <span className='flex items-center justify-center h-8 w-8 bg-green-600 border-2 border-white text-white rounded-full mr-4'>
+                    <IconContext.Provider value={{ className: 'font-extrabold' }} >
+                      <div>
+                        {idCiclo === ciclo.idCiclo && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoCheckmark size={22} />}
+                      </div>
+                    </IconContext.Provider>
+                  </span>
+                  : <span className='flex items-center justify-center h-8 w-8 bg-red-600 border-2 border-white text-white rounded-full mr-4'>
+                    <IconContext.Provider value={{ className: 'font-extrabold' }} >
+                      <div>
+                        {idCiclo === ciclo.idCiclo && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoClose size={22} />}
+                      </div>
+                    </IconContext.Provider>
+                  </span>
+                }
+              </button>
+
+              <SDlButtom active={ciclo.ativo} onClick={() => toggleDelete(ciclo.idCiclo)} />
+            </div>
+          </STd>
+        </>
+      </STr>
+    ));
+
+  // sistema de busca
+  const handleSearch = (() => {
+    const resultSearch = allCiclos.filter((res: any) => (moment(res.dataInicial).format('YYYY-MM-DD') === moment(startDate).format('YYYY-MM-DD')));
+    setNewCiclo(resultSearch);
+    setNewSearch(true);
+  });
+
   return (
     <Fragment>
 
@@ -87,10 +205,10 @@ const Ciclos = () => {
 
           <div className="flex items-center justify-between mb-2">
             <div>
-              <SAddButtom link='/22' />
+              <SAddButtom onClick='/22' />
             </div>
             <div>
-              <SFormSearch />
+              <SFormSearch onclick={ () => handleSearch() } />
             </div>
           </div>
           <div>
@@ -115,38 +233,45 @@ const Ciclos = () => {
 
                     </thead>
 
-                    <tbody>
-                      {currentItems.map((ciclo: any, index: any) => (
-                        <STr key={index} bgColor="bg-white">
-                          <>
-                            <STd>{ciclo.idCiclo}</STd>
-                            <STd>{ciclo.dataInicial}</STd>
-                            <STd>{ciclo.dataFinal}</STd>
-                            <STd>{ciclo.semanaInicial}</STd>
-                            <STd>{ciclo.metas.length}</STd>
-                            <STd>{ciclo.metas.length}</STd>
-                            <STd>
-                              <div className='flex items-center justify-end'>
-                                <SEdButtom link='' />
-                                <SDlButtom link='' />
-                              </div>
+                    <tbody className='animate__animated animate__fadeIn'>
 
-                            </STd>
-                          </>
-                        </STr>
-                      ))}
+                      {DisplayItems}
+
                     </tbody>
                   </>
                 </STable>
 
               </div>
-              <div className='bg-white border-x border-b rounded-b-lg py-2'>
-                <Pagination pages={pages} setCurrentPage={setCurrentPage} currentPage={currentPage} />
+              <div className='bg-white border-x border-b rounded-b-lg py-2  '>
+                {/* <Pagination pages={pages} currentPage={currentPage} setCurrentPage={setCurrentPage} itemsPerPage={itemsPerPage} /> */}
+                <ReactPaginate
+                  previousLabel={<IoArrowBack size={17} />}
+                  nextLabel={<IoArrowForward size={17} />}
+                  pageCount={pageCount}
+                  onPageChange={changePage}
+                  containerClassName="flex items-center justify-center"
+                  previousLinkClassName="flex items-center justify-center mr-1 w-11 h-11 rounded-lg bg-gray-100 !border-2 !border-white shadow-md"
+                  nextLinkClassName="flex items-center justify-center ml-1 w-11 h-11 rounded-lg bg-gray-100 !border-2 !border-white shadow-md"
+                  disabledClassName="flex items-center text-gray-300 cursor-not-allowed bg-white"
+                  // pageClassName="border flex items-center justify-center bg-gray-200 mx-1 rounded-lg"
+                  pageLinkClassName="mx-1 flex items-center justify-center w-11 h-11 text-gray-800 bg-gray-100 rounded-lg !border-2 !border-white shadow-md"
+                  // activeClassName="border-0 flex items-center text-gray-50 bg-blue-500 rounded-lg"
+                  activeLinkClassName="flex items-center justify-center w-11 h-11 !text-gray-50 font-bold !bg-blue-500 rounded-lg !border-2 !border-white shadow-md"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {showDeleteModal &&
+        <ModalDelete info="este ciclo" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
+      }
+
+      {showConfirmModal &&
+        <ModalConfirm info="Ciclo" closemodal={() => setShowConfirmModal(!showConfirmModal)} />
+      }
+
     </Fragment>
   )
 }

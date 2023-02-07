@@ -3,6 +3,8 @@ import React from 'react';
 interface PropsTable {
     children: JSX.Element;
     bgColor?: string;
+    colorRow?: any;
+    head?:boolean;
 }
 
 export const STable = ({ children }: PropsTable) => {
@@ -13,9 +15,9 @@ export const STable = ({ children }: PropsTable) => {
     )
 };
 
-export const STr = ({ bgColor, children }: PropsTable) => {
+export const STr = ({ head, colorRow, children }: PropsTable) => {
     return (
-        <tr className={`${bgColor} border-b transition duration-300 ease-in-out hover:bg-gray-50`}>
+        <tr className={`${colorRow > 0 ? 'bg-gray-50' : 'bg-white'}  border-b transition duration-300 ease-in-out ${head && 'hover:bg-blue-50'}`}>
             {children}
         </tr>
     )
