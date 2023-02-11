@@ -3,7 +3,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { IconContext } from 'react-icons';
 import { IoArrowBack, IoArrowForward, IoCheckbox, IoCheckmark, IoClose, IoHome, IoTimer } from 'react-icons/io5';
 import { SAddButtom, SDlButtom } from '../../Components/Buttons';
-import SFormSearch from '../../Components/Form/FormSearch';
+import { SFormSearchData } from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
 import ReactPaginate from 'react-paginate';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
@@ -25,7 +25,6 @@ const Ciclos = () => {
   const [idCiclo, setIdCiclo] = useState();
   const [loadingActive, setLoadingActive] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
-  const [newSearch, setNewSearch] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -153,10 +152,19 @@ const Ciclos = () => {
     ));
 
   // sistema de busca
-  const handleSearch = (() => {
-    const resultSearch = allCiclos.filter((res: any) => (moment(res.dataInicial).format('YYYY-MM-DD') === moment(startDate).format('YYYY-MM-DD')));
-    setNewCiclo(resultSearch);
-    setNewSearch(true);
+  const handleSearch = (async () => {
+    setLoading(true);
+    let date = moment(startDate).format('YYYY-MM-DD');
+    console.log(date);
+    await api.get(`date/${date}`)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((err) => {
+      console.log(err.response);
+    })
+    // setNewCiclo(resultSearch);
+    setLoading(false);
   });
 
   return (
@@ -208,7 +216,11 @@ const Ciclos = () => {
               <SAddButtom onClick='/22' />
             </div>
             <div>
-              <SFormSearch onclick={ () => handleSearch() } />
+              <SFormSearchData
+                onclick={handleSearch}
+                selected={startDate}
+                onChange={(date: Date) => setStartDate(date)}
+              />
             </div>
           </div>
           <div>

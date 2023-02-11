@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { SAddButtom } from '../../Components/Buttons';
-import SFormSearch from '../../Components/Form/FormSearch';
+import { SFormSearch } from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
 import { AuthContext } from '../../Context/AuthContext';
