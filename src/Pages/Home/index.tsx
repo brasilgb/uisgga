@@ -13,10 +13,9 @@ import api from "../../Services/api";
 const Home = () => {
   const { setLoading, loading } = useContext(AuthContext);
   const [allCiclos, setAllCiclos] = useState<any>([]);
-  const [cicloAtivo, setCicloAtivo] = useState<boolean>(false);
+  const [cicloAtivo, setCicloAtivo] = useState<boolean>(true);
 
   useEffect(() => {
-    setLoading(false);
     const getCiclos = (async () => {
       await api.get('ciclos')
         .then((result) => {
@@ -29,7 +28,6 @@ const Home = () => {
             let dataAtual = moment().format("YYYY-MM-DD");
             let dataCompare = moment(metasExist[0].dataInicial).add(1, 'day').format("YYYY-MM-DD");
             if (dataAtual === dataCompare) {
-              console.log(dataAtual + '===' + dataCompare);
               api.post('metas', {
                 cicloId: activeCicle[0].idCiclo,
                 semana: metasExist[0].semana + 1,
@@ -41,10 +39,10 @@ const Home = () => {
                 })
               })
             } else {
-              console.log("dataDiferente");
+              return;
             }
           } else {
-            setCicloAtivo(true);
+            setCicloAtivo(false);
           }
         })
         .catch((error) => {
@@ -55,7 +53,7 @@ const Home = () => {
       }, 500);
     });
     getCiclos();
-  }, [])
+  }, [setLoading])
 
   return (
     <Fragment>

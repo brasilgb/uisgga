@@ -36,16 +36,18 @@ const Ciclos = () => {
     setLoading(true);
     const getAllCiclos = async () => {
       await api.get('ciclos')
+
         .then((response) => {
           setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo < b.idCiclo)));
-          setLoading(false);
+          
         })
         .catch((err) => {
           console.log(err);
-        })
+        });
+        setLoading(false);
     };
     getAllCiclos();
-  }, [])
+  }, [setLoading])
 
   const toggleDelete = (id: any) => {
     setShowDeleteModal(!showDeleteModal);
