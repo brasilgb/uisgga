@@ -19,14 +19,14 @@ import { ABoxAll } from '../../Components/Boxes';
 import { useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE } from "../../Constants";
 
-const Ciclos = () => {
+const Lotes = () => {
   const navigate = useNavigate();
   const { setLoading, loading } = useContext(AuthContext);
-  const [allCiclos, setAllCiclos] = useState<any>([]);
+  const [allLotes, setAllLotes] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
-  const [idCiclo, setIdCiclo] = useState();
+  const [idLote, setIdLote] = useState();
   const [loadingActive, setLoadingActive] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
@@ -34,17 +34,17 @@ const Ciclos = () => {
 
   useEffect(() => {
     setLoading(true);
-    const getAllCiclos = async () => {
-      await api.get('ciclos')
+    const getAllLotes = async () => {
+      await api.get('lotes')
         .then((response) => {
-          setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo < b.idCiclo)));
+          setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote < b.idLote)));
           setLoading(false);
         })
         .catch((err) => {
           console.log(err);
         })
     };
-    getAllCiclos();
+    getAllLotes();
   }, [])
 
   const toggleDelete = (id: any) => {
@@ -52,10 +52,10 @@ const Ciclos = () => {
     setIdDelete(id);
   }
 
-  // delete ciclos
+  // delete lotes
   const deleteRow = (async (id: any) => {
-    await api.delete('ciclos', {
-      data: { idCiclo: id },
+    await api.delete('lotes', {
+      data: { idLote: id },
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -63,8 +63,8 @@ const Ciclos = () => {
       }
     })
       .then(res => {
-        const cic = allCiclos.filter((item: any) => item.idCiclo !== id);
-        setAllCiclos(cic);
+        const cic = allLotes.filter((item: any) => item.idLote !== id);
+        setAllLotes(cic);
         setShowDeleteModal(false);
         setShowConfirmModal(true);
       }).catch(err => {
@@ -72,12 +72,12 @@ const Ciclos = () => {
       });
   });
 
-  // edita ciclos
-  const updateCiclo = (async (id: any, ativo: any, data: any, semana: any, semanafinal: any) => {
-    setIdCiclo(id);
+  // edita lotes
+  const updateLote = (async (id: any, ativo: any, data: any, semana: any, semanafinal: any) => {
+    setIdLote(id);
     setLoadingActive(true);
-    await api.patch('ciclos', {
-      idCiclo: id,
+    await api.patch('lotes', {
+      idLote: id,
       ativo: ativo ? false : true,
       dataInicial: data,
       semanaInicial: semana,
@@ -91,11 +91,11 @@ const Ciclos = () => {
       }
     })
       .then(res => {
-        api.get('ciclos')
+        api.get('lotes')
           .then((response) => {
             setTimeout(() => {
               setLoadingActive(false);
-              setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo < b.idCiclo)));
+              setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote < b.idLote)));
             }, 500)
           })
       }).catch(err => {
@@ -104,53 +104,53 @@ const Ciclos = () => {
   });
 
   // -> Pagination
-  const [newCiclo, setNewCiclo] = useState(allCiclos.slice(0, 50));
+  const [newLote, setNewLote] = useState(allLotes.slice(0, 50));
   useEffect(() => {
-    setNewCiclo(allCiclos.slice(0, 50));
-  }, [allCiclos])
+    setNewLote(allLotes.slice(0, 50));
+  }, [allLotes])
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = ITENS_PER_PAGE;
   const pagesVisited = pageNumber * itemsPerPage;
-  const pageCount = Math.ceil(allCiclos.length / itemsPerPage);
+  const pageCount = Math.ceil(allLotes.length / itemsPerPage);
   const changePage = ({ selected }: any) => {
     setPageNumber(selected);
   };
-  const DisplayItems = newCiclo
+  const DisplayItems = newLote
     .slice(pagesVisited, pagesVisited + itemsPerPage)
-    .map((ciclo: any, index: any) => (
+    .map((lote: any, index: any) => (
       <STr key={index} head={true} colorRow={index % 2}>
         <>
-          <STd>{ciclo.idCiclo}</STd>
-          <STd>{ moment(ciclo.dataInicial).format("DD/MM/YYYY") }</STd>
-          <STd>{ciclo.semanaInicial}</STd>
-          <STd>{ciclo.metas[ciclo.metas.length -1].semana}</STd>
-          <STd>{ciclo.metas.length}</STd>
-          <STd>{ciclo.dataFinal != null ? moment(ciclo.dataFinal).format("DD/MM/YYYY") : '-'}</STd>
-          <STd>{ciclo.semanaFinal != null ? ciclo.semanaFinal : '-'}</STd>
+          <STd>{lote.idLote}</STd>
+          <STd>{ moment(lote.dataInicial).format("DD/MM/YYYY") }</STd>
+          <STd>{lote.semanaInicial}</STd>
+          <STd>{lote.metas[lote.metas.length -1].semana}</STd>
+          <STd>{lote.metas.length}</STd>
+          <STd>{lote.dataFinal != null ? moment(lote.dataFinal).format("DD/MM/YYYY") : '-'}</STd>
+          <STd>{lote.semanaFinal != null ? lote.semanaFinal : '-'}</STd>
           <STd>
             <div className='flex items-center justify-end'>
               <button
-                onClick={() => updateCiclo(ciclo.idCiclo, ciclo.ativo, ciclo.dataInicial, ciclo.semanaInicial, ciclo.metas[ciclo.metas.length -1].semana)}
+                onClick={() => updateLote(lote.idLote, lote.ativo, lote.dataInicial, lote.semanaInicial, lote.metas[lote.metas.length -1].semana)}
               >
-                {ciclo.ativo
+                {lote.ativo
                   ? <span className='flex items-center justify-center h-8 w-8 bg-green-600 border-2 border-white text-white rounded-full mr-4'>
                     <IconContext.Provider value={{ className: 'font-extrabold' }} >
                       <div>
-                        {idCiclo === ciclo.idCiclo && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoCheckmark size={22} />}
+                        {idLote === lote.idLote && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoCheckmark size={22} />}
                       </div>
                     </IconContext.Provider>
                   </span>
                   : <span className='flex items-center justify-center h-8 w-8 bg-red-600 border-2 border-white text-white rounded-full mr-4'>
                     <IconContext.Provider value={{ className: 'font-extrabold' }} >
                       <div>
-                        {idCiclo === ciclo.idCiclo && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoClose size={22} />}
+                        {idLote === lote.idLote && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoClose size={22} />}
                       </div>
                     </IconContext.Provider>
                   </span>
                 }
               </button>
 
-              <SDlButtom active={ciclo.ativo} onClick={() => toggleDelete(ciclo.idCiclo)} />
+              <SDlButtom active={lote.ativo} onClick={() => toggleDelete(lote.idLote)} />
             </div>
           </STd>
         </>
@@ -167,11 +167,11 @@ const Ciclos = () => {
 
         setTimeout(() => {
           if (response.data.data.length > 0) {
-            setNewCiclo(response.data.data);
+            setNewLote(response.data.data);
             setLoadingSearch(false);
             setMessageSearch(true);
           } else {
-            setNewCiclo(response.data.data);
+            setNewLote(response.data.data);
             setLoadingSearch(false);
             setMessageSearch(true);
           }
@@ -183,11 +183,11 @@ const Ciclos = () => {
   };
   // Sistema de busca ->
 
-  // Reload ciclos
-  const handleReloadCiclos = (() => {
+  // Reload lotes
+  const handleReloadLotes = (() => {
     setLoading(true);
     setTimeout(() => {
-      setNewCiclo(allCiclos);
+      setNewLote(allLotes);
       setLoading(false);
       setMessageSearch(false);
     }, 500)
@@ -208,7 +208,7 @@ const Ciclos = () => {
                   <IoTimerOutline />
                 </div>
               </IconContext.Provider>
-              <h1 className='text-2xl ml-1 font-medium'>Ciclos</h1>
+              <h1 className='text-2xl ml-1 font-medium'>Lotes</h1>
             </>
           </SubBarLeft>
           <SubBarRight>
@@ -222,7 +222,7 @@ const Ciclos = () => {
                 </IconContext.Provider>
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
-              <span className="text-gray-600">Ciclos</span>
+              <span className="text-gray-600">Lotes</span>
             </div>
 
           </SubBarRight>
@@ -233,19 +233,19 @@ const Ciclos = () => {
 
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SAddButtom onClick={() => navigate('/ciclos/addciclo')} />
+            <SAddButtom onClick={() => navigate('/lotes/addlote')} />
           </div>
 
           {messageSearch &&
             <div className="flex items-center justify-start">
-              <button onClick={() => handleReloadCiclos()} className="flex items-center justify-center" title="Limpar busca">
+              <button onClick={() => handleReloadLotes()} className="flex items-center justify-center" title="Limpar busca">
                 <IconContext.Provider value={{ className: "text-2xl font-bold" }}>
                   <div className="bg-gray-200 rounded-l-full px-2 py-1  border border-gray-300">
                     <GiLargePaintBrush className="rotate-90" />
                   </div>
                 </IconContext.Provider>
               </button>
-              <div className="bg-gray-100 text-base rounded-r-md py-1 px-4  border border-gray-300">Correspondências encontradas: <span className={`${newCiclo.length > 0 ? 'text-green-500' : 'text-red-500'}`}>{newCiclo.length}</span></div>
+              <div className="bg-gray-100 text-base rounded-r-md py-1 px-4  border border-gray-300">Correspondências encontradas: <span className={`${newLote.length > 0 ? 'text-green-500' : 'text-red-500'}`}>{newLote.length}</span></div>
 
             </div>
           }
@@ -289,7 +289,7 @@ const Ciclos = () => {
           </STable>
 
         </div>
-        {newCiclo.length > itemsPerPage &&
+        {newLote.length > itemsPerPage &&
           <div className='bg-white border-x border-b rounded-b-lg py-2  '>
             <ReactPaginate
               previousLabel={<IoArrowBack size={17} />}
@@ -311,15 +311,15 @@ const Ciclos = () => {
       </ABoxAll>
 
       {showDeleteModal &&
-        <ModalDelete info="este ciclo" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
+        <ModalDelete info="este lote" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
       }
 
       {showConfirmModal &&
-        <ModalConfirm info="Ciclo" closemodal={() => setShowConfirmModal(!showConfirmModal)} />
+        <ModalConfirm info="Lote" closemodal={() => setShowConfirmModal(!showConfirmModal)} />
       }
 
     </Fragment>
   )
 }
 
-export default Ciclos;
+export default Lotes;

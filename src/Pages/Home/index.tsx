@@ -1,17 +1,60 @@
+import moment from "moment";
 import React, { Fragment, useContext, useEffect, useState } from 'react';
-import { SAddButtom } from '../../Components/Buttons';
-import { SFormSearch } from '../../Components/Form/FormSearch';
+import { IconContext } from "react-icons";
+import "animate.css";
+import { IoHomeOutline } from "react-icons/io5";
+import { ABoxAll } from "../../Components/Boxes";
 import SLoading from '../../Components/Loading';
+import { AMessageError } from "../../Components/Messages";
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
 import { AuthContext } from '../../Context/AuthContext';
+import api from "../../Services/api";
 
 const Home = () => {
-  const { setLoading, loading, bostinha } = useContext(AuthContext);
+  const { setLoading, loading } = useContext(AuthContext);
+  const [allCiclos, setAllCiclos] = useState<any>([]);
+  const [cicloAtivo, setCicloAtivo] = useState<boolean>(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    setLoading(false);
+    const getCiclos = (async () => {
+      await api.get('ciclos')
+        .then((result) => {
+          let res = result.data.data;
+          setAllCiclos(res);
+          let activeCicle = res.filter((item: any) => (item.ativo === true));
+          if (activeCicle.length > 0) {
+            setCicloAtivo(true);
+            let metasExist = activeCicle[0].metas.filter((meta: any) => (meta.cicloId === activeCicle[0].idCiclo));
+            let dataAtual = moment().format("YYYY-MM-DD");
+            let dataCompare = moment(metasExist[0].dataInicial).add(1, 'day').format("YYYY-MM-DD");
+            if (dataAtual === dataCompare) {
+              console.log(dataAtual + '===' + dataCompare);
+              api.post('metas', {
+                cicloId: activeCicle[0].idCiclo,
+                semana: metasExist[0].semana + 1,
+                dataInicial: dataCompare
+              }).then(() => {
+                api.get('ciclos').then((result) => {
+                  let re = result.data.data;
+                  setAllCiclos(re);
+                })
+              })
+            } else {
+              console.log("dataDiferente");
+            }
+          } else {
+            setCicloAtivo(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    });
+    getCiclos();
   }, [])
 
   return (
@@ -24,56 +67,42 @@ const Home = () => {
       <SubBar>
         <>
           <SubBarLeft>
-            <h1 className='text-3xl font-medium'>Home</h1>
+            <div className="flex items-center justify-start">
+              <IconContext.Provider value={{ className: 'text-3xl' }} >
+                <div>
+                  <IoHomeOutline />
+                </div>
+              </IconContext.Provider>
+              <h1 className='text-2xl ml-1 font-medium'>Home</h1>
+            </div>
+
           </SubBarLeft>
           <SubBarRight>
 
-            <div className="flex items-center py-4 overflow-x-auto whitespace-nowrap">
-              <span className="text-gray-600 ">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                </svg>
-              </span>
-
-              <span className="mx-2 text-gray-500 ">/</span>
-
-              <a href="#" className="text-gray-600  hover:underline">Account</a>
-
-              <span className="mx-2 text-gray-500 ">/</span>
-
-              <a href="#" className="text-gray-600  hover:underline">Profile</a>
-
-              <span className="mx-2 text-gray-500 ">/</span>
-
-              <a href="#" className="text-blue-600 hover:underline">Settings</a>
-
+            <div className="flex items-center py-7 overflow-x-auto whitespace-nowrap">
             </div>
 
           </SubBarRight>
         </>
       </SubBar>
 
-      <div>
+      <ABoxAll>
+        {!cicloAtivo &&
 
-        <div>
+          <AMessageError className="rounded-t-lg !mb-0 animate__animated animate__fadeIn animate__delay-2s">
+            Não há ciclos cadastrados ou está inativo, para visualização de dados adicione e/ou ative-o em ciclos.
+          </AMessageError>
 
-          <div>
-            <SAddButtom onClick='/22' />
+        }
+        {allCiclos.map((item: any, index: any) => (
+          <div key={index}>
+            {item.idCiclo}
+            {item.metas.map((im: any, ixm: any) => (
+              <div key={ixm} className="ml-4">{im.semana}</div>
+            ))}
           </div>
-          <div>
-            {/* <SFormSearch /> */}
-          </div>
-
-        </div>
-        <div>
-
-          Maindiv
-
-        </div>
-        <div>
-          Footerdiv
-        </div>
-      </div>
+        ))}
+      </ABoxAll>
 
     </Fragment>
   )

@@ -17,7 +17,7 @@ import moment from "moment";
 import { AMessageError, AMessageSuccess } from "../../Components/Messages";
 registerLocale("ptbr", ptbr);
 
-const AddCiclo = () => {
+const AddLote = () => {
   const navigate = useNavigate();
   const { loading } = useContext(AuthContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
@@ -57,10 +57,10 @@ const AddCiclo = () => {
         if (response.length > 0) {
           setLoadingSaveButton(false);
           setPostMessageSuccess(false);
-          setPostMessageErro("Existe um ciclo cadastrado para esta data");
+          setPostMessageErro("Existe um lote cadastrado para esta data");
         } else {
 
-          api.post('ciclos', {
+          api.post('lotes', {
             dataInicial: moment(values.dataInicial).format('YYYY-MM-DD'),
             semanaInicial: values.semanaInicial,
             ativo: 1
@@ -103,7 +103,7 @@ const AddCiclo = () => {
                   <IoTimer />
                 </div>
               </IconContext.Provider>
-              <h1 className='text-2xl ml-1 font-medium'>Ciclos</h1>
+              <h1 className='text-2xl ml-1 font-medium'>Lotes</h1>
             </>
 
           </SubBarLeft>
@@ -124,10 +124,10 @@ const AddCiclo = () => {
               <span className="mx-2 text-gray-500 ">/</span>
 
               <button
-                onClick={() => navigate('/ciclos')}
+                onClick={() => navigate('/lotes')}
                 className="text-gray-600  hover:underline"
               >
-                Ciclos
+                Lotes
               </button>
 
             </div>
@@ -139,7 +139,7 @@ const AddCiclo = () => {
       <ABoxAll>
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SBackButtom onClick={() => navigate('/ciclos')} />
+            <SBackButtom onClick={() => navigate('/lotes')} />
           </div>
 
         </div>
@@ -163,7 +163,7 @@ const AddCiclo = () => {
                 }
 
                 <div className="">
-                  <label className="w-full mt-2 text-gray-700" htmlFor="dataInicial">Data inicial do ciclo</label>
+                  <label className="w-full mt-2 text-gray-700" htmlFor="dataInicial">Data inicial do lote</label>
                   <DatePickerField
                     className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.semanaInicial ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                     id="dataInicial"
@@ -173,7 +173,7 @@ const AddCiclo = () => {
                   />
                 </div>
                 <div className="mt-4">
-                  <label className="w-full mt-2 text-gray-700" htmlFor="semanaInicial">Semana Inicial do ciclo</label>
+                  <label className="w-full mt-2 text-gray-700" htmlFor="semanaInicial">Semana Inicial do lote</label>
                   <Field
                     className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.semanaInicial ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                     id="semanaInicial"
@@ -198,4 +198,4 @@ const AddCiclo = () => {
   )
 }
 
-export default AddCiclo;
+export default AddLote;

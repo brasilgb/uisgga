@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface PropsTable {
-    children: JSX.Element;
+    children: React.ReactNode;
     bgColor?: string;
     colorRow?: any;
     head?:boolean;
