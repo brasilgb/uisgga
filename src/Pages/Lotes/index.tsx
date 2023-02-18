@@ -37,11 +37,14 @@ const Lotes = () => {
     const getAllLotes = async () => {
       await api.get('lotes')
         .then((response) => {
+          setTimeout(() => {
           setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote < b.idLote)));
           setLoading(false);
+          }, 500);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          setLoading(false);
+          console.log(error.response.status);
         })
     };
     getAllLotes();
@@ -121,16 +124,16 @@ const Lotes = () => {
       <STr key={index} head={true} colorRow={index % 2}>
         <>
           <STd>{lote.idLote}</STd>
-          <STd>{ moment(lote.dataInicial).format("DD/MM/YYYY") }</STd>
+          <STd>{moment(lote.dataInicial).format("DD/MM/YYYY")}</STd>
           <STd>{lote.semanaInicial}</STd>
-          <STd>{lote.metas[lote.metas.length -1].semana}</STd>
+          <STd>{lote.metas[lote.metas.length - 1].semana}</STd>
           <STd>{lote.metas.length}</STd>
           <STd>{lote.dataFinal != null ? moment(lote.dataFinal).format("DD/MM/YYYY") : '-'}</STd>
           <STd>{lote.semanaFinal != null ? lote.semanaFinal : '-'}</STd>
           <STd>
             <div className='flex items-center justify-end'>
               <button
-                onClick={() => updateLote(lote.idLote, lote.ativo, lote.dataInicial, lote.semanaInicial, lote.metas[lote.metas.length -1].semana)}
+                onClick={() => updateLote(lote.idLote, lote.ativo, lote.dataInicial, lote.semanaInicial, lote.metas[lote.metas.length - 1].semana)}
               >
                 {lote.ativo
                   ? <span className='flex items-center justify-center h-8 w-8 bg-green-600 border-2 border-white text-white rounded-full mr-4'>

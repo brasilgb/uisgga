@@ -36,15 +36,16 @@ const Ciclos = () => {
     setLoading(true);
     const getAllCiclos = async () => {
       await api.get('ciclos')
-
         .then((response) => {
-          setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo < b.idCiclo)));
-          
+          setTimeout(() => {
+            setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo < b.idCiclo)));
+            setLoading(false);
+          }, 500);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          setLoading(false);
+          console.log(error.response.status);
         });
-        setLoading(false);
     };
     getAllCiclos();
   }, [setLoading])
@@ -123,16 +124,16 @@ const Ciclos = () => {
       <STr key={index} head={true} colorRow={index % 2}>
         <>
           <STd>{ciclo.idCiclo}</STd>
-          <STd>{ moment(ciclo.dataInicial).format("DD/MM/YYYY") }</STd>
+          <STd>{moment(ciclo.dataInicial).format("DD/MM/YYYY")}</STd>
           <STd>{ciclo.semanaInicial}</STd>
-          <STd>{ciclo.metas[ciclo.metas.length -1].semana}</STd>
+          <STd>{ciclo.metas[ciclo.metas.length - 1].semana}</STd>
           <STd>{ciclo.metas.length}</STd>
           <STd>{ciclo.dataFinal != null ? moment(ciclo.dataFinal).format("DD/MM/YYYY") : '-'}</STd>
           <STd>{ciclo.semanaFinal != null ? ciclo.semanaFinal : '-'}</STd>
           <STd>
             <div className='flex items-center justify-end'>
               <button
-                onClick={() => updateCiclo(ciclo.idCiclo, ciclo.ativo, ciclo.dataInicial, ciclo.semanaInicial, ciclo.metas[ciclo.metas.length -1].semana)}
+                onClick={() => updateCiclo(ciclo.idCiclo, ciclo.ativo, ciclo.dataInicial, ciclo.semanaInicial, ciclo.metas[ciclo.metas.length - 1].semana)}
               >
                 {ciclo.ativo
                   ? <span className='flex items-center justify-center h-8 w-8 bg-green-600 border-2 border-white text-white rounded-full mr-4'>
