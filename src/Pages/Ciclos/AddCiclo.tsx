@@ -153,7 +153,7 @@ const AddCiclo = () => {
           }}
         >
           {({ errors, isValid }) => (
-            <Form>
+            <Form autoComplete="off">
               <div className="bg-white rounded-t-lg border overflow-auto py-8 px-2">
                 {postMessageErro &&
                   <div>{<AMessageError className="rounded-lg">{postMessageErro}</AMessageError>}</div>
@@ -162,10 +162,14 @@ const AddCiclo = () => {
                   <div>{<AMessageSuccess className="rounded-lg">{postMessageSuccess}</AMessageSuccess>}</div>
                 }
 
+                <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
+                  <h1 className="font-lg text-white font-medium uppercase">Cadastro do ciclo de produção</h1>
+                </div>
+
                 <div className="">
-                  <label className="w-full mt-2 text-gray-700" htmlFor="dataInicial">Data inicial do ciclo</label>
+                  <label className="w-full mt-2 text-blue-800" htmlFor="dataInicial">Data inicial do ciclo</label>
                   <DatePickerField
-                    className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.semanaInicial ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                    className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataInicial ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                     id="dataInicial"
                     name="dataInicial"
                     dateFormat="dd/MM/yyyy"
@@ -173,7 +177,7 @@ const AddCiclo = () => {
                   />
                 </div>
                 <div className="mt-4">
-                  <label className="w-full mt-2 text-gray-700" htmlFor="semanaInicial">Semana Inicial do ciclo</label>
+                  <label className="w-full mt-2 text-blue-800" htmlFor="semanaInicial">Semana Inicial do ciclo</label>
                   <Field
                     className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.semanaInicial ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                     id="semanaInicial"

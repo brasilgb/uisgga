@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 
 import { IconContext } from 'react-icons';
-import { IoArrowBack, IoArrowForward, IoCheckmark, IoClose, IoHome, IoTimerOutline } from 'react-icons/io5';
+import { IoArrowBack, IoArrowForward, IoCheckmark, IoClose, IoHome, IoFileTrayStackedOutline } from 'react-icons/io5';
 import { GiLargePaintBrush } from "react-icons/gi";
 import { SAddButtom, SDlButtom } from '../../Components/Buttons';
 import { SFormSearchData } from '../../Components/Form/FormSearch';
@@ -38,8 +38,8 @@ const Lotes = () => {
       await api.get('lotes')
         .then((response) => {
           setTimeout(() => {
-          setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote < b.idLote)));
-          setLoading(false);
+            setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote < b.idLote)));
+            setLoading(false);
           }, 500);
         })
         .catch((error) => {
@@ -124,35 +124,16 @@ const Lotes = () => {
       <STr key={index} head={true} colorRow={index % 2}>
         <>
           <STd>{lote.idLote}</STd>
-          <STd>{moment(lote.dataInicial).format("DD/MM/YYYY")}</STd>
-          <STd>{lote.semanaInicial}</STd>
-          <STd>{lote.metas[lote.metas.length - 1].semana}</STd>
-          <STd>{lote.metas.length}</STd>
-          <STd>{lote.dataFinal != null ? moment(lote.dataFinal).format("DD/MM/YYYY") : '-'}</STd>
-          <STd>{lote.semanaFinal != null ? lote.semanaFinal : '-'}</STd>
+          <STd>{lote.lote}</STd>
+          <STd>{lote.femea}</STd>
+          <STd>{lote.femeaCapitalizada}</STd>
+          <STd>{lote.macho}</STd>
+          <STd>{lote.machoCapitalizado}</STd>
+          <STd>{lote.femea + lote.macho}</STd>
+          <STd>{lote.aviarios.length}</STd>
+          <STd>{lote.dataEntrada}</STd>
           <STd>
             <div className='flex items-center justify-end'>
-              <button
-                onClick={() => updateLote(lote.idLote, lote.ativo, lote.dataInicial, lote.semanaInicial, lote.metas[lote.metas.length - 1].semana)}
-              >
-                {lote.ativo
-                  ? <span className='flex items-center justify-center h-8 w-8 bg-green-600 border-2 border-white text-white rounded-full mr-4'>
-                    <IconContext.Provider value={{ className: 'font-extrabold' }} >
-                      <div>
-                        {idLote === lote.idLote && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoCheckmark size={22} />}
-                      </div>
-                    </IconContext.Provider>
-                  </span>
-                  : <span className='flex items-center justify-center h-8 w-8 bg-red-600 border-2 border-white text-white rounded-full mr-4'>
-                    <IconContext.Provider value={{ className: 'font-extrabold' }} >
-                      <div>
-                        {idLote === lote.idLote && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoClose size={22} />}
-                      </div>
-                    </IconContext.Provider>
-                  </span>
-                }
-              </button>
-
               <SDlButtom active={lote.ativo} onClick={() => toggleDelete(lote.idLote)} />
             </div>
           </STd>
@@ -208,7 +189,7 @@ const Lotes = () => {
             <>
               <IconContext.Provider value={{ className: 'text-3xl' }} >
                 <div>
-                  <IoTimerOutline />
+                  <IoFileTrayStackedOutline />
                 </div>
               </IconContext.Provider>
               <h1 className='text-2xl ml-1 font-medium'>Lotes</h1>
@@ -271,12 +252,14 @@ const Lotes = () => {
                 <STr bgColor="bg-gray-200">
                   <>
                     <STh><span>#ID</span></STh>
-                    <STh><span>Data inicial</span></STh>
-                    <STh><span>Semana inicial</span></STh>
-                    <STh><span>Semana atual</span></STh>
-                    <STh><span>Semanas percorridas</span></STh>
-                    <STh><span>Data final</span></STh>
-                    <STh><span>Semana final</span></STh>
+                    <STh><span>Lote</span></STh>
+                    <STh><span>Fêmeas</span></STh>
+                    <STh><span>Capitalizadas</span></STh>
+                    <STh><span>Machos</span></STh>
+                    <STh><span>Capitalizados</span></STh>
+                    <STh><span>Tot. Aves</span></STh>
+                    <STh><span>Aviários</span></STh>
+                    <STh><span>Cadastro</span></STh>
                     <STh><span></span></STh>
                   </>
                 </STr>
