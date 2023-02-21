@@ -7,7 +7,7 @@ import SideBar from '../SideBar';
 const BackLayout = () => {
     return (
         <Fragment>
-            <div className='flex flex-row min-h-screen bg-gray-100 text-gray-800 md:ml-0 transition-all duration-150 ease-in'>
+            <div className='flex flex-row min-h-screen bg-gray-100 text-gray-800 md:ml-0 transition-all duration-150 ease-in font-Roboto'>
 
                 <div className='flex-none'>
                     <SideBar />

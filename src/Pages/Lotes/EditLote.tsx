@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { IoHome, IoFileTrayStackedOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ABoxAll } from "../../Components/Boxes";
 import { SBackButtom, SSaveButtom } from "../../Components/Buttons";
 import SLoading from "../../Components/Loading";
@@ -19,8 +19,9 @@ import { AMessageError, AMessageSuccess } from "../../Components/Messages";
 
 registerLocale("ptbr", ptbr);
 
-const AddLote = () => {
+const AditLote = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const { loading } = useContext(AppContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
@@ -28,6 +29,7 @@ const AddLote = () => {
   const [idCicloActive, setIdCicloActive] = useState();
   const [activeCiclo, setActiveCiclo] = useState<any>();
   const [openCapitalizadas, setOpenCapitalizadas] = useState<boolean>(false);
+  const [loteForId, setLoteForId] = useState([]);
 
   const DatePickerField = ({ ...props }: any) => {
     const { setFieldValue } = useFormikContext();
@@ -60,6 +62,29 @@ const AddLote = () => {
     getCiclos();
   }, []);
 
+  useEffect(() => {
+    async function getLoteForId() {
+      await api.get(`lotes/${state.idLote}`,{
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          // 'Authorization': `Bearer ${token}`
+        }
+      })
+        .then((response) => {
+          setLoteForId(response.data.lote)
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    };
+    getLoteForId();
+  }, [state])
+
+  loteForId.map((lt: any) => (
+    console.log(lt.lote)
+  ));
+  // 
   const onsubmit = async (values: any) => {
     setLoadingSaveButton(true);
     await api.post('lotes', {
@@ -125,7 +150,7 @@ const AddLote = () => {
                 Lotes
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
-              <span className="text-gray-600 ">Adicionar</span>
+              <span className="text-gray-600 ">Editar</span>
             </div>
 
           </SubBarRight>
@@ -222,12 +247,12 @@ const AddLote = () => {
                     <h1 className="font-lg text-white uppercase">Capitalização de aves</h1>
                     <IconContext.Provider value={{ className: 'text-xl mr-4 text-white font-bold' }} >
                       <div>
-                        {openCapitalizadas ? <IoChevronUp /> : <IoChevronDown /> }
+                        {openCapitalizadas ? <IoChevronUp /> : <IoChevronDown />}
                       </div>
                     </IconContext.Provider>
                   </div>
 
-                  <div className={`${openCapitalizadas ? 'flex-col animate__animated animate__fadeIn': 'hidden'}`}>
+                  <div className={`${openCapitalizadas ? 'flex-col animate__animated animate__fadeIn' : 'hidden'}`}>
                     <div className="mt-4">
                       <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataCapitalizada">Data de capitalização</label>
                       <DatePickerField
@@ -281,4 +306,4 @@ const AddLote = () => {
   )
 }
 
-export default AddLote;
+export default AditLote;

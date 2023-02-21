@@ -4,7 +4,7 @@ interface PropsTable {
     children: React.ReactNode;
     bgColor?: string;
     colorRow?: any;
-    head?:boolean;
+    head?: boolean;
 }
 
 export const STable = ({ children }: PropsTable) => {
@@ -17,16 +17,15 @@ export const STable = ({ children }: PropsTable) => {
 
 export const STr = ({ head, colorRow, children }: PropsTable) => {
     return (
-        <tr className={`${colorRow > 0 ? 'bg-gray-50' : 'bg-white'}  border-b transition duration-300 ease-in-out ${head && 'hover:bg-blue-50'}`}>
+        <tr className={`${head ? 'bg-gradient-to-b from-gray-100 to-transparent' : 'hover:bg-blue-50'} ${!head && colorRow > 0 ? 'bg-gray-50' : 'bg-white'} border-b transition duration-300 ease-in-out`}>
             {children}
         </tr>
     )
 };
 
-
 export const STh = ({ children }: PropsTable) => {
     return (
-        <th className='text-base font-normal text-gray-900 px-6 py-4 text-left'>
+        <th className='text-base text-gray-900 px-2 py-4 text-left'>
             {children}
         </th>
     )
@@ -34,7 +33,7 @@ export const STh = ({ children }: PropsTable) => {
 
 export const STd = ({ children }: PropsTable) => {
     return (
-        <td className='text-base text-gray-900 font-normal px-6 py-2'>
+        <td className='text-base font-normal text-gray-900 px-2 py-2'>
             <div className=''>
                 {children}
             </div>

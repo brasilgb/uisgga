@@ -9,7 +9,7 @@ import SLoading from '../../Components/Loading';
 import ReactPaginate from 'react-paginate';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
 import { STable, STd, STh, STr } from '../../Components/Tables';
-import { AuthContext } from '../../Context/AuthContext';
+import { AppContext } from '../../Contexts/AppContext';
 import 'animate.css';
 import api from '../../Services/api';
 import { ModalDelete, ModalConfirm } from '../../Components/ModalDelete';
@@ -21,7 +21,7 @@ import { ITENS_PER_PAGE } from "../../Constants";
 
 const Ciclos = () => {
   const navigate = useNavigate();
-  const { setLoading, loading } = useContext(AuthContext);
+  const { setLoading, loading } = useContext(AppContext);
   const [allCiclos, setAllCiclos] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -38,7 +38,7 @@ const Ciclos = () => {
       await api.get('ciclos')
         .then((response) => {
           setTimeout(() => {
-            setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo < b.idCiclo)));
+            setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo > b.idCiclo ? -1 : 1 )));
             setLoading(false);
           }, 500);
         })
@@ -121,7 +121,7 @@ const Ciclos = () => {
   const DisplayItems = newCiclo
     .slice(pagesVisited, pagesVisited + itemsPerPage)
     .map((ciclo: any, index: any) => (
-      <STr key={index} head={true} colorRow={index % 2}>
+      <STr key={index} head={false} colorRow={index % 2}>
         <>
           <STd>{ciclo.idCiclo}</STd>
           <STd>{moment(ciclo.dataInicial).format("DD/MM/YYYY")}</STd>
@@ -130,6 +130,7 @@ const Ciclos = () => {
           <STd>{ciclo.metas.length}</STd>
           <STd>{ciclo.dataFinal != null ? moment(ciclo.dataFinal).format("DD/MM/YYYY") : '-'}</STd>
           <STd>{ciclo.semanaFinal != null ? ciclo.semanaFinal : '-'}</STd>
+          <STd>{ciclo.lotes.length}</STd>
           <STd>
             <div className='flex items-center justify-end'>
               <button
@@ -266,9 +267,9 @@ const Ciclos = () => {
         <div className="rounded-t-lg border overflow-auto">
           <STable>
             <>
-              <thead className='bg-gray-200'>
+              <thead>
 
-                <STr bgColor="bg-gray-200">
+                <STr head={true}>
                   <>
                     <STh><span>#ID</span></STh>
                     <STh><span>Data inicial</span></STh>
@@ -277,6 +278,7 @@ const Ciclos = () => {
                     <STh><span>Semanas percorridas</span></STh>
                     <STh><span>Data final</span></STh>
                     <STh><span>Semana final</span></STh>
+                    <STh><span>Lotes</span></STh>
                     <STh><span></span></STh>
                   </>
                 </STr>

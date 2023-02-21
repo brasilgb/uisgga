@@ -2496,7 +2496,7 @@ ajv@^8.0.0, ajv@^8.6.0, ajv@^8.8.0:
 
 animate.css@^4.1.1:
   version "4.1.1"
-  resolved "https://registry.yarnpkg.com/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
+  resolved "https://registry.npmjs.org/animate.css/-/animate.css-4.1.1.tgz"
   integrity sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==
 
 ansi-escapes@^4.2.1, ansi-escapes@^4.3.1:
@@ -3603,7 +3603,7 @@ deep-is@^0.1.3, deep-is@~0.1.3:
 
 deepmerge@^2.1.1:
   version "2.2.1"
-  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
+  resolved "https://registry.npmjs.org/deepmerge/-/deepmerge-2.2.1.tgz"
   integrity sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==
 
 deepmerge@^4.2.2:
@@ -4576,7 +4576,7 @@ form-data@^4.0.0:
 
 formik@^2.2.9:
   version "2.2.9"
-  resolved "https://registry.yarnpkg.com/formik/-/formik-2.2.9.tgz#8594ba9c5e2e5cf1f42c5704128e119fc46232d0"
+  resolved "https://registry.npmjs.org/formik/-/formik-2.2.9.tgz"
   integrity sha512-LQLcISMmf1r5at4/gyJigGn0gOwFbeEAlji+N9InZF6LIMXnFNkO42sCI8Jt84YZggpD4cPWObAZaxpEFtSzNA==
   dependencies:
     deepmerge "^2.1.1"
@@ -4863,7 +4863,7 @@ he@^1.2.0:
 
 hoist-non-react-statics@^3.3.0:
   version "3.3.2"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
+  resolved "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
   dependencies:
     react-is "^16.7.0"
@@ -6174,7 +6174,7 @@ locate-path@^6.0.0:
 
 lodash-es@^4.17.21:
   version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  resolved "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.21.tgz"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
 lodash.debounce@^4.0.8:
@@ -6383,7 +6383,7 @@ mkdirp@~0.5.1:
 
 moment@^2.29.4:
   version "2.29.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 ms@2.0.0:
@@ -7449,7 +7449,7 @@ prop-types@^15, prop-types@^15.7.2, prop-types@^15.8.1:
 
 property-expr@^2.0.5:
   version "2.0.5"
-  resolved "https://registry.yarnpkg.com/property-expr/-/property-expr-2.0.5.tgz#278bdb15308ae16af3e3b9640024524f4dc02cb4"
+  resolved "https://registry.npmjs.org/property-expr/-/property-expr-2.0.5.tgz"
   integrity sha512-IJUkICM5dP5znhCckHSv30Q4b5/JA5enCtkRHYaOVOAocnH/1BQEYTC5NMfT3AVl/iXKdr3aqQbQn9DxyWknwA==
 
 proxy-addr@~2.0.7:
@@ -7600,7 +7600,7 @@ react-error-overlay@^6.0.11:
 
 react-fast-compare@^2.0.1:
   version "2.0.4"
-  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
+  resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-2.0.4.tgz"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
 react-fast-compare@^3.0.1:
@@ -7635,7 +7635,7 @@ react-onclickoutside@^6.12.2:
 
 react-paginate@^8.1.4:
   version "8.1.4"
-  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-8.1.4.tgz#f62bfef4f07bb420f3a994e0284d1065a865a6b9"
+  resolved "https://registry.npmjs.org/react-paginate/-/react-paginate-8.1.4.tgz"
   integrity sha512-c3rxjcTEqeDQa6LqXifxLeFguY2qy2CHGRphVjHLFFMGfIHyaJ+v3bOvIlLYEeohwQ1q+cQpknjsqBVrkc/SNA==
   dependencies:
     prop-types "^15"
@@ -8649,12 +8649,12 @@ thunky@^1.0.2:
 
 tiny-case@^1.0.3:
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tiny-case/-/tiny-case-1.0.3.tgz#d980d66bc72b5d5a9ca86fb7c9ffdb9c898ddd03"
+  resolved "https://registry.npmjs.org/tiny-case/-/tiny-case-1.0.3.tgz"
   integrity sha512-Eet/eeMhkO6TX8mnUteS9zgPbUMQa4I6Kkp5ORiBD5476/m+PIRiumP5tmh5ioJpH7k51Kehawy2UDfsnxxY8Q==
 
 tiny-warning@^1.0.2:
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
+  resolved "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
 tmpl@1.0.5:
@@ -8681,7 +8681,7 @@ toidentifier@1.0.1:
 
 toposort@^2.0.2:
   version "2.0.2"
-  resolved "https://registry.yarnpkg.com/toposort/-/toposort-2.0.2.tgz#ae21768175d1559d48bef35420b2f4962f09c330"
+  resolved "https://registry.npmjs.org/toposort/-/toposort-2.0.2.tgz"
   integrity sha512-0a5EOkAUp8D4moMi2W8ZF8jcga7BgZd91O/yabJCFY8az+XSzeGyTKs0Aoo897iV1Nj6guFq8orWDS96z91oGg==
 
 tough-cookie@^4.0.0:
@@ -8776,7 +8776,7 @@ type-fest@^0.21.3:
 
 type-fest@^2.19.0:
   version "2.19.0"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.19.0.tgz#88068015bb33036a598b952e55e9311a60fd3a9b"
+  resolved "https://registry.npmjs.org/type-fest/-/type-fest-2.19.0.tgz"
   integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
 
 type-is@~1.6.18:
@@ -9472,7 +9472,7 @@ yocto-queue@^0.1.0:
 
 yup@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/yup/-/yup-1.0.0.tgz#de4e32f9d2e45b1ab428076fc916c84db861b8ce"
+  resolved "https://registry.npmjs.org/yup/-/yup-1.0.0.tgz"
   integrity sha512-bRZIyMkoe212ahGJTE32cr2dLkJw53Va+Uw5mzsBKpcef9zCGQ23k/xtpQUfGwdWPKvCIlR8CzFwchs2rm2XpQ==
   dependencies:
     property-expr "^2.0.5"

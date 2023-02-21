@@ -7,11 +7,11 @@ import { ABoxAll } from "../../Components/Boxes";
 import SLoading from '../../Components/Loading';
 import { AMessageError } from "../../Components/Messages";
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
-import { AuthContext } from '../../Context/AuthContext';
+import { AppContext } from '../../Contexts/AppContext';
 import api from "../../Services/api";
 
 const Home = () => {
-  const { setLoading, loading } = useContext(AuthContext);
+  const { setLoading, loading } = useContext(AppContext);
   const [allCiclos, setAllCiclos] = useState<any>([]);
   const [cicloAtivo, setCicloAtivo] = useState<boolean>(true);
 

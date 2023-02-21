@@ -6,7 +6,7 @@ import { ABoxAll } from "../../Components/Boxes";
 import { SBackButtom, SSaveButtom } from "../../Components/Buttons";
 import SLoading from "../../Components/Loading";
 import { SubBar, SubBarLeft, SubBarRight } from "../../Components/SubBar";
-import { AuthContext } from "../../Context/AuthContext";
+import { AppContext } from "../../Contexts/AppContext";
 import { Formik, Field, Form, ErrorMessage, useFormikContext, useField } from 'formik';
 import schema from './schema';
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -19,7 +19,7 @@ registerLocale("ptbr", ptbr);
 
 const AddCiclo = () => {
   const navigate = useNavigate();
-  const { loading } = useContext(AuthContext);
+  const { loading } = useContext(AppContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
@@ -167,7 +167,7 @@ const AddCiclo = () => {
                 </div>
 
                 <div className="">
-                  <label className="w-full mt-2 text-blue-800" htmlFor="dataInicial">Data inicial do ciclo</label>
+                  <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataInicial">Data inicial do ciclo</label>
                   <DatePickerField
                     className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataInicial ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                     id="dataInicial"
@@ -177,7 +177,7 @@ const AddCiclo = () => {
                   />
                 </div>
                 <div className="mt-4">
-                  <label className="w-full mt-2 text-blue-800" htmlFor="semanaInicial">Semana Inicial do ciclo</label>
+                  <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="semanaInicial">Semana Inicial do ciclo</label>
                   <Field
                     className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.semanaInicial ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                     id="semanaInicial"

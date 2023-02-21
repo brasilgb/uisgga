@@ -9,11 +9,12 @@ interface Props {
     disabled?: any;
 }
 
-export const SAddButtom = ({ onClick }: Props) => {
+export const SAddButtom = ({ onClick, active }: Props) => {
     return (
         <Fragment>
             <button
-                className='flex items-center px-5 py-2.5 rounded-md shadow-md bg-blue-600 text-white transition-opacity ease-in duration-400 opacity-100 hover:opacity-80'
+                disabled={active}
+                className={`flex items-center px-5 py-2.5 rounded-md shadow-md  ${active ? 'bg-gray-200 text-gray-400' : 'bg-blue-600 text-white'}  text-white transition-opacity ease-in duration-400 opacity-100 hover:opacity-80`}
                 type="button"
                 onClick={onClick}
             >
@@ -32,7 +33,7 @@ export const SEdButtom = ({ onClick }: Props) => {
     return (
         <Fragment>
             <button
-                className='flex items-center mr-2 px-4 py-2 rounded-md shadow-md bg-orange-600 text-white transition-opacity ease-in duration-400 opacity-100 hover:opacity-80'
+                className='flex items-center mr-2 py-1 px-2 rounded-md shadow-md bg-orange-600 text-white transition-opacity ease-in duration-400 opacity-100 hover:opacity-80'
                 type="button"
                 onClick={onClick}
             >
@@ -75,7 +76,7 @@ export const SSaveButtom = ({ loading, disabled }: any) => {
                 <IconContext.Provider value={{ className: 'text-md' }}>
                     <div>
                         {loading
-                            ? <CgSpinner className="animate-spin"/>
+                            ? <CgSpinner className="animate-spin" />
                             : <IoSave />
                         }
 

@@ -3,13 +3,13 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { IconContext } from 'react-icons';
 import { IoArrowBack, IoArrowForward, IoCheckmark, IoClose, IoHome, IoFileTrayStackedOutline } from 'react-icons/io5';
 import { GiLargePaintBrush } from "react-icons/gi";
-import { SAddButtom, SDlButtom } from '../../Components/Buttons';
+import { SAddButtom, SDlButtom, SEdButtom } from '../../Components/Buttons';
 import { SFormSearchData } from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
 import ReactPaginate from 'react-paginate';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
 import { STable, STd, STh, STr } from '../../Components/Tables';
-import { AuthContext } from '../../Context/AuthContext';
+import { AppContext } from '../../Contexts/AppContext';
 import 'animate.css';
 import api from '../../Services/api';
 import { ModalDelete, ModalConfirm } from '../../Components/ModalDelete';
@@ -21,13 +21,12 @@ import { ITENS_PER_PAGE } from "../../Constants";
 
 const Lotes = () => {
   const navigate = useNavigate();
-  const { setLoading, loading } = useContext(AuthContext);
+  const { setLoading, loading } = useContext(AppContext);
   const [allLotes, setAllLotes] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
-  const [idLote, setIdLote] = useState();
-  const [loadingActive, setLoadingActive] = useState(false);
+  const [cicloActive, setCicloActive] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [messageSearch, setMessageSearch] = useState<boolean>(false);
@@ -37,8 +36,9 @@ const Lotes = () => {
     const getAllLotes = async () => {
       await api.get('lotes')
         .then((response) => {
+          setCicloActive(response.data.ciclos);
           setTimeout(() => {
-            setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote < b.idLote)));
+            setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote > b.idLote ? -1 : 1)));
             setLoading(false);
           }, 500);
         })
@@ -75,37 +75,6 @@ const Lotes = () => {
       });
   });
 
-  // edita lotes
-  const updateLote = (async (id: any, ativo: any, data: any, semana: any, semanafinal: any) => {
-    setIdLote(id);
-    setLoadingActive(true);
-    await api.patch('lotes', {
-      idLote: id,
-      ativo: ativo ? false : true,
-      dataInicial: data,
-      semanaInicial: semana,
-      dataFinal: moment().format("YYYY-MM-DD"),
-      semanaFinal: semanafinal
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        // 'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(res => {
-        api.get('lotes')
-          .then((response) => {
-            setTimeout(() => {
-              setLoadingActive(false);
-              setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote < b.idLote)));
-            }, 500)
-          })
-      }).catch(err => {
-        console.log(err.response.data);
-      });
-  });
-
   // -> Pagination
   const [newLote, setNewLote] = useState(allLotes.slice(0, 50));
   useEffect(() => {
@@ -119,9 +88,9 @@ const Lotes = () => {
     setPageNumber(selected);
   };
   const DisplayItems = newLote
-    .slice(pagesVisited, pagesVisited + itemsPerPage)
+    .slice(pagesVisited, pagesVisited + itemsPerPage).sort((a: any, b: any) => (a < b ? -1 : 1))
     .map((lote: any, index: any) => (
-      <STr key={index} head={true} colorRow={index % 2}>
+      <STr key={index} head={false} colorRow={index % 2}>
         <>
           <STd>{lote.idLote}</STd>
           <STd>{lote.lote}</STd>
@@ -131,9 +100,10 @@ const Lotes = () => {
           <STd>{lote.machoCapitalizado}</STd>
           <STd>{lote.femea + lote.macho}</STd>
           <STd>{lote.aviarios.length}</STd>
-          <STd>{lote.dataEntrada}</STd>
+          <STd>{moment(lote.dataEntrada).format("DD/MM/YYYY")}</STd>
           <STd>
             <div className='flex items-center justify-end'>
+              <SEdButtom onClick={() => navigate('/lotes/editlote/', {state: {idLote: lote.idLote}})} />
               <SDlButtom active={lote.ativo} onClick={() => toggleDelete(lote.idLote)} />
             </div>
           </STd>
@@ -217,7 +187,7 @@ const Lotes = () => {
 
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SAddButtom onClick={() => navigate('/lotes/addlote')} />
+            <SAddButtom active={cicloActive} onClick={() => navigate('/lotes/addlote')} />
           </div>
 
           {messageSearch &&
@@ -249,7 +219,7 @@ const Lotes = () => {
             <>
               <thead className='bg-gray-200'>
 
-                <STr bgColor="bg-gray-200">
+                <STr head={true}>
                   <>
                     <STh><span>#ID</span></STh>
                     <STh><span>Lote</span></STh>

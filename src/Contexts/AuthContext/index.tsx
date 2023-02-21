@@ -3,14 +3,13 @@ import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 interface DataContext {
     setLoading: any;
     loading: boolean;
-    bostinha: string;
+}
+
+interface ContextProps {
+    children: JSX.Element;
 }
 
 export const AuthContext = createContext<DataContext>({} as DataContext);
-
-type ContextProps = {
-    children: JSX.Element,
-}
 
 export const AuthProvider = ({ children }: ContextProps) => {
 
@@ -19,7 +18,6 @@ export const AuthProvider = ({ children }: ContextProps) => {
     return (
 
         <AuthContext.Provider value={{
-            bostinha: "bostinha",
             setLoading,
             loading
         }}>
