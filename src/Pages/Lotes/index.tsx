@@ -103,7 +103,7 @@ const Lotes = () => {
           <STd>{moment(lote.dataEntrada).format("DD/MM/YYYY")}</STd>
           <STd>
             <div className='flex items-center justify-end'>
-              <SEdButtom onClick={() => navigate('/lotes/editlote/', {state: {idLote: lote.idLote}})} />
+              <SEdButtom onClick={() => navigate("/lotes/editlote", {state: lote})} />
               <SDlButtom active={lote.ativo} onClick={() => toggleDelete(lote.idLote)} />
             </div>
           </STd>

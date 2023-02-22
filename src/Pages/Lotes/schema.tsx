@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 import { LoteExixts } from "../../Components/CheckFields";
 
-
 export default Yup.object().shape({
     lote: Yup.string().required("O lote é um campo obrigatório")
     .test("lote_check", "Lote já existe na base de dados, escolha outro identificador", 

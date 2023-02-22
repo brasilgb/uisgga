@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { IoHome, IoFileTrayStackedOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ABoxAll } from "../../Components/Boxes";
 import { SBackButtom, SSaveButtom } from "../../Components/Buttons";
 import SLoading from "../../Components/Loading";
@@ -16,13 +16,24 @@ import api from "../../Services/api";
 import moment from "moment";
 import "animate.css";
 import { AMessageError, AMessageSuccess } from "../../Components/Messages";
-
 registerLocale("ptbr", ptbr);
 
-const AditLote = () => {
+interface LoteProps {
+  lote: string,
+  dataEntrada: Date,
+  femea: number,
+  macho: number,
+  dataCapitalizada: Date,
+  femeaCapitalizada: number,
+  machoCapitalizado: number
+}
+
+const EditLote = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const location = useLocation().state as LoteProps;
+
   const { loading } = useContext(AppContext);
+
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
@@ -46,6 +57,7 @@ const AditLote = () => {
       />
     );
   };
+
   useEffect(() => {
     const getCiclos = (async () => {
       await api.get('ciclos')
@@ -62,29 +74,6 @@ const AditLote = () => {
     getCiclos();
   }, []);
 
-  useEffect(() => {
-    async function getLoteForId() {
-      await api.get(`lotes/${state.idLote}`,{
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          // 'Authorization': `Bearer ${token}`
-        }
-      })
-        .then((response) => {
-          setLoteForId(response.data.lote)
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    };
-    getLoteForId();
-  }, [state])
-
-  loteForId.map((lt: any) => (
-    console.log(lt.lote)
-  ));
-  // 
   const onsubmit = async (values: any) => {
     setLoadingSaveButton(true);
     await api.post('lotes', {
@@ -169,13 +158,13 @@ const AditLote = () => {
             validationSchema={schema}
             onSubmit={onsubmit}
             initialValues={{
-              lote: '',
-              dataEntrada: new Date(),
-              femea: '',
-              macho: '',
-              dataCapitalizada: '',
-              femeaCapitalizada: '',
-              machoCapitalizado: '',
+              lote: location.lote,
+              dataEntrada: moment(location.dataEntrada),
+              femea: location.femea,
+              macho: location.macho,
+              dataCapitalizada: moment(location.dataCapitalizada),
+              femeaCapitalizada: location.femeaCapitalizada,
+              machoCapitalizado: location.machoCapitalizado,
             }}
           >
             {({ errors, isValid }) => (
@@ -300,10 +289,9 @@ const AditLote = () => {
           </Formik>
         }
 
-
       </ABoxAll>
     </Fragment>
   )
 }
 
-export default AditLote;
+export default EditLote;

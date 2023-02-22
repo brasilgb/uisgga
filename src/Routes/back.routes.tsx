@@ -6,7 +6,7 @@ import AddCiclo from '../Pages/Ciclos/AddCiclo';
 import Home from '../Pages/Home';
 import Lotes from "../Pages/Lotes";
 import AddLote from "../Pages/Lotes/AddLote";
-import AditLote from "../Pages/Lotes/EditLote";
+import EditLote from '../Pages/Lotes/EditLote';
 
 function BackRoutes() {
   return (
@@ -18,7 +18,7 @@ function BackRoutes() {
             <Route path='/ciclos/addciclo' element={<AddCiclo />} />
             <Route path='/lotes' element={<Lotes />} />
             <Route path='/lotes/addlote' element={<AddLote />} />
-            <Route path='/lotes/editlote/:idLote' element={<AditLote />} />
+            <Route path='/lotes/editlote' element={<EditLote />} />
         </Route>
     </Routes>
   )
