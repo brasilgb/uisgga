@@ -13,9 +13,9 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.min.css";
 import ptbr from "date-fns/locale/pt-BR";
 import api from "../../Services/api";
-import moment from "moment";
 import "animate.css";
 import { AMessageError, AMessageSuccess } from "../../Components/Messages";
+import { LoteExixts } from "../../Components/CheckFields";
 
 registerLocale("ptbr", ptbr);
 
@@ -27,7 +27,6 @@ const AddLote = () => {
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
   const [idCicloActive, setIdCicloActive] = useState();
   const [activeCiclo, setActiveCiclo] = useState<any>();
-  const [openCapitalizadas, setOpenCapitalizadas] = useState<boolean>(false);
 
   const DatePickerField = ({ ...props }: any) => {
     const { setFieldValue } = useFormikContext();
@@ -61,6 +60,10 @@ const AddLote = () => {
   }, []);
 
   const onsubmit = async (values: any) => {
+    // console.log(values.idLote, values.lote)
+    const exists = await LoteExixts(values.idLote, values.lote);
+    console.log(exists);
+    return;
     setLoadingSaveButton(true);
     await api.post('lotes', {
       cicloId: idCicloActive,
@@ -68,9 +71,6 @@ const AddLote = () => {
       dataEntrada: values.dataEntrada,
       femea: values.femea,
       macho: values.macho,
-      dataCapitalizacao: values.dataCapitalizacao,
-      femeaCapitalizada: values.femeaCapitalizada === '' ? null : values.femeaCapitalizada,
-      machoCapitalizado: values.machoCapitalizado === '' ? null : values.machoCapitalizado,
     })
       .then((response) => {
         setTimeout(() => {
@@ -144,13 +144,11 @@ const AddLote = () => {
             validationSchema={schema}
             onSubmit={onsubmit}
             initialValues={{
+              idLote: null,
               lote: '',
               dataEntrada: new Date(),
               femea: '',
               macho: '',
-              dataCapitalizada: '',
-              femeaCapitalizada: '',
-              machoCapitalizado: '',
             }}
           >
             {({ errors, isValid }) => (
@@ -167,7 +165,7 @@ const AddLote = () => {
                   <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
                     <h1 className="font-lg text-white font-medium uppercase">Chegada de aves</h1>
                   </div>
-
+                  <Field id="idLote" name="idLote" type="hidden"/>
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="lote">Identificador do lote</label>
                     <Field
@@ -218,53 +216,6 @@ const AddLote = () => {
                     }
                   </div>
 
-                  <div onClick={() => setOpenCapitalizadas(!openCapitalizadas)} className="cursor-pointer flex items-center justify-between mt-8 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                    <h1 className="font-lg text-white uppercase">Capitalização de aves</h1>
-                    <IconContext.Provider value={{ className: 'text-xl mr-4 text-white font-bold' }} >
-                      <div>
-                        {openCapitalizadas ? <IoChevronUp /> : <IoChevronDown /> }
-                      </div>
-                    </IconContext.Provider>
-                  </div>
-
-                  <div className={`${openCapitalizadas ? 'flex-col animate__animated animate__fadeIn': 'hidden'}`}>
-                    <div className="mt-4">
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataCapitalizada">Data de capitalização</label>
-                      <DatePickerField
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataCapitalizada ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="dataCapitalizada"
-                        name="dataCapitalizada"
-                        dateFormat="dd/MM/yyyy"
-                        onFocus={(e: any) => e.target.blur()}
-                      />
-                    </div>
-
-                    <div className="mt-4">
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="femeaCapitalizada">Fêmeas capitalizadas</label>
-                      <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.femeaCapitalizada ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="femeaCapitalizada"
-                        name="femeaCapitalizada"
-                        type="text"
-                      />
-                      {errors.femeaCapitalizada &&
-                        <AMessageError className="rounded-b-lg">{errors.femeaCapitalizada}</AMessageError>
-                      }
-                    </div>
-
-                    <div className="mt-4">
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="machoCapitalizado">Machos capitalizados</label>
-                      <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.machoCapitalizado ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="machoCapitalizado"
-                        name="machoCapitalizado"
-                        type="text"
-                      />
-                      {errors.machoCapitalizado &&
-                        <AMessageError className="rounded-b-lg">{errors.machoCapitalizado}</AMessageError>
-                      }
-                    </div>
-                  </div>
                 </div>
 
                 <div className="flex items-center justify-end bg-white border-x border-b rounded-b-lg py-2 pr-2">
@@ -282,3 +233,27 @@ const AddLote = () => {
 }
 
 export default AddLote;
+
+function sync() {
+  throw new Error("Function not implemented.");
+}
+
+
+function setActiveCiclo(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
+
+
+function setIdCicloActive(idCiclo: any) {
+  throw new Error("Function not implemented.");
+}
+
+
+function setLoadingSaveButton(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
+
+
+function setPostMessageErro(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}

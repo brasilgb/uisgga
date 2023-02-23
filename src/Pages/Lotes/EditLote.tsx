@@ -16,9 +16,11 @@ import api from "../../Services/api";
 import moment from "moment";
 import "animate.css";
 import { AMessageError, AMessageSuccess } from "../../Components/Messages";
+import { LoteExixts } from "../../Components/CheckFields";
 registerLocale("ptbr", ptbr);
 
 interface LoteProps {
+  idLote: number;
   lote: string,
   dataEntrada: Date,
   femea: number,
@@ -75,6 +77,9 @@ const EditLote = () => {
   }, []);
 
   const onsubmit = async (values: any) => {
+    const exists = await LoteExixts(values.idLote, values.lote);
+    console.log(exists);
+    return;
     setLoadingSaveButton(true);
     await api.post('lotes', {
       cicloId: idCicloActive,
@@ -156,8 +161,8 @@ const EditLote = () => {
           ? <AMessageError className="rounded-t-lg">Para cadastrar lotes os ciclos deverão estar cadastrados e ativos</AMessageError>
           : <Formik
             validationSchema={schema}
-            onSubmit={onsubmit}
             initialValues={{
+              idLote: location.idLote,
               lote: location.lote,
               dataEntrada: moment(location.dataEntrada),
               femea: location.femea,
@@ -166,6 +171,7 @@ const EditLote = () => {
               femeaCapitalizada: location.femeaCapitalizada,
               machoCapitalizado: location.machoCapitalizado,
             }}
+            onSubmit={onsubmit}
           >
             {({ errors, isValid }) => (
               <Form autoComplete="off" >
@@ -181,7 +187,7 @@ const EditLote = () => {
                   <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
                     <h1 className="font-lg text-white font-medium uppercase">Chegada de aves</h1>
                   </div>
-
+                  <Field id="idLote" name="idLote" type="hidden" />
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="lote">Identificador do lote</label>
                     <Field
