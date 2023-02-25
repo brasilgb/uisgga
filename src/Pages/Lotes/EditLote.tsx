@@ -16,7 +16,6 @@ import api from "../../Services/api";
 import moment from "moment";
 import "animate.css";
 import { AMessageError, AMessageSuccess } from "../../Components/Messages";
-import { LoteExixts } from "../../Components/CheckFields";
 registerLocale("ptbr", ptbr);
 
 interface LoteProps {
@@ -77,9 +76,6 @@ const EditLote = () => {
   }, []);
 
   const onsubmit = async (values: any) => {
-    const exists = await LoteExixts(values.idLote, values.lote);
-    console.log(exists);
-    return;
     setLoadingSaveButton(true);
     await api.post('lotes', {
       cicloId: idCicloActive,

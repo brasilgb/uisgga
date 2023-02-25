@@ -69,7 +69,6 @@ const Lotes = () => {
         const cic = allLotes.filter((item: any) => item.idLote !== id);
         setAllLotes(cic);
         setShowDeleteModal(false);
-        setShowConfirmModal(true);
       }).catch(err => {
         console.log(err.response.data);
       });

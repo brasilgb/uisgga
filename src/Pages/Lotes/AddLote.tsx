@@ -15,7 +15,6 @@ import ptbr from "date-fns/locale/pt-BR";
 import api from "../../Services/api";
 import "animate.css";
 import { AMessageError, AMessageSuccess } from "../../Components/Messages";
-import { LoteExixts } from "../../Components/CheckFields";
 
 registerLocale("ptbr", ptbr);
 
@@ -27,6 +26,7 @@ const AddLote = () => {
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
   const [idCicloActive, setIdCicloActive] = useState();
   const [activeCiclo, setActiveCiclo] = useState<any>();
+  const [loteExist, setLoteExist] = useState(false);
 
   const DatePickerField = ({ ...props }: any) => {
     const { setFieldValue } = useFormikContext();
@@ -59,30 +59,47 @@ const AddLote = () => {
     getCiclos();
   }, []);
 
-  const onsubmit = async (values: any) => {
-    // console.log(values.idLote, values.lote)
-    const exists = await LoteExixts(values.idLote, values.lote);
-    console.log(exists);
-    return;
-    setLoadingSaveButton(true);
-    await api.post('lotes', {
-      cicloId: idCicloActive,
-      lote: values.lote,
-      dataEntrada: values.dataEntrada,
-      femea: values.femea,
-      macho: values.macho,
-    })
-      .then((response) => {
-        setTimeout(() => {
-          setLoadingSaveButton(false);
-          setPostMessageErro(false)
-          setPostMessageSuccess(response.data.message);
-        }, 500);
-      }).catch((err) => {
-        setPostMessageErro(false)
-        setLoadingSaveButton(false);
+  useEffect(() => {
+    const getLoteExist = (async () => {
+      await api.get('lotes')
+        .then((response) => {
+          setLoteExist(response.data.data);
+        }).catch((error) => {
+          console.log(error);
+        })
+    });
+    getLoteExist();
+  }, [])
 
-      });
+  const onsubmit = async (values: any) => {
+    await api.get('lotes')
+      .then((response) => {
+        const exist = response.data.data.filter((act: any) => ((act.lote).toUpperCase() === (values.lote).toUpperCase()));
+        if (exist.length) {
+          setLoteExist(false);
+        } else {
+          setLoteExist(true);
+          setLoadingSaveButton(true);
+          api.post('lotes', {
+            cicloId: idCicloActive,
+            lote: values.lote,
+            dataEntrada: values.dataEntrada,
+            femea: values.femea,
+            macho: values.macho,
+          }).then((response) => {
+            setTimeout(() => {
+              setLoadingSaveButton(false);
+              setPostMessageErro(false)
+              setPostMessageSuccess(response.data.message);
+            }, 500);
+          }).catch((err) => {
+            setPostMessageErro(false)
+            setLoadingSaveButton(false);
+
+          });
+        }
+      })
+
   };
 
   return (
@@ -144,7 +161,6 @@ const AddLote = () => {
             validationSchema={schema}
             onSubmit={onsubmit}
             initialValues={{
-              idLote: null,
               lote: '',
               dataEntrada: new Date(),
               femea: '',
@@ -165,7 +181,7 @@ const AddLote = () => {
                   <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
                     <h1 className="font-lg text-white font-medium uppercase">Chegada de aves</h1>
                   </div>
-                  <Field id="idLote" name="idLote" type="hidden"/>
+                  <Field id="idLote" name="idLote" type="hidden" />
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="lote">Identificador do lote</label>
                     <Field
@@ -177,6 +193,10 @@ const AddLote = () => {
                     {errors.lote &&
                       <AMessageError className="rounded-b-lg">{errors.lote}</AMessageError>
                     }
+                    {!loteExist &&
+                      <AMessageError className="rounded-b-lg">Lote exist na base de dados insira identificador diferente</AMessageError>
+                    }
+                    
                   </div>
 
                   <div className="mt-4">
@@ -233,27 +253,3 @@ const AddLote = () => {
 }
 
 export default AddLote;
-
-function sync() {
-  throw new Error("Function not implemented.");
-}
-
-
-function setActiveCiclo(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
-
-
-function setIdCicloActive(idCiclo: any) {
-  throw new Error("Function not implemented.");
-}
-
-
-function setLoadingSaveButton(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
-
-
-function setPostMessageErro(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
