@@ -34,14 +34,11 @@ const EditLote = () => {
   const location = useLocation().state as LoteProps;
 
   const { loading } = useContext(AppContext);
-
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
-  const [idCicloActive, setIdCicloActive] = useState();
-  const [activeCiclo, setActiveCiclo] = useState<any>();
   const [openCapitalizadas, setOpenCapitalizadas] = useState<boolean>(false);
-  const [loteForId, setLoteForId] = useState([]);
+  const [loteExist, setLoteExist] = useState(false);
 
   const DatePickerField = ({ ...props }: any) => {
     const { setFieldValue } = useFormikContext();
@@ -59,103 +56,94 @@ const EditLote = () => {
     );
   };
 
-  useEffect(() => {
-    const getCiclos = (async () => {
-      await api.get('ciclos')
-        .then((res) => {
-          const active = res.data.data.filter((act: any) => (act.ativo === true));
-          setActiveCiclo(active.length > 0 ? true : false);
-          if (active.length > 0) {
-            if (active[0].ativo) {
-              setIdCicloActive(active[0].idCiclo)
-            }
-          }
-        });
-    });
-    getCiclos();
-  }, []);
-
   const onsubmit = async (values: any) => {
-    setLoadingSaveButton(true);
-    await api.post('lotes', {
-      cicloId: idCicloActive,
-      lote: values.lote,
-      dataEntrada: values.dataEntrada,
-      femea: values.femea,
-      macho: values.macho,
-      dataCapitalizacao: values.dataCapitalizacao,
-      femeaCapitalizada: values.femeaCapitalizada === '' ? null : values.femeaCapitalizada,
-      machoCapitalizado: values.machoCapitalizado === '' ? null : values.machoCapitalizado,
-    })
+    await api.get('lotes')
       .then((response) => {
-        setTimeout(() => {
-          setLoadingSaveButton(false);
-          setPostMessageErro(false)
-          setPostMessageSuccess(response.data.message);
-        }, 500);
-      }).catch((err) => {
-        setPostMessageErro(false)
-        setLoadingSaveButton(false);
+        const exist = response.data.data.filter((act: any) => ((act.lote).toUpperCase() === (values.lote).toUpperCase() && act.idLote !== location.idLote));
+        if (exist.length) {
+          setLoteExist(true);
+        } else {
+          setLoteExist(false);
+          setLoadingSaveButton(true);
+          api.patch('lotes', {
+            idLote: location.idLote,
+            lote: values.lote,
+            dataEntrada: values.dataEntrada,
+            femea: values.femea,
+            macho: values.macho,
+            dataCapitalizacao: values.dataCapitalizacao,
+            femeaCapitalizada: values.femeaCapitalizada === '' ? null : values.femeaCapitalizada,
+            machoCapitalizado: values.machoCapitalizado === '' ? null : values.machoCapitalizado,
+          })
+            .then((response) => {
+              setTimeout(() => {
+                setLoadingSaveButton(false);
+                setPostMessageErro(false)
+                setPostMessageSuccess(response.data.message);
+              }, 500);
+            }).catch((err) => {
+              setPostMessageErro(false)
+              setLoadingSaveButton(false);
 
-      });
-  };
+            });
+          }
+        })
+    };
 
-  return (
-    <Fragment>
-      {loading &&
-        <SLoading />
-      }
+    return (
+      <Fragment>
+        {loading &&
+          <SLoading />
+        }
 
-      <SubBar>
-        <>
-          <SubBarLeft>
-            <>
-              <IconContext.Provider value={{ className: 'text-3xl' }} >
-                <div>
-                  <IoFileTrayStackedOutline />
-                </div>
-              </IconContext.Provider>
-              <h1 className='text-2xl ml-1 font-medium'>Lotes</h1>
-            </>
-
-          </SubBarLeft>
-          <SubBarRight>
-
-            <div className="flex items-center py-4">
-              <button
-                onClick={() => navigate('/')}
-                className="text-gray-600"
-              >
-                <IconContext.Provider value={{ className: 'text-xl' }} >
+        <SubBar>
+          <>
+            <SubBarLeft>
+              <>
+                <IconContext.Provider value={{ className: 'text-3xl' }} >
                   <div>
-                    <IoHome />
+                    <IoFileTrayStackedOutline />
                   </div>
                 </IconContext.Provider>
-              </button>
-              <span className="mx-2 text-gray-500 ">/</span>
-              <button
-                onClick={() => navigate('/lotes')}
-                className="text-gray-600  hover:underline"
-              >
-                Lotes
-              </button>
-              <span className="mx-2 text-gray-500 ">/</span>
-              <span className="text-gray-600 ">Editar</span>
+                <h1 className='text-2xl ml-1 font-medium'>Lotes</h1>
+              </>
+
+            </SubBarLeft>
+            <SubBarRight>
+
+              <div className="flex items-center py-4">
+                <button
+                  onClick={() => navigate('/')}
+                  className="text-gray-600"
+                >
+                  <IconContext.Provider value={{ className: 'text-xl' }} >
+                    <div>
+                      <IoHome />
+                    </div>
+                  </IconContext.Provider>
+                </button>
+                <span className="mx-2 text-gray-500 ">/</span>
+                <button
+                  onClick={() => navigate('/lotes')}
+                  className="text-gray-600  hover:underline"
+                >
+                  Lotes
+                </button>
+                <span className="mx-2 text-gray-500 ">/</span>
+                <span className="text-gray-600 ">Editar</span>
+              </div>
+
+            </SubBarRight>
+          </>
+        </SubBar>
+
+        <ABoxAll>
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <SBackButtom onClick={() => navigate('/lotes')} />
             </div>
-
-          </SubBarRight>
-        </>
-      </SubBar>
-
-      <ABoxAll>
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <SBackButtom onClick={() => navigate('/lotes')} />
           </div>
-        </div>
-        {!activeCiclo
-          ? <AMessageError className="rounded-t-lg">Para cadastrar lotes os ciclos deverão estar cadastrados e ativos</AMessageError>
-          : <Formik
+          <Formik
             validationSchema={schema}
             initialValues={{
               idLote: location.idLote,
@@ -187,13 +175,16 @@ const EditLote = () => {
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="lote">Identificador do lote</label>
                     <Field
-                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.lote ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.lote || loteExist ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="lote"
                       name="lote"
                       type="text"
                     />
                     {errors.lote &&
                       <AMessageError className="rounded-b-lg">{errors.lote}</AMessageError>
+                    }
+                    {loteExist &&
+                      <AMessageError className="rounded-b-lg">Lote exist na base de dados insira identificador diferente</AMessageError>
                     }
                   </div>
 
@@ -289,11 +280,10 @@ const EditLote = () => {
               </Form>
             )}
           </Formik>
-        }
 
-      </ABoxAll>
-    </Fragment>
-  )
-}
+        </ABoxAll>
+      </Fragment>
+    )
+  }
 
-export default EditLote;
+  export default EditLote;

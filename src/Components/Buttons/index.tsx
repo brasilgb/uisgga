@@ -70,19 +70,19 @@ export const SSaveButtom = ({ loading, disabled }: any) => {
         <Fragment>
             <button
                 disabled={disabled}
-                className={`flex items-center justify-center px-5 py-2.5 rounded-md shadow-md ${disabled ? "bg-blue-200 text-gray-100" : "bg-blue-600 text-white"} transition-opacity ease-in duration-400 opacity-100 hover:opacity-80`}
+                className={`flex items-center justify-center ${loading? "px-[41px]" : "px-5"} py-2.5 rounded-md shadow-md ${disabled ? "bg-blue-200 text-gray-100" : "bg-blue-600 text-white"} transition-opacity ease-in duration-400 opacity-100 hover:opacity-80`}
                 type="submit"
             >
-                <IconContext.Provider value={{ className: 'text-md' }}>
+                <IconContext.Provider value={{ className: "" }}>
                     <div>
                         {loading
-                            ? <CgSpinner className="animate-spin" />
-                            : <IoSave />
+                            ? <CgSpinner className="text-2xl animate-spin" />
+                            : <IoSave className="text-lg" />
                         }
 
                     </div>
                 </IconContext.Provider>
-                <span className='text-md ml-1'>Salvar</span>
+                {loading ? '' : <span className='text-md ml-1'>Salvar</span>}
             </button>
         </Fragment>
     )

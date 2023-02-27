@@ -4,7 +4,7 @@ import { IconContext } from 'react-icons';
 import { IoArrowBack, IoArrowForward, IoCheckmark, IoClose, IoHome, IoFileTrayStackedOutline } from 'react-icons/io5';
 import { GiLargePaintBrush } from "react-icons/gi";
 import { SAddButtom, SDlButtom, SEdButtom } from '../../Components/Buttons';
-import { SFormSearchData } from '../../Components/Form/FormSearch';
+import { SFormSearch, SFormSearchData } from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
 import ReactPaginate from 'react-paginate';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';

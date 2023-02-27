@@ -69,7 +69,6 @@ const Ciclos = () => {
         const cic = allCiclos.filter((item: any) => item.idCiclo !== id);
         setAllCiclos(cic);
         setShowDeleteModal(false);
-        setShowConfirmModal(true);
       }).catch(err => {
         console.log(err.response.data);
       });

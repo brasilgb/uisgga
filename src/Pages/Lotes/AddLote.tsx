@@ -59,26 +59,14 @@ const AddLote = () => {
     getCiclos();
   }, []);
 
-  useEffect(() => {
-    const getLoteExist = (async () => {
-      await api.get('lotes')
-        .then((response) => {
-          setLoteExist(response.data.data);
-        }).catch((error) => {
-          console.log(error);
-        })
-    });
-    getLoteExist();
-  }, [])
-
   const onsubmit = async (values: any) => {
     await api.get('lotes')
       .then((response) => {
         const exist = response.data.data.filter((act: any) => ((act.lote).toUpperCase() === (values.lote).toUpperCase()));
         if (exist.length) {
-          setLoteExist(false);
-        } else {
           setLoteExist(true);
+        } else {
+          setLoteExist(false);
           setLoadingSaveButton(true);
           api.post('lotes', {
             cicloId: idCicloActive,
@@ -95,11 +83,9 @@ const AddLote = () => {
           }).catch((err) => {
             setPostMessageErro(false)
             setLoadingSaveButton(false);
-
           });
         }
       })
-
   };
 
   return (
@@ -185,7 +171,7 @@ const AddLote = () => {
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="lote">Identificador do lote</label>
                     <Field
-                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.lote ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.lote || loteExist ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="lote"
                       name="lote"
                       type="text"
@@ -193,7 +179,7 @@ const AddLote = () => {
                     {errors.lote &&
                       <AMessageError className="rounded-b-lg">{errors.lote}</AMessageError>
                     }
-                    {!loteExist &&
+                    {loteExist &&
                       <AMessageError className="rounded-b-lg">Lote exist na base de dados insira identificador diferente</AMessageError>
                     }
                     
