@@ -18,7 +18,7 @@ import { AMessageError, AMessageSuccess } from "../../Components/Messages";
 
 registerLocale("ptbr", ptbr);
 
-const AddLote = () => {
+const AddAviario = () => {
   const navigate = useNavigate();
   const { loading } = useContext(AppContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
@@ -238,4 +238,4 @@ const AddLote = () => {
   )
 }
 
-export default AddLote;
+export default AddAviario;

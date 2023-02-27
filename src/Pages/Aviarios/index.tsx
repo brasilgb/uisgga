@@ -19,10 +19,10 @@ import { ABoxAll } from '../../Components/Boxes';
 import { useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE } from "../../Constants";
 
-const Lotes = () => {
+const Aviarios = () => {
   const navigate = useNavigate();
   const { setLoading, loading } = useContext(AppContext);
-  const [allLotes, setAllLotes] = useState<any>([]);
+  const [allAviarios, setAllAviarios] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
@@ -34,12 +34,12 @@ const Lotes = () => {
 
   useEffect(() => {
     setLoading(true);
-    const getAllLotes = async () => {
-      await api.get('lotes')
+    const getAllAviarios = async () => {
+      await api.get('aviarios')
         .then((response) => {
           setCicloActive(response.data.ciclos);
           setTimeout(() => {
-            setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote > b.idLote ? -1 : 1)));
+            setAllAviarios(response.data.data.sort((a: any, b: any) => (a.idAviario > b.idAviario ? -1 : 1)));
             setLoading(false);
           }, 500);
         })
@@ -48,7 +48,7 @@ const Lotes = () => {
           console.log(error.response.status);
         })
     };
-    getAllLotes();
+    getAllAviarios();
   }, [])
 
   const toggleDelete = (id: any) => {
@@ -56,10 +56,10 @@ const Lotes = () => {
     setIdDelete(id);
   }
 
-  // delete lotes
+  // delete aviarios
   const deleteRow = (async (id: any) => {
-    await api.delete('lotes', {
-      data: { idLote: id },
+    await api.delete('aviarios', {
+      data: { idAviario: id },
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -67,8 +67,8 @@ const Lotes = () => {
       }
     })
       .then(res => {
-        const cic = allLotes.filter((item: any) => item.idLote !== id);
-        setAllLotes(cic);
+        const cic = allAviarios.filter((item: any) => item.idAviario !== id);
+        setAllAviarios(cic);
         setShowDeleteModal(false);
       }).catch(err => {
         console.log(err.response.data);
@@ -76,37 +76,36 @@ const Lotes = () => {
   });
 
   // -> Pagination
-  const [newLote, setNewLote] = useState(allLotes.slice(0, 50));
+  const [newAviario, setNewAviario] = useState(allAviarios.slice(0, 50));
   useEffect(() => {
-    setNewLote(allLotes.slice(0, 50));
-  }, [allLotes])
+    setNewAviario(allAviarios.slice(0, 50));
+  }, [allAviarios])
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = ITENS_PER_PAGE;
   const pagesVisited = pageNumber * itemsPerPage;
-  const pageCount = Math.ceil(allLotes.length / itemsPerPage);
+  const pageCount = Math.ceil(allAviarios.length / itemsPerPage);
   const changePage = ({ selected }: any) => {
     setPageNumber(selected);
   };
 
-
-  const DisplayItems = newLote
+  const DisplayItems = newAviario
     .slice(pagesVisited, pagesVisited + itemsPerPage).sort((a: any, b: any) => (a < b ? -1 : 1))
-    .map((lote: any, index: any) => (
+    .map((aviario: any, index: any) => (
       <STr key={index} head={false} colorRow={index % 2}>
         <>
-          <STd>{lote.idLote}</STd>
-          <STd>{lote.lote}</STd>
-          <STd>{lote.femea}</STd>
-          <STd>{lote.femeaCapitalizada}</STd>
-          <STd>{lote.macho}</STd>
-          <STd>{lote.machoCapitalizado}</STd>
-          <STd>{lote.femea + lote.macho}</STd>
-          <STd>{lote.aviarios.length}</STd>
-          <STd>{moment(lote.dataEntrada).format("DD/MM/YYYY")}</STd>
+          <STd>{aviario.idAviario}</STd>
+          <STd>{aviario.aviario}</STd>
+          <STd>{aviario.femea}</STd>
+          <STd>{aviario.femeaCapitalizada}</STd>
+          <STd>{aviario.macho}</STd>
+          <STd>{aviario.machoCapitalizado}</STd>
+          <STd>{aviario.femea + aviario.macho}</STd>
+          <STd>{aviario.aviarios.length}</STd>
+          <STd>{moment(aviario.dataEntrada).format("DD/MM/YYYY")}</STd>
           <STd>
             <div className='flex items-center justify-end'>
-              <SEdButtom onClick={() => navigate("/lotes/editlote", { state: lote })} />
-              <SDlButtom active={lote.ativo} onClick={() => toggleDelete(lote.idLote)} />
+              <SEdButtom onClick={() => navigate("/aviarios/editaviario", { state: aviario })} />
+              <SDlButtom active={aviario.ativo} onClick={() => toggleDelete(aviario.idAviario)} />
             </div>
           </STd>
         </>
@@ -120,20 +119,20 @@ const Lotes = () => {
       setSearchInput(true);
       return;
     }
-    let lote = searchRef.current.value;
+    let aviario = searchRef.current.value;
     await api.post(`search`, {
-      lote: lote
+      aviario: aviario
     })
       .then((response) => {
         setLoadingSearch(true);
         setSearchInput(false);
         setTimeout(() => {
           if (response.data.data.length > 0) {
-            setNewLote(response.data.data);
+            setNewAviario(response.data.data);
             setLoadingSearch(false);
             setMessageSearch(true);
           } else {
-            setNewLote(response.data.data);
+            setNewAviario(response.data.data);
             setLoadingSearch(false);
             setMessageSearch(true);
             return;
@@ -147,11 +146,11 @@ const Lotes = () => {
   });
   // Sistema de busca ->
 
-  // Reload lotes
-  const handleReloadLotes = (() => {
+  // Reload aviarios
+  const handleReloadAviarios = (() => {
     setLoading(true);
     setTimeout(() => {
-      setNewLote(allLotes);
+      setNewAviario(allAviarios);
       setLoading(false);
       setMessageSearch(false);
     }, 500)
@@ -172,7 +171,7 @@ const Lotes = () => {
                   <IoFileTrayStackedOutline />
                 </div>
               </IconContext.Provider>
-              <h1 className='text-2xl ml-1 font-medium'>Lotes</h1>
+              <h1 className='text-2xl ml-1 font-medium'>Aviarios</h1>
             </>
           </SubBarLeft>
           <SubBarRight>
@@ -186,7 +185,7 @@ const Lotes = () => {
                 </IconContext.Provider>
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
-              <span className="text-gray-600">Lotes</span>
+              <span className="text-gray-600">Aviarios</span>
             </div>
 
           </SubBarRight>
@@ -197,19 +196,19 @@ const Lotes = () => {
 
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SAddButtom active={cicloActive} onClick={() => navigate('/lotes/addlote')} />
+            <SAddButtom active={cicloActive} onClick={() => navigate('/aviarios/addaviario')} />
           </div>
 
           {messageSearch &&
             <div className="flex items-center justify-start">
-              <button onClick={() => handleReloadLotes()} className="flex items-center justify-center" title="Limpar busca">
+              <button onClick={() => handleReloadAviarios()} className="flex items-center justify-center" title="Limpar busca">
                 <IconContext.Provider value={{ className: "text-2xl font-bold" }}>
                   <div className="bg-gray-200 rounded-l-full px-2 py-1  border border-gray-300">
                     <GiLargePaintBrush className="rotate-90 text-blue-600" />
                   </div>
                 </IconContext.Provider>
               </button>
-              <div className="bg-gray-100 text-base rounded-r-md py-1 px-4  border border-gray-300">Correspondências encontradas: <span className={`${newLote.length > 0 ? 'text-green-500' : 'text-red-500'}`}>{newLote.length}</span></div>
+              <div className="bg-gray-100 text-base rounded-r-md py-1 px-4  border border-gray-300">Correspondências encontradas: <span className={`${newAviario.length > 0 ? 'text-green-500' : 'text-red-500'}`}>{newAviario.length}</span></div>
 
             </div>
           }
@@ -232,7 +231,7 @@ const Lotes = () => {
                 <STr head={true}>
                   <>
                     <STh><span>#ID</span></STh>
-                    <STh><span>Lote</span></STh>
+                    <STh><span>Aviario</span></STh>
                     <STh><span>Fêmeas</span></STh>
                     <STh><span>Capitalizadas</span></STh>
                     <STh><span>Machos</span></STh>
@@ -255,7 +254,7 @@ const Lotes = () => {
           </STable>
 
         </div>
-        {newLote.length > itemsPerPage &&
+        {newAviario.length > itemsPerPage &&
           <div className='bg-white border-x border-b rounded-b-lg py-2  '>
             <ReactPaginate
               previousLabel={<IoArrowBack size={17} />}
@@ -277,15 +276,15 @@ const Lotes = () => {
       </ABoxAll>
 
       {showDeleteModal &&
-        <ModalDelete info="este lote" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
+        <ModalDelete info="este aviario" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
       }
 
       {showConfirmModal &&
-        <ModalConfirm info="Lote" closemodal={() => setShowConfirmModal(!showConfirmModal)} />
+        <ModalConfirm info="Aviario" closemodal={() => setShowConfirmModal(!showConfirmModal)} />
       }
 
     </Fragment>
   )
 }
 
-export default Lotes;
+export default Aviarios;

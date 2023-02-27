@@ -184,7 +184,7 @@ const EditLote = () => {
                       <AMessageError className="rounded-b-lg">{errors.lote}</AMessageError>
                     }
                     {loteExist &&
-                      <AMessageError className="rounded-b-lg">Lote exist na base de dados insira identificador diferente</AMessageError>
+                      <AMessageError className="rounded-b-lg">Lote existente na base de dados, insira um identificador diferente!</AMessageError>
                     }
                   </div>
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 import BackLayout from '../Layouts/BackLayout/Main';
+import Aviarios from "../Pages/Aviarios";
 import Ciclos from '../Pages/Ciclos';
 import AddCiclo from '../Pages/Ciclos/AddCiclo';
 import Home from '../Pages/Home';
@@ -19,6 +20,7 @@ function BackRoutes() {
             <Route path='/lotes' element={<Lotes />} />
             <Route path='/lotes/addlote' element={<AddLote />} />
             <Route path='/lotes/editlote' element={<EditLote />} />
+            <Route path='/aviarios' element={<Aviarios />} />
         </Route>
     </Routes>
   )

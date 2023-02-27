@@ -22,6 +22,7 @@ const SideBar = () => {
                 </div>
                 <div className="sidebar-content px-4 py-6">
                     <ul className="flex flex-col w-full">
+
                         <li className="my-px">
                             <NavLink
                                 to="/"
@@ -37,6 +38,7 @@ const SideBar = () => {
                                 <span className="ml-3 text-gray-400">Home</span>
                             </NavLink>
                         </li>
+
                         <li className="my-px">
                             <NavLink
                                 to="/ciclos"
@@ -68,20 +70,21 @@ const SideBar = () => {
                                 <span className="ml-3 text-gray-400">Lotes</span>
                             </NavLink>
                         </li>
+
                         <li className="my-px">
-                            <a
-                                href="#"
-                                className="flex flex-row items-center h-10 px-3 rounded-lg text-gray-400 hover:bg-gray-600 hover:text-gray-100"
+                            <NavLink
+                                to="/aviarios"
+                                className={({ isActive }) => isActive ? 'flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 bg-[#3b3c4e]' : "flex flex-row items-center h-10 px-3 rounded-lg hover:bg-gray-600 hover:text-gray-100"}
                             >
-                                <span className="flex items-center justify-center text-lg text-gray-400">
+                                <span className="flex items-center justify-center text-lg">
                                     <IconContext.Provider value={{ className: "text-xl text-gray-400" }} >
                                         <div>
                                             <IoFileTrayOutline />
                                         </div>
                                     </IconContext.Provider>
                                 </span>
-                                <span className="ml-3">Aviarios</span>
-                            </a>
+                                <span className="ml-3 text-gray-400">Aviarios</span>
+                            </NavLink>
                         </li>
 
                         <li className="my-px">
