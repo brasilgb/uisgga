@@ -83,7 +83,7 @@ const SideBar = () => {
                                         </div>
                                     </IconContext.Provider>
                                 </span>
-                                <span className="ml-3 text-gray-400">Aviarios</span>
+                                <span className="ml-3 text-gray-400">Aviários</span>
                             </NavLink>
                         </li>
 

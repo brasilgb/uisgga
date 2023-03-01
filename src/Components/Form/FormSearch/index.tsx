@@ -22,7 +22,7 @@ interface PropsSearchDate {
 }
 
 export const SFormSearch = ({ loading, handleSubmit, refSearch, required }: PropsSearch) => {
-    
+
     return (
         <Fragment>
             <div className="hidden md:flex relative">
@@ -45,7 +45,7 @@ export const SFormSearch = ({ loading, handleSubmit, refSearch, required }: Prop
                     </button>
                 </div>
                 <input
-                autoComplete="off"
+                    autoComplete="off"
                     ref={refSearch}
                     id="search"
                     type="text"
@@ -81,10 +81,9 @@ export const SFormSearchData = ({ loading, selected, onChange, onclick }: PropsS
                             </div>
                         </IconContext.Provider>
                     </button>
-
                 </div>
                 <DatePicker
-                    className="text-gray-500 border-y-0 border-r-0 border-gray-300 focus:ring-0 focus:border-gray-300 text-md md:mr-2 h-10 w-32  md:w-60"
+                    className="text-gray-500 border-y-0 border-r-0 border-gray-300 focus:ring-0 focus:border-gray-300 text-md mr-4 md:mr-2 h-10 w-32  md:w-60"
                     selected={selected}
                     onChange={onChange}
                     id="dataInicial"

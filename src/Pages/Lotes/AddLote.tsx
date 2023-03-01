@@ -165,7 +165,7 @@ const AddLote = () => {
                   }
 
                   <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                    <h1 className="font-lg text-white font-medium uppercase">Chegada de aves</h1>
+                    <h1 className="font-lg text-white font-medium uppercase">Cadastrar lote</h1>
                   </div>
                   <Field id="idLote" name="idLote" type="hidden" />
                   <div className="mt-4">
@@ -186,7 +186,7 @@ const AddLote = () => {
                   </div>
 
                   <div className="mt-4">
-                    <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataEntrada">Data de chegada</label>
+                    <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataEntrada">Data do cadastro</label>
                     <DatePickerField
                       className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataEntrada ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="dataEntrada"

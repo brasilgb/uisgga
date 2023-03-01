@@ -1,10 +1,9 @@
 import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
-
 import { IconContext } from 'react-icons';
-import { IoArrowBack, IoArrowForward, IoCheckmark, IoClose, IoHome, IoFileTrayStackedOutline } from 'react-icons/io5';
+import { IoArrowBack, IoArrowForward, IoHome, IoFileTrayOutline } from 'react-icons/io5';
 import { GiLargePaintBrush } from "react-icons/gi";
 import { SAddButtom, SDlButtom, SEdButtom } from '../../Components/Buttons';
-import { SFormSearch, SFormSearchData } from '../../Components/Form/FormSearch';
+import { SFormSearch } from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
 import ReactPaginate from 'react-paginate';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
@@ -12,8 +11,7 @@ import { STable, STd, STh, STr } from '../../Components/Tables';
 import { AppContext } from '../../Contexts/AppContext';
 import 'animate.css';
 import api from '../../Services/api';
-import { ModalDelete, ModalConfirm } from '../../Components/ModalDelete';
-import { CgSpinnerTwo } from 'react-icons/cg';
+import { ModalDelete } from '../../Components/ModalDelete';
 import moment from 'moment';
 import { ABoxAll } from '../../Components/Boxes';
 import { useNavigate } from "react-router-dom";
@@ -24,7 +22,6 @@ const Aviarios = () => {
   const { setLoading, loading } = useContext(AppContext);
   const [allAviarios, setAllAviarios] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
   const [cicloActive, setCicloActive] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
@@ -49,7 +46,7 @@ const Aviarios = () => {
         })
     };
     getAllAviarios();
-  }, [])
+  }, [setLoading])
 
   const toggleDelete = (id: any) => {
     setShowDeleteModal(!showDeleteModal);
@@ -94,13 +91,11 @@ const Aviarios = () => {
       <STr key={index} head={false} colorRow={index % 2}>
         <>
           <STd>{aviario.idAviario}</STd>
+          <STd>{aviario.lote}</STd>
           <STd>{aviario.aviario}</STd>
-          <STd>{aviario.femea}</STd>
-          <STd>{aviario.femeaCapitalizada}</STd>
-          <STd>{aviario.macho}</STd>
-          <STd>{aviario.machoCapitalizado}</STd>
-          <STd>{aviario.femea + aviario.macho}</STd>
-          <STd>{aviario.aviarios.length}</STd>
+          <STd>{aviario.totalFemeas}</STd>
+          <STd>{aviario.totalMachos}</STd>
+          <STd>{aviario.totalAves}</STd>
           <STd>{moment(aviario.dataEntrada).format("DD/MM/YYYY")}</STd>
           <STd>
             <div className='flex items-center justify-end'>
@@ -114,35 +109,40 @@ const Aviarios = () => {
   // Pagination ->
 
   // -> sistema de busca
-  const handleSubmit = (async () => {
+  const handleSearch = (async () => {
     if (searchRef.current.value === '') {
       setSearchInput(true);
       return;
     }
-    let aviario = searchRef.current.value;
-    await api.post(`search`, {
-      aviario: aviario
-    })
-      .then((response) => {
-        setLoadingSearch(true);
-        setSearchInput(false);
-        setTimeout(() => {
-          if (response.data.data.length > 0) {
-            setNewAviario(response.data.data);
-            setLoadingSearch(false);
-            setMessageSearch(true);
-          } else {
-            setNewAviario(response.data.data);
-            setLoadingSearch(false);
-            setMessageSearch(true);
-            return;
-          }
-        }, 500);
+    let lote = searchRef.current.value;
 
-      })
-      .catch((err) => {
-        console.log(err.response);
-      })
+    await api.post(`searchlote`, {
+      lote: lote
+    }).then((response) => {
+      if (response.data.data.length > 0) {
+        const idlote = response.data.data[0].idLote;
+        api.post(`searchaviario`, {
+          lote: idlote
+        }).then((response) => {
+          setLoadingSearch(true);
+          setSearchInput(false);
+          setTimeout(() => {
+            setNewAviario(response.data.data);
+            setLoadingSearch(false);
+            setMessageSearch(true);
+          }, 500);
+        });
+      } else {
+        setLoadingSearch(true);
+        setTimeout(() => {
+          setNewAviario([]);
+          setLoadingSearch(false);
+          setMessageSearch(true);
+          return;
+        }, 500)
+      }
+    })
+
   });
   // Sistema de busca ->
 
@@ -168,10 +168,10 @@ const Aviarios = () => {
             <>
               <IconContext.Provider value={{ className: 'text-3xl' }} >
                 <div>
-                  <IoFileTrayStackedOutline />
+                  <IoFileTrayOutline />
                 </div>
               </IconContext.Provider>
-              <h1 className='text-2xl ml-1 font-medium'>Aviarios</h1>
+              <h1 className='text-2xl ml-1 font-medium'>Aviários</h1>
             </>
           </SubBarLeft>
           <SubBarRight>
@@ -185,7 +185,7 @@ const Aviarios = () => {
                 </IconContext.Provider>
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
-              <span className="text-gray-600">Aviarios</span>
+              <span className="text-gray-600">Aviários</span>
             </div>
 
           </SubBarRight>
@@ -217,7 +217,7 @@ const Aviarios = () => {
             <SFormSearch
               refSearch={searchRef}
               loading={loadingSearch}
-              handleSubmit={handleSubmit}
+              handleSubmit={handleSearch}
               required={searchInput}
             />
           </div>
@@ -231,18 +231,15 @@ const Aviarios = () => {
                 <STr head={true}>
                   <>
                     <STh><span>#ID</span></STh>
-                    <STh><span>Aviario</span></STh>
+                    <STh><span>Lote</span></STh>
+                    <STh><span>Aviário</span></STh>
                     <STh><span>Fêmeas</span></STh>
-                    <STh><span>Capitalizadas</span></STh>
                     <STh><span>Machos</span></STh>
-                    <STh><span>Capitalizados</span></STh>
-                    <STh><span>Tot. Aves</span></STh>
-                    <STh><span>Aviários</span></STh>
+                    <STh><span>Total de Aves</span></STh>
                     <STh><span>Cadastro</span></STh>
                     <STh><span></span></STh>
                   </>
                 </STr>
-
               </thead>
 
               <tbody className='animate__animated animate__fadeIn'>
@@ -278,11 +275,6 @@ const Aviarios = () => {
       {showDeleteModal &&
         <ModalDelete info="este aviario" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
       }
-
-      {showConfirmModal &&
-        <ModalConfirm info="Aviario" closemodal={() => setShowConfirmModal(!showConfirmModal)} />
-      }
-
     </Fragment>
   )
 }

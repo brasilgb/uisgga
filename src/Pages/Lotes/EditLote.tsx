@@ -1,7 +1,7 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { IconContext } from "react-icons";
 import { IoHome, IoFileTrayStackedOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ABoxAll } from "../../Components/Boxes";
 import { SBackButtom, SSaveButtom } from "../../Components/Buttons";
 import SLoading from "../../Components/Loading";
@@ -169,7 +169,7 @@ const EditLote = () => {
                   }
 
                   <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                    <h1 className="font-lg text-white font-medium uppercase">Chegada de aves</h1>
+                    <h1 className="font-lg text-white font-medium uppercase">Editar lote</h1>
                   </div>
                   <Field id="idLote" name="idLote" type="hidden" />
                   <div className="mt-4">

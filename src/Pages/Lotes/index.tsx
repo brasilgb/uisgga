@@ -121,7 +121,7 @@ const Lotes = () => {
       return;
     }
     let lote = searchRef.current.value;
-    await api.post(`search`, {
+    await api.post(`searchlote`, {
       lote: lote
     })
       .then((response) => {
@@ -278,10 +278,6 @@ const Lotes = () => {
 
       {showDeleteModal &&
         <ModalDelete info="este lote" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
-      }
-
-      {showConfirmModal &&
-        <ModalConfirm info="Lote" closemodal={() => setShowConfirmModal(!showConfirmModal)} />
       }
 
     </Fragment>

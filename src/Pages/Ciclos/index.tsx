@@ -318,10 +318,6 @@ const Ciclos = () => {
         <ModalDelete info="este ciclo" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
       }
 
-      {showConfirmModal &&
-        <ModalConfirm info="Ciclo" closemodal={() => setShowConfirmModal(!showConfirmModal)} />
-      }
-
     </Fragment>
   )
 }
