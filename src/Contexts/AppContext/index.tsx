@@ -4,8 +4,8 @@ import api from "../../Services/api";
 interface AppContext {
     setLoading: any;
     loading: boolean;
-    existsCiclo: any;
-    setExistsCiclo: any;
+    // existsCiclo: any;
+    // setExistsCiclo: any;
 };
 
 interface ContextProps {
@@ -18,6 +18,7 @@ export const AppProvider = ({ children }: ContextProps) => {
 
     const [loading, setLoading] = useState(false);
     const [existsCiclo, setExistsCiclo] = useState([]);
+
     useEffect(() => {
         const getExistsCiclo = (async () => {
             await api.get('ciclos')
@@ -32,12 +33,10 @@ export const AppProvider = ({ children }: ContextProps) => {
         getExistsCiclo();
     }, [])
 
-
-
     return (
         <AppContext.Provider value={{
-            setExistsCiclo,
-            existsCiclo,
+            // setExistsCiclo,
+            // existsCiclo,
             setLoading,
             loading
         }}>

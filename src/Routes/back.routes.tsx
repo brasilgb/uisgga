@@ -7,6 +7,7 @@ import {
   AddLote,
   Aviarios,
   Ciclos,
+  Coletas,
   EditAviario,
   EditLote,
   Home,
@@ -28,6 +29,7 @@ function BackRoutes() {
         <Route path='/aviarios' element={<Aviarios />} />
         <Route path='/aviarios/addaviario' element={<AddAviario />} />
         <Route path='/aviarios/editaviario' element={<EditAviario />} />
+        <Route path='/coletas' element={<Coletas />} />
       </Route>
     </Routes>
   )

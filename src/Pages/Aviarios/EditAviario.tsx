@@ -189,6 +189,7 @@ const EditAviario = () => {
                     id="aviario"
                     name="aviario"
                     type="text"
+                    autoFocus
                   />
                   {errors.aviario &&
                     <AMessageError className="rounded-b-lg">{errors.aviario}</AMessageError>

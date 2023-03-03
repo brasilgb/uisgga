@@ -10,6 +10,8 @@ import Aviarios from "./Aviarios";
 import AddAviario from "./Aviarios/AddAviario";
 import EditAviario from "./Aviarios/EditAviario";
 
+import Coletas from "./Coletas";
+
 export {
     Home,
     Ciclos,
@@ -19,5 +21,6 @@ export {
     EditLote,
     Aviarios,
     AddAviario,
-    EditAviario
+    EditAviario,
+    Coletas
 };

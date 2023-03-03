@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
-import { IoHome, IoFileTrayStackedOutline, IoChevronDown, IoChevronUp } from "react-icons/io5";
+import { IoHome, IoFileTrayStackedOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { ABoxAll } from "../../Components/Boxes";
 import { SBackButtom, SSaveButtom } from "../../Components/Buttons";
@@ -175,6 +175,7 @@ const AddLote = () => {
                       id="lote"
                       name="lote"
                       type="text"
+                      autoFocus
                     />
                     {errors.lote &&
                       <AMessageError className="rounded-b-lg">{errors.lote}</AMessageError>

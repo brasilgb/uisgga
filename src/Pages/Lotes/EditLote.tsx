@@ -179,6 +179,7 @@ const EditLote = () => {
                       id="lote"
                       name="lote"
                       type="text"
+                      autoFocus
                     />
                     {errors.lote &&
                       <AMessageError className="rounded-b-lg">{errors.lote}</AMessageError>

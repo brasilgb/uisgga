@@ -115,7 +115,6 @@ const Aviarios = () => {
       return;
     }
     let lote = searchRef.current.value;
-
     await api.post(`searchlote`, {
       lote: lote
     }).then((response) => {
