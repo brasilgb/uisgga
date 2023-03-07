@@ -23,10 +23,11 @@ const AddColeta = () => {
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [allValuesForm, setAllValuesForm] = useState<any>();
   const [lotesAll, setLotesAll] = useState([]);
-  const [aviariosAll, setAviariosAll] = useState([]);
-  const [coletasAll, setColetasAll] = useState([]);
+  const [aviarioLote, setAviarioLote] = useState([]);
+  const [coletasAviario, setColetasAviario] = useState(0);
+
 
   const DatePickerField = ({ ...props }: any) => {
     const { setFieldValue } = useFormikContext();
@@ -44,6 +45,16 @@ const AddColeta = () => {
     );
   };
 
+  const FormObserver = () => {
+    const { values } = useFormikContext();
+
+    useEffect(() => {
+      setAllValuesForm(values);
+    }, [values]);
+
+    return null;
+  };
+
   useEffect(() => {
     const getLotesAll = (async () => {
       await api.get('lotes')
@@ -55,23 +66,24 @@ const AddColeta = () => {
   }, []);
 
   useEffect(() => {
-    const getAviariosAll = (async () => {
+    const getAviarioLote = (async () => {
       const response = await api.get('aviarios')
-      let aviarios = response.data.data;
-      setAviariosAll(aviarios);
+      let aviarios = response.data.data.filter((fl: any) => (fl.loteId === parseInt(allValuesForm.loteId)));
+      setAviarioLote(aviarios);
     });
-    getAviariosAll();
-  }, [])
+    getAviarioLote();
+  }, [allValuesForm])
 
   useEffect(() => {
-    const getColetasAll = (async () => {
+    const getColetasAviario = (async () => {
       await api.get('coletas')
         .then((response) => {
-          setColetasAll(response.data.data);
+          let coletas = response.data.data.filter((fa: any) => (fa.aviarioId === parseInt(allValuesForm.aviarioId)));
+          setColetasAviario(coletas[coletas.length -1].coleta);
         })
     });
-    getColetasAll();
-  }, []);
+    getColetasAviario();
+  }, [allValuesForm]);
 
   const onsubmit = async (values: any) => {
     setLoadingSaveButton(true);
@@ -168,6 +180,7 @@ const AddColeta = () => {
         >
           {({ errors, isValid, values }) => (
             <Form autoComplete="off">
+              <FormObserver />
               <div className="bg-white rounded-t-lg border overflow-auto py-8 px-2">
                 {postMessageErro &&
                   <div>{<AMessageError className="rounded-lg">{postMessageErro}</AMessageError>}</div>
@@ -214,7 +227,7 @@ const AddColeta = () => {
                     }
                   </div>
                   <div className="mt-4 md:mt-0">
-                    <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="aviarioId">Aviário {values.loteId}</label>
+                    <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="aviarioId">Aviário</label>
                     <Field
                       as="select"
                       className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.aviarioId ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
@@ -223,7 +236,7 @@ const AddColeta = () => {
                       type="text"
                     >
                       <option value="0">Selecione o aviário</option>
-                      {aviariosAll.filter((f: any) => (f.loteId === parseInt(values.loteId))).map((av: any, iav: any) => (
+                      {aviarioLote.map((av: any, iav: any) => (
                         <option value={av.idAviario}>{av.aviario}</option>
                       ))}
                     </Field>
@@ -239,7 +252,7 @@ const AddColeta = () => {
                       id="coleta"
                       name="coleta"
                       type="text"
-                      value={values.aviarioId != "0" ? coletasAll.filter((f: any) => (f.aviarioId == values.aviarioId)).length + 1 : 0}
+                      value={coletasAviario}
                     />
                     {errors.coleta &&
                       <AMessageError className="rounded-b-lg">{errors.coleta}</AMessageError>
