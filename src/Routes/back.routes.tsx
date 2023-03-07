@@ -4,6 +4,7 @@ import BackLayout from '../Layouts/BackLayout/Main';
 import { 
   AddAviario,
   AddCiclo,
+  AddColeta,
   AddLote,
   Aviarios,
   Ciclos,
@@ -30,6 +31,7 @@ function BackRoutes() {
         <Route path='/aviarios/addaviario' element={<AddAviario />} />
         <Route path='/aviarios/editaviario' element={<EditAviario />} />
         <Route path='/coletas' element={<Coletas />} />
+        <Route path='/coletas/addcoleta' element={<AddColeta />} />
       </Route>
     </Routes>
   )

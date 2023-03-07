@@ -16,6 +16,7 @@ import moment from 'moment';
 import { ABoxAll } from '../../Components/Boxes';
 import { useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE } from "../../Constants";
+import { AMessageError } from '../../Components/Messages';
 
 const Aviarios = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const Aviarios = () => {
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [searchInput, setSearchInput] = useState(false);
   const [messageSearch, setMessageSearch] = useState<boolean>(false);
+  const [loteExists, setLoteExists] = useState<boolean>(true);
   const searchRef = useRef<any>('');
 
   useEffect(() => {
@@ -155,6 +157,23 @@ const Aviarios = () => {
     }, 500)
   });
 
+  // Verify if lotes exists
+  useEffect(() => {
+    const getLoteExists = (async () => {
+      await api.get('lotes')
+        .then((response) => {
+          let exist = response.data.data;
+          if (exist.length > 0) {
+            setLoteExists(true);
+          } else {
+            setLoteExists(false);
+          }
+
+        })
+    });
+    getLoteExists();
+  }, [])
+
   return (
     <Fragment>
 
@@ -195,9 +214,14 @@ const Aviarios = () => {
 
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SAddButtom active={cicloActive} onClick={() => navigate('/aviarios/addaviario')} />
+            <SAddButtom active={cicloActive || !loteExists} onClick={() => navigate('/aviarios/addaviario')} />
           </div>
-
+          {cicloActive &&
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">ciclos</span> deverão estar cadastrados e ativos</AMessageError>
+          }
+          {!loteExists &&
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">lotes</span> deverão estar cadastrados</AMessageError>
+          }
           {messageSearch &&
             <div className="flex items-center justify-start">
               <button onClick={() => handleReloadAviarios()} className="flex items-center justify-center" title="Limpar busca">

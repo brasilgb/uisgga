@@ -11,6 +11,7 @@ import AddAviario from "./Aviarios/AddAviario";
 import EditAviario from "./Aviarios/EditAviario";
 
 import Coletas from "./Coletas";
+import AddColeta from "./Coletas/AddColeta";
 
 export {
     Home,
@@ -22,5 +23,6 @@ export {
     Aviarios,
     AddAviario,
     EditAviario,
-    Coletas
+    Coletas,
+    AddColeta
 };

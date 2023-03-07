@@ -1,9 +1,9 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 
 import { IconContext } from 'react-icons';
-import { IoArrowBack, IoArrowForward, IoCheckmark, IoClose, IoHome, IoTimerOutline } from 'react-icons/io5';
+import { IoArrowBack, IoArrowForward, IoCheckmark, IoClose, IoHome, IoCartOutline } from 'react-icons/io5';
 import { GiLargePaintBrush } from "react-icons/gi";
-import { SAddButtom, SDlButtom } from '../../Components/Buttons';
+import { SAddButtom, SDlButtom, SEdButtom } from '../../Components/Buttons';
 import { SFormSearchData } from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
 import ReactPaginate from 'react-paginate';
@@ -24,7 +24,6 @@ const Coletas = () => {
   const { setLoading, loading } = useContext(AppContext);
   const [allColetas, setAllColetas] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
   const [idColeta, setIdColeta] = useState();
   const [loadingActive, setLoadingActive] = useState(false);
@@ -38,7 +37,7 @@ const Coletas = () => {
       await api.get('coletas')
         .then((response) => {
           setTimeout(() => {
-            setAllColetas(response.data.data.sort((a: any, b: any) => (a.idColeta > b.idColeta ? -1 : 1 )));
+            setAllColetas(response.data.data.sort((a: any, b: any) => (a.idColeta > b.idColeta ? -1 : 1)));
             setLoading(false);
           }, 500);
         })
@@ -123,37 +122,17 @@ const Coletas = () => {
       <STr key={index} head={false} colorRow={index % 2}>
         <>
           <STd>{coleta.idColeta}</STd>
-          <STd>{moment(coleta.dataInicial).format("DD/MM/YYYY")}</STd>
-          <STd>{coleta.semanaInicial}</STd>
-          <STd>{coleta.metas[coleta.metas.length - 1].semana}</STd>
-          <STd>{coleta.metas.length}</STd>
-          <STd>{coleta.dataFinal != null ? moment(coleta.dataFinal).format("DD/MM/YYYY") : '-'}</STd>
-          <STd>{coleta.semanaFinal != null ? coleta.semanaFinal : '-'}</STd>
-          <STd>{coleta.lotes.length}</STd>
+          <STd>{coleta.lotes.lote}</STd>
+          <STd>{coleta.aviarios.aviario}</STd>
+          <STd>{coleta.coleta}</STd>
+          <STd>{coleta.incubaveis}</STd>
+          <STd>{coleta.comerciais}</STd>
+          <STd>{coleta.posturaDia}</STd>
+          <STd>{moment(coleta.dataColeta).format("DD/MM/YYYY HH:mm:ss")}</STd>
           <STd>
             <div className='flex items-center justify-end'>
-              <button
-                onClick={() => updateColeta(coleta.idColeta, coleta.ativo, coleta.dataInicial, coleta.semanaInicial, coleta.metas[coleta.metas.length - 1].semana)}
-              >
-                {coleta.ativo
-                  ? <span className='flex items-center justify-center h-8 w-8 bg-green-600 border-2 border-white text-white rounded-full mr-4'>
-                    <IconContext.Provider value={{ className: 'font-extrabold' }} >
-                      <div>
-                        {idColeta === coleta.idColeta && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoCheckmark size={22} />}
-                      </div>
-                    </IconContext.Provider>
-                  </span>
-                  : <span className='flex items-center justify-center h-8 w-8 bg-red-600 border-2 border-white text-white rounded-full mr-4'>
-                    <IconContext.Provider value={{ className: 'font-extrabold' }} >
-                      <div>
-                        {idColeta === coleta.idColeta && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoClose size={22} />}
-                      </div>
-                    </IconContext.Provider>
-                  </span>
-                }
-              </button>
-
-              <SDlButtom active={coleta.ativo} onClick={() => toggleDelete(coleta.idColeta)} />
+              <SEdButtom onClick={() => navigate("/coletas/editcoleta", { state: coleta })} />
+              <SDlButtom onClick={() => toggleDelete(coleta.idColeta)} />
             </div>
           </STd>
         </>
@@ -208,7 +187,7 @@ const Coletas = () => {
             <>
               <IconContext.Provider value={{ className: 'text-3xl' }} >
                 <div>
-                  <IoTimerOutline />
+                  <IoCartOutline />
                 </div>
               </IconContext.Provider>
               <h1 className='text-2xl ml-1 font-medium'>Coletas</h1>
@@ -271,13 +250,13 @@ const Coletas = () => {
                 <STr head={true}>
                   <>
                     <STh><span>#ID</span></STh>
-                    <STh><span>Data inicial</span></STh>
-                    <STh><span>Semana inicial</span></STh>
-                    <STh><span>Semana atual</span></STh>
-                    <STh><span>Semanas percorridas</span></STh>
-                    <STh><span>Data final</span></STh>
-                    <STh><span>Semana final</span></STh>
-                    <STh><span>Lotes</span></STh>
+                    <STh><span>Lote</span></STh>
+                    <STh><span>Aviário</span></STh>
+                    <STh><span>Num. Coleta</span></STh>
+                    <STh><span>Incubáveis</span></STh>
+                    <STh><span>Comerciais</span></STh>
+                    <STh><span>Postura dia</span></STh>
+                    <STh><span>Data e hora</span></STh>
                     <STh><span></span></STh>
                   </>
                 </STr>

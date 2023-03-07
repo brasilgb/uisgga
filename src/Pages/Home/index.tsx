@@ -26,11 +26,11 @@ const Home = () => {
             setCicloAtivo(true);
             let metasExist = activeCicle[0].metas.filter((meta: any) => (meta.cicloId === activeCicle[0].idCiclo));
             let dataAtual = moment().format("YYYY-MM-DD");
-            let dataCompare = moment(metasExist[0].dataInicial).add(1, 'day').format("YYYY-MM-DD");
+            let dataCompare = moment(metasExist[metasExist.length - 1].dataInicial).add(1, 'day').format("YYYY-MM-DD");
             if (dataAtual === dataCompare) {
               api.post('metas', {
                 cicloId: activeCicle[0].idCiclo,
-                semana: metasExist[0].semana + 1,
+                semana: metasExist[metasExist.length - 1].semana + 1,
                 dataInicial: dataCompare
               }).then(() => {
                 api.get('ciclos').then((result) => {
@@ -38,15 +38,8 @@ const Home = () => {
                   setAllCiclos(re);
                 })
               })
-            } else {
-              return;
             }
-          } else {
-            setCicloAtivo(false);
           }
-        })
-        .catch((error) => {
-          console.log(error);
         });
       setTimeout(() => {
         setLoading(false);

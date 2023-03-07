@@ -18,6 +18,7 @@ import moment from 'moment';
 import { ABoxAll } from '../../Components/Boxes';
 import { useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE } from "../../Constants";
+import { AMessageError } from '../../Components/Messages';
 
 const Lotes = () => {
   const navigate = useNavigate();
@@ -201,6 +202,10 @@ const Lotes = () => {
             <SAddButtom active={cicloActive} onClick={() => navigate('/lotes/addlote')} />
           </div>
 
+          {cicloActive &&
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">ciclos</span> deverão estar cadastrados e ativos</AMessageError>
+          }
+          
           {messageSearch &&
             <div className="flex items-center justify-start">
               <button onClick={() => handleReloadLotes()} className="flex items-center justify-center" title="Limpar busca">
