@@ -14,6 +14,7 @@ import {
   Home,
   Lotes 
 } from "../Pages";
+import EditColeta from "../Pages/Coletas/EditColeta";
 
 
 function BackRoutes() {
@@ -32,6 +33,7 @@ function BackRoutes() {
         <Route path='/aviarios/editaviario' element={<EditAviario />} />
         <Route path='/coletas' element={<Coletas />} />
         <Route path='/coletas/addcoleta' element={<AddColeta />} />
+        <Route path='/coletas/editcoleta' element={<EditColeta />} />
       </Route>
     </Routes>
   )

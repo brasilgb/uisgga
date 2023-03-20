@@ -13,9 +13,9 @@ export const SAddButtom = ({ onClick, active }: Props) => {
     return (
         <Fragment>
             <button
+                title='Adicionar'
                 disabled={active}
-                className={`flex items-center px-5 py-2.5 rounded-md shadow-md  ${active ? 'bg-gray-200 text-gray-400' : 'bg-blue-600 text-white'}  text-white transition-opacity ease-in duration-400 opacity-100 hover:opacity-80`}
-                type="button"
+                className={`flex items-center justify-start ${active ? 'bg-gray-200 text-gray-400' : 'bg-blue-600 text-white'} p-2 bg-blue-600 text-white border-2 border-white rounded-full shadow-md transition-opacity ease-in duration-400 opacity-100 hover:opacity-80`} type="button"
                 onClick={onClick}
             >
                 <IconContext.Provider value={{ className: 'text-xl' }}>
@@ -23,7 +23,6 @@ export const SAddButtom = ({ onClick, active }: Props) => {
                         <IoAdd />
                     </div>
                 </IconContext.Provider>
-                <span className='text-md ml-1'>Adicionar</span>
             </button>
         </Fragment>
     )
@@ -91,6 +90,7 @@ export const SBackButtom = ({ onClick }: Props) => {
     return (
         <Fragment>
             <button
+                title='Voltar'
                 onClick={onClick}
                 className={`flex items-center justify-start p-2 bg-blue-600 text-white border-2 border-white rounded-full shadow-md transition-opacity ease-in duration-400 opacity-100 hover:opacity-80`}
             >

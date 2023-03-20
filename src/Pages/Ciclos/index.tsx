@@ -38,7 +38,7 @@ const Ciclos = () => {
       await api.get('ciclos')
         .then((response) => {
           setTimeout(() => {
-            setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo > b.idCiclo ? -1 : 1 )));
+            setAllCiclos(response.data.data.sort((a: any, b: any) => (a.idCiclo > b.idCiclo ? -1 : 1)));
             setLoading(false);
           }, 500);
         })
@@ -125,7 +125,11 @@ const Ciclos = () => {
           <STd>{ciclo.idCiclo}</STd>
           <STd>{moment(ciclo.dataInicial).format("DD/MM/YYYY")}</STd>
           <STd>{ciclo.semanaInicial}</STd>
-          <STd>{ciclo.metas[ciclo.metas.length - 1].semana}</STd>
+          <STd>
+            {
+              ciclo.metas.sort((s:any,m:any) => (s.semana < m.semana ? -1 : 1) ).slice(-1)[0].semana
+            }
+          </STd>
           <STd>{ciclo.metas.length}</STd>
           <STd>{ciclo.dataFinal != null ? moment(ciclo.dataFinal).format("DD/MM/YYYY") : '-'}</STd>
           <STd>{ciclo.semanaFinal != null ? ciclo.semanaFinal : '-'}</STd>

@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 
 import { IconContext } from 'react-icons';
-import { IoArrowBack, IoArrowForward, IoCheckmark, IoClose, IoHome, IoCartOutline } from 'react-icons/io5';
+import { IoArrowBack, IoArrowForward, IoHome, IoCartOutline } from 'react-icons/io5';
 import { GiLargePaintBrush } from "react-icons/gi";
 import { SAddButtom, SDlButtom, SEdButtom } from '../../Components/Buttons';
 import { SFormSearchData } from '../../Components/Form/FormSearch';
@@ -12,8 +12,7 @@ import { STable, STd, STh, STr } from '../../Components/Tables';
 import { AppContext } from '../../Contexts/AppContext';
 import 'animate.css';
 import api from '../../Services/api';
-import { ModalDelete, ModalConfirm } from '../../Components/ModalDelete';
-import { CgSpinnerTwo } from 'react-icons/cg';
+import { ModalDelete } from '../../Components/ModalDelete';
 import moment from 'moment';
 import { ABoxAll } from '../../Components/Boxes';
 import { useNavigate } from "react-router-dom";
@@ -143,10 +142,9 @@ const Coletas = () => {
   // -> sistema de busca
   async function handleSearch() {
     let date = moment(startDate).format('YYYY-MM-DD');
-    await api.get(`date/${date}`)
+    await api.get(`datacoleta/${date}`)
       .then((response) => {
         setLoadingSearch(true);
-
         setTimeout(() => {
           if (response.data.data.length > 0) {
             setNewColeta(response.data.data);

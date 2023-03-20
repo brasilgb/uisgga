@@ -19,8 +19,8 @@ export default Yup.object().shape({
     sujosDeCama: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
     trincados: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
     eliminados: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
-    incubaveisBons: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
-    incubaveis: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
-    comerciais: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
-    posturaDia: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
+    //incubaveisBons: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
+    //incubaveis: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
+    //comerciais: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
+    //posturaDia: Yup.number().integer("Digite somente inteiros!").typeError("Digite somente números!").required("Este é um campo obrigatório"),
 });

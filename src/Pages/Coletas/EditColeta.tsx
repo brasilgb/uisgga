@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { IoHome, IoCartOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ABoxAll } from "../../Components/Boxes";
 import { SBackButtom, SSaveButtom } from "../../Components/Buttons";
 import SLoading from "../../Components/Loading";
@@ -14,9 +14,36 @@ import "react-datepicker/dist/react-datepicker.min.css";
 import ptbr from "date-fns/locale/pt-BR";
 import api from "../../Services/api";
 import { AMessageError, AMessageSuccess } from "../../Components/Messages";
+import moment from "moment";
 registerLocale("ptbr", ptbr);
 
-const AddColeta = () => {
+interface ColetaProps {
+  dataColeta: Date,
+  loteId: string,
+  aviarioId: string,
+  coleta: string,
+  limposNinho: string,
+  sujosNinho: string,
+  ovosCama: string,
+  duasGemas: string,
+  refugos: string,
+  pequenos: string,
+  cascaFina: string,
+  frios: string,
+  esmagadosQuebrados: string,
+  camaNaoIncubaveis: string,
+  deformados: string,
+  sujosDeCama: string,
+  trincados: string,
+  eliminados: string,
+  incubaveisBons: string,
+  incubaveis: string,
+  comerciais: string,
+  posturaDia: string,
+}
+const EditColeta = () => {
+  const location = useLocation().state as ColetaProps;
+
   const navigate = useNavigate();
   const { loading } = useContext(AppContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
@@ -170,29 +197,28 @@ const AddColeta = () => {
           // validateOnChange={false}
           onSubmit={onsubmit}
           initialValues={{
-            dataColeta: new Date(),
-            loteId: '',
-            aviarioId: '',
-            coleta: '0',
-            limposNinho: '0',
-            sujosNinho: '0',
-            ovosCama: '0',
-            duasGemas: '0',
-            refugos: '0',
-            pequenos: '0',
-            cascaFina: '0',
-            frios: '0',
-            esmagadosQuebrados: '0',
-            camaNaoIncubaveis: '0',
-            deformados: '0',
-            sujosDeCama: '0',
-            trincados: '0',
-            eliminados: '0',
-            incubaveisBons: '0',
-            incubaveis: '0',
-            comerciais: '0',
-            posturaDia: '0',
-
+            dataColeta: moment(location.dataColeta),
+            loteId: location.loteId,
+            aviarioId: location.aviarioId,
+            coleta: location.coleta,
+            limposNinho: location.limposNinho,
+            sujosNinho: location.sujosNinho,
+            ovosCama: location.ovosCama,
+            duasGemas: location.duasGemas,
+            refugos: location.refugos,
+            pequenos: location.pequenos,
+            cascaFina: location.cascaFina,
+            frios: location.frios,
+            camaNaoIncubaveis: location.camaNaoIncubaveis,
+            deformados: location.deformados,
+            sujosDeCama: location.sujosDeCama,
+            esmagadosQuebrados: location.esmagadosQuebrados,
+            trincados: location.trincados,
+            eliminados: location.eliminados,
+            incubaveisBons: location.incubaveisBons,
+            incubaveis: location.incubaveis,
+            comerciais: location.comerciais,
+            posturaDia: location.posturaDia,
           }}
         >
           {({ errors, isValid, values }) => (
@@ -585,4 +611,4 @@ const AddColeta = () => {
   )
 }
 
-export default AddColeta;
+export default EditColeta;

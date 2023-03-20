@@ -24,13 +24,14 @@ const Home = () => {
           let activeCicle = res.filter((item: any) => (item.ativo === true));
           if (activeCicle.length > 0) {
             setCicloAtivo(true);
-            let metasExist = activeCicle[0].metas.filter((meta: any) => (meta.cicloId === activeCicle[0].idCiclo));
+            let metasExist = activeCicle[0].metas.filter((meta: any) => (meta.cicloId === activeCicle[0].idCiclo)).sort((a:any, b:any) => a > b ? -1 : 1 );
             let dataAtual = moment().format("YYYY-MM-DD");
-            let dataCompare = moment(metasExist[metasExist.length - 1].dataInicial).add(1, 'day').format("YYYY-MM-DD");
+            let dataCompare = moment(metasExist.slice(-1)[0].dataInicial).add(1, 'day').format("YYYY-MM-DD");
+            // console.log(dataCompare);
             if (dataAtual === dataCompare) {
               api.post('metas', {
                 cicloId: activeCicle[0].idCiclo,
-                semana: metasExist[metasExist.length - 1].semana + 1,
+                semana: metasExist.slice(-1)[0].semana + 1,
                 dataInicial: dataCompare
               }).then(() => {
                 api.get('ciclos').then((result) => {
