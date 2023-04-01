@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconContext } from 'react-icons';
 import { IoBarChartOutline, IoCartOutline, IoCogOutline, IoFileTrayOutline, IoFileTrayStackedOutline, IoHomeOutline, IoLockOpenOutline, IoNotificationsOutline, IoPeopleOutline, IoTimerOutline } from 'react-icons/io5';
+import { HiOutlineTruck } from 'react-icons/hi';
 import { NavLink } from 'react-router-dom';
 
 const SideBar = () => {
@@ -100,6 +101,22 @@ const SideBar = () => {
                                     </IconContext.Provider>
                                 </span>
                                 <span className="ml-3 text-gray-400">Coletas</span>
+                            </NavLink>
+                        </li>
+
+                        <li className="my-px">
+                            <NavLink
+                                to="/envios"
+                                className={({ isActive }) => isActive ? 'flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 bg-[#3b3c4e]' : "flex flex-row items-center h-10 px-3 rounded-lg hover:bg-gray-600 hover:text-gray-100"}
+                            >
+                                <span className="flex items-center justify-center text-lg">
+                                    <IconContext.Provider value={{ className: "text-xl text-gray-400" }} >
+                                        <div>
+                                            <HiOutlineTruck />
+                                        </div>
+                                    </IconContext.Provider>
+                                </span>
+                                <span className="ml-3 text-gray-400">Envio de ovos</span>
                             </NavLink>
                         </li>
 

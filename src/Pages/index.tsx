@@ -12,6 +12,11 @@ import EditAviario from "./Aviarios/EditAviario";
 
 import Coletas from "./Coletas";
 import AddColeta from "./Coletas/AddColeta";
+import EditColeta from "./Coletas/EditColeta";
+
+import Envios from "./Envios";
+import AddEnvio from "./Envios/AddEnvio";
+import EditEnvio from "./Envios/EditEnvio";
 
 export {
     Home,
@@ -24,5 +29,9 @@ export {
     AddAviario,
     EditAviario,
     Coletas,
-    AddColeta
+    AddColeta,
+    EditColeta,
+    Envios,
+    AddEnvio,
+    EditEnvio
 };

@@ -5,16 +5,19 @@ import {
   AddAviario,
   AddCiclo,
   AddColeta,
+  AddEnvio,
   AddLote,
   Aviarios,
   Ciclos,
   Coletas,
   EditAviario,
+  EditColeta,
+  EditEnvio,
   EditLote,
+  Envios,
   Home,
   Lotes 
 } from "../Pages";
-import EditColeta from "../Pages/Coletas/EditColeta";
 
 
 function BackRoutes() {
@@ -34,7 +37,11 @@ function BackRoutes() {
         <Route path='/coletas' element={<Coletas />} />
         <Route path='/coletas/addcoleta' element={<AddColeta />} />
         <Route path='/coletas/editcoleta' element={<EditColeta />} />
+        <Route path='/envios' element={<Envios />} />
+        <Route path='/envios/addenvio' element={<AddEnvio />} />
+        <Route path='/envios/editenvio' element={<EditEnvio />} />
       </Route>
+      
     </Routes>
   )
 }
