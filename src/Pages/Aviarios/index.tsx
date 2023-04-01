@@ -95,9 +95,12 @@ const Aviarios = () => {
           <STd>{aviario.idAviario}</STd>
           <STd>{aviario.lote}</STd>
           <STd>{aviario.aviario}</STd>
-          <STd>{aviario.totalFemeas}</STd>
-          <STd>{aviario.totalMachos}</STd>
-          <STd>{aviario.totalAves}</STd>
+          <STd>{(aviario.box1Femea + aviario.box2Femea + aviario.box2Femea + aviario.box2Femea)}</STd>
+          <STd>{(aviario.box1Macho + aviario.box2Macho + aviario.box2Macho + aviario.box2Macho)}</STd>
+          <STd>{
+            (aviario.box1Femea + aviario.box2Femea + aviario.box2Femea + aviario.box2Femea) +
+            (aviario.box1Macho + aviario.box2Macho + aviario.box2Macho + aviario.box2Macho)
+          }</STd>
           <STd>{moment(aviario.dataEntrada).format("DD/MM/YYYY")}</STd>
           <STd>
             <div className='flex items-center justify-end'>
