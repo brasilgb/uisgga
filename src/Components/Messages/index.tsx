@@ -11,7 +11,7 @@ export const AMessageError = ({ children, className }: MessagesProps) => {
 
     return (
         <Fragment>
-            <div className={`flex p-2 mb-4 ${className} text-sm text-red-700 bg-red-100 rounded-b-lg dark:bg-red-200 dark:text-red-800 border border-red-200 shadow-sm animate__animated animate__fadeIn`}>
+            <div className={`flex p-2 mb-4 ${className} text-sm text-red-400 animate__animated animate__fadeIn`}>
                 <IconContext.Provider value={{ color: "", className: "text-xl mr-2" }}>
                     <IoAlertCircleSharp />
                 </IconContext.Provider>

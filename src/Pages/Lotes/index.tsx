@@ -22,12 +22,11 @@ import { AMessageError } from '../../Components/Messages';
 
 const Lotes = () => {
   const navigate = useNavigate();
-  const { setLoading, loading } = useContext(AppContext);
+  const { setLoading, loading, cicloActive } = useContext(AppContext);
   const [allLotes, setAllLotes] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
-  const [cicloActive, setCicloActive] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [searchInput, setSearchInput] = useState(false);
   const [messageSearch, setMessageSearch] = useState<boolean>(false);
@@ -38,7 +37,6 @@ const Lotes = () => {
     const getAllLotes = async () => {
       await api.get('lotes')
         .then((response) => {
-          setCicloActive(response.data.ciclos);
           setTimeout(() => {
             setAllLotes(response.data.data.sort((a: any, b: any) => (a.idLote > b.idLote ? -1 : 1)));
             setLoading(false);
@@ -199,10 +197,10 @@ const Lotes = () => {
 
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SAddButtom active={cicloActive} onClick={() => navigate('/lotes/addlote')} />
+            <SAddButtom active={!cicloActive} onClick={() => navigate('/lotes/addlote')} />
           </div>
 
-          {cicloActive &&
+          {!cicloActive &&
             <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">ciclos</span> deverão estar cadastrados e ativos</AMessageError>
           }
           

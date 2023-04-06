@@ -27,7 +27,7 @@ interface EnviosProps {
   totalEnvio: number;
 }
 
-const EditEnvio = () => {
+const EditMortalidade = () => {
   const location = useLocation().state as EnviosProps;
 
   const navigate = useNavigate();
@@ -284,4 +284,4 @@ const EditEnvio = () => {
   )
 }
 
-export default EditEnvio;
+export default EditMortalidade;

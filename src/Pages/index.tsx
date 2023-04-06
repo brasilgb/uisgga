@@ -18,6 +18,10 @@ import Envios from "./Envios";
 import AddEnvio from "./Envios/AddEnvio";
 import EditEnvio from "./Envios/EditEnvio";
 
+import Mortalidades from "./Mortalidades";
+import AddMortalidade from "./Mortalidades/AddMortalidade";
+import EditMortalidade from "./Mortalidades/EditMortalidade";
+
 export {
     Home,
     Ciclos,
@@ -33,5 +37,8 @@ export {
     EditColeta,
     Envios,
     AddEnvio,
-    EditEnvio
+    EditEnvio,
+    Mortalidades,
+    AddMortalidade,
+    EditMortalidade
 };

@@ -20,12 +20,10 @@ import { ITENS_PER_PAGE } from "../../Constants";
 
 const Coletas = () => {
   const navigate = useNavigate();
-  const { setLoading, loading } = useContext(AppContext);
+  const { setLoading, loading, cicloActive } = useContext(AppContext);
   const [allColetas, setAllColetas] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
-  const [idColeta, setIdColeta] = useState();
-  const [loadingActive, setLoadingActive] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [messageSearch, setMessageSearch] = useState<boolean>(false);
@@ -67,37 +65,6 @@ const Coletas = () => {
         const cic = allColetas.filter((item: any) => item.idColeta !== id);
         setAllColetas(cic);
         setShowDeleteModal(false);
-      }).catch(err => {
-        console.log(err.response.data);
-      });
-  });
-
-  // edita coletas
-  const updateColeta = (async (id: any, ativo: any, data: any, semana: any, semanafinal: any) => {
-    setIdColeta(id);
-    setLoadingActive(true);
-    await api.patch('coletas', {
-      idColeta: id,
-      ativo: ativo ? false : true,
-      dataInicial: data,
-      semanaInicial: semana,
-      dataFinal: moment().format("YYYY-MM-DD"),
-      semanaFinal: semanafinal
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        // 'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(res => {
-        api.get('coletas')
-          .then((response) => {
-            setTimeout(() => {
-              setLoadingActive(false);
-              setAllColetas(response.data.data.sort((a: any, b: any) => (a.idColeta < b.idColeta)));
-            }, 500)
-          })
       }).catch(err => {
         console.log(err.response.data);
       });
@@ -213,7 +180,7 @@ const Coletas = () => {
 
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SAddButtom onClick={() => navigate('/coletas/addcoleta')} />
+            <SAddButtom active={!cicloActive} onClick={() => navigate('/coletas/addcoleta')} />
           </div>
 
           {messageSearch &&

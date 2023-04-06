@@ -18,28 +18,29 @@ import moment from "moment";
 registerLocale("ptbr", ptbr);
 
 interface ColetaProps {
+  idColeta: number | undefined,
   dataColeta: Date,
-  loteId: string,
-  aviarioId: string,
-  coleta: string,
-  limposNinho: string,
-  sujosNinho: string,
-  ovosCama: string,
-  duasGemas: string,
-  refugos: string,
-  pequenos: string,
-  cascaFina: string,
-  frios: string,
-  esmagadosQuebrados: string,
-  camaNaoIncubaveis: string,
-  deformados: string,
-  sujosDeCama: string,
-  trincados: string,
-  eliminados: string,
-  incubaveisBons: string,
-  incubaveis: string,
-  comerciais: string,
-  posturaDia: string,
+  loteId: string | undefined;
+  aviarioId: string | undefined;
+  coleta: string | undefined;
+  limposNinho: string | undefined;
+  sujosNinho: string | undefined;
+  ovosCama: string | undefined;
+  duasGemas: string | undefined;
+  refugos: string | undefined;
+  pequenos: string | undefined;
+  cascaFina: string | undefined;
+  frios: string | undefined;
+  esmagadosQuebrados: string | undefined;
+  camaNaoIncubaveis: string | undefined;
+  deformados: string | undefined;
+  sujosDeCama: string | undefined;
+  trincados: string | undefined;
+  eliminados: string | undefined;
+  incubaveisBons: number | undefined,
+  incubaveis: number | undefined,
+  comerciais: number | undefined,
+  posturaDia: number | undefined,
 }
 const EditColeta = () => {
   const location = useLocation().state as ColetaProps;
@@ -68,16 +69,6 @@ const EditColeta = () => {
         locale='ptbr'
       />
     );
-  };
-
-  const FormObserver = () => {
-    const { values } = useFormikContext();
-
-    useEffect(() => {
-      setAllValuesForm(values);
-    }, [values]);
-
-    return null;
   };
 
   useEffect(() => {
@@ -119,7 +110,7 @@ const EditColeta = () => {
 
   const onsubmit = async (values: any, { resetForm }: any) => {
     setLoadingSaveButton(true);
-    await api.post('coletas', {
+    await api.patch('coletas', {
       values: values
     }).then((response) => {
       resetForm();
@@ -133,6 +124,24 @@ const EditColeta = () => {
       setLoadingSaveButton(false);
     });
   };
+
+  const FormObserver = () => {
+    const { values } = useFormikContext();
+    useEffect(() => {
+      setAllValuesForm(values);
+    }, [values]);
+
+    return null;
+  };
+
+  const handleKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      var form = e.target.form;
+      var index = Array.prototype.indexOf.call(form, e.target);
+      form.elements[index + 1].focus();
+      e.preventDefault();
+    }
+  }
 
   return (
     <Fragment>
@@ -197,6 +206,7 @@ const EditColeta = () => {
           // validateOnChange={false}
           onSubmit={onsubmit}
           initialValues={{
+            idColeta: location.idColeta,
             dataColeta: moment(location.dataColeta),
             loteId: location.loteId,
             aviarioId: location.aviarioId,
@@ -223,7 +233,6 @@ const EditColeta = () => {
         >
           {({ errors, isValid, values }) => (
             <Form autoComplete="off">
-
               <FormObserver />
               <div className="bg-white rounded-t-lg border overflow-auto py-8 px-2">
                 {postMessageErro &&
@@ -241,7 +250,7 @@ const EditColeta = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataColeta">Data e hora da coleta</label>
                     <DatePickerField
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataColeta ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.dataColeta ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="dataColeta"
                       name="dataColeta"
                       dateFormat="dd/MM/yyyy HH:mm:ss"
@@ -256,7 +265,7 @@ const EditColeta = () => {
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="loteId">Lote</label>
                     <Field
                       as="select"
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.loteId ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.loteId ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="loteId"
                       name="loteId"
                       type="text"
@@ -274,7 +283,7 @@ const EditColeta = () => {
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="aviarioId">Aviário</label>
                     <Field
                       as="select"
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.aviarioId ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.aviarioId ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="aviarioId"
                       name="aviarioId"
                       type="text"
@@ -292,7 +301,7 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="coleta">Coleta</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.coleta ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.coleta ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="coleta"
                       name="coleta"
                       type="text"
@@ -310,11 +319,12 @@ const EditColeta = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="limposNinho">Limpos do ninho</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.limposNinho ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.limposNinho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="limposNinho"
                       name="limposNinho"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.limposNinho &&
                       <AMessageError className="rounded-b-lg">{errors.limposNinho}</AMessageError>
@@ -323,11 +333,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="sujosNinho">Sujos do ninho</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.sujosNinho ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.sujosNinho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="sujosNinho"
                       name="sujosNinho"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.sujosNinho &&
                       <AMessageError className="rounded-b-lg">{errors.sujosNinho}</AMessageError>
@@ -336,11 +347,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="ovosCama">Cama incubáveis</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.ovosCama ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.ovosCama ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="ovosCama"
                       name="ovosCama"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.ovosCama &&
                       <AMessageError className="rounded-b-lg">{errors.ovosCama}</AMessageError>
@@ -350,11 +362,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="duasGemas">Duas gemas</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.duasGemas ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.duasGemas ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="duasGemas"
                       name="duasGemas"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.duasGemas &&
                       <AMessageError className="rounded-b-lg">{errors.duasGemas}</AMessageError>
@@ -363,11 +376,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="pequenos">Pequenos</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.pequenos ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.pequenos ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="pequenos"
                       name="pequenos"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.pequenos &&
                       <AMessageError className="rounded-b-lg">{errors.pequenos}</AMessageError>
@@ -376,11 +390,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="trincados">Trincados</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.trincados ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.trincados ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="trincados"
                       name="trincados"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.trincados &&
                       <AMessageError className="rounded-b-lg">{errors.trincados}</AMessageError>
@@ -389,11 +404,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="cascaFina">Casca fina</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.cascaFina ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.cascaFina ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="cascaFina"
                       name="cascaFina"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.cascaFina &&
                       <AMessageError className="rounded-b-lg">{errors.cascaFina}</AMessageError>
@@ -402,11 +418,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="deformados">Deformados</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.deformados ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.deformados ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="deformados"
                       name="deformados"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.deformados &&
                       <AMessageError className="rounded-b-lg">{errors.deformados}</AMessageError>
@@ -415,11 +432,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="frios">Frios</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.frios ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.frios ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="frios"
                       name="frios"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.frios &&
                       <AMessageError className="rounded-b-lg">{errors.frios}</AMessageError>
@@ -428,11 +446,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="sujosDeCama">Sujos não aproveitáveis</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.sujosDeCama ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.sujosDeCama ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="sujosDeCama"
                       name="sujosDeCama"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.sujosDeCama &&
                       <AMessageError className="rounded-b-lg">{errors.sujosDeCama}</AMessageError>
@@ -441,11 +460,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="esmagadosQuebrados">Esmagados e quebrados</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.esmagadosQuebrados ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.esmagadosQuebrados ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="esmagadosQuebrados"
                       name="esmagadosQuebrados"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.esmagadosQuebrados &&
                       <AMessageError className="rounded-b-lg">{errors.esmagadosQuebrados}</AMessageError>
@@ -455,11 +475,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="camaNaoIncubaveis">Cama não incubáveis</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.camaNaoIncubaveis ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.camaNaoIncubaveis ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="camaNaoIncubaveis"
                       name="camaNaoIncubaveis"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.camaNaoIncubaveis &&
                       <AMessageError className="rounded-b-lg">{errors.camaNaoIncubaveis}</AMessageError>
@@ -469,11 +490,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="eliminados">Eliminados</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.eliminados ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.eliminados ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="eliminados"
                       name="eliminados"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.eliminados &&
                       <AMessageError className="rounded-b-lg">{errors.eliminados}</AMessageError>
@@ -483,11 +505,12 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="refugos">Refugos</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.refugos ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.refugos ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="refugos"
                       name="refugos"
                       type="text"
-                      onFocus={(e: any) => e.target.value = ''}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.refugos &&
                       <AMessageError className="rounded-b-lg">{errors.refugos}</AMessageError>
@@ -499,15 +522,15 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="incubaveisBons">Incubáveis bons</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.incubaveisBons ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.incubaveisBons ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="incubaveisBons"
                       name="incubaveisBons"
                       type="text"
                       readonly="true"
-                      value={
+                      value={values.incubaveisBons =
                         (
-                          parseInt(values.limposNinho) +
-                          parseInt(values.sujosNinho)
+                          parseInt(values.limposNinho ? values.limposNinho : '0') +
+                          parseInt(values.sujosNinho ? values.sujosNinho : '0')
                         )
                       }
                     />
@@ -519,16 +542,16 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="incubaveis">Incubáveis</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.incubaveis ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.incubaveis ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="incubaveis"
                       name="incubaveis"
                       type="text"
                       readonly="true"
-                      value={
+                      value={values.incubaveis =
                         (
-                          parseInt(values.limposNinho) +
-                          parseInt(values.sujosNinho) +
-                          parseInt(values.ovosCama)
+                          parseInt(values.limposNinho ? values.limposNinho : '0') +
+                          parseInt(values.sujosNinho ? values.sujosNinho : '0') +
+                          parseInt(values.ovosCama ? values.ovosCama : '0')
                         )
                       }
                     />
@@ -540,22 +563,22 @@ const EditColeta = () => {
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="comerciais">Comerciais</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.comerciais ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.comerciais ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="comerciais"
                       name="comerciais"
                       type="text"
                       readonly="true"
-                      value={
+                      value={values.comerciais =
                         (
-                          parseInt(values.duasGemas) +
-                          parseInt(values.pequenos) +
-                          parseInt(values.trincados) +
-                          parseInt(values.cascaFina) +
-                          parseInt(values.deformados) +
-                          parseInt(values.frios) +
-                          parseInt(values.sujosDeCama) +
-                          parseInt(values.camaNaoIncubaveis) +
-                          parseInt(values.refugos)
+                          parseInt(values.duasGemas ? values.duasGemas : '0') +
+                          parseInt(values.pequenos ? values.pequenos : '0') +
+                          parseInt(values.trincados ? values.trincados : '0') +
+                          parseInt(values.cascaFina ? values.cascaFina : '0') +
+                          parseInt(values.deformados ? values.deformados : '0') +
+                          parseInt(values.frios ? values.frios : '0') +
+                          parseInt(values.sujosDeCama ? values.sujosDeCama : '0') +
+                          parseInt(values.camaNaoIncubaveis ? values.camaNaoIncubaveis : '0') +
+                          parseInt(values.refugos ? values.refugos : '0')
                         )
                       }
                     />
@@ -568,27 +591,27 @@ const EditColeta = () => {
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="posturaDia">Postura do dia</label>
 
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.posturaDia ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.posturaDia ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="posturaDia"
                       name="posturaDia"
                       type="text"
                       readonly="true"
-                      value={
+                      value={values.posturaDia =
                         (
-                          parseInt(values.limposNinho) +
-                          parseInt(values.sujosNinho) +
-                          parseInt(values.ovosCama) +
-                          parseInt(values.duasGemas) +
-                          parseInt(values.pequenos) +
-                          parseInt(values.trincados) +
-                          parseInt(values.cascaFina) +
-                          parseInt(values.deformados) +
-                          parseInt(values.frios) +
-                          parseInt(values.sujosDeCama) +
-                          parseInt(values.esmagadosQuebrados) +
-                          parseInt(values.camaNaoIncubaveis) +
-                          parseInt(values.eliminados) +
-                          parseInt(values.refugos)
+                          parseInt(values.limposNinho ? values.limposNinho : '0') +
+                          parseInt(values.sujosNinho ? values.sujosNinho : '0') +
+                          parseInt(values.ovosCama ? values.ovosCama : '0') +
+                          parseInt(values.duasGemas ? values.duasGemas : '0') +
+                          parseInt(values.pequenos ? values.pequenos : '0') +
+                          parseInt(values.trincados ? values.trincados : '0') +
+                          parseInt(values.cascaFina ? values.cascaFina : '0') +
+                          parseInt(values.deformados ? values.deformados : '0') +
+                          parseInt(values.frios ? values.frios : '0') +
+                          parseInt(values.sujosDeCama ? values.sujosDeCama : '0') +
+                          parseInt(values.esmagadosQuebrados ? values.esmagadosQuebrados : '0') +
+                          parseInt(values.camaNaoIncubaveis ? values.camaNaoIncubaveis : '0') +
+                          parseInt(values.eliminados ? values.eliminados : '0') +
+                          parseInt(values.refugos ? values.refugos : '0')
                         )
                       }
                     />

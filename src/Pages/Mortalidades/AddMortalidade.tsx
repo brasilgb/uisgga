@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { IoHome, IoFileTrayOutline } from "react-icons/io5";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ABoxAll } from "../../Components/Boxes";
 import { SBackButtom, SSaveButtom } from "../../Components/Buttons";
 import SLoading from "../../Components/Loading";
@@ -15,20 +15,18 @@ import ptbr from "date-fns/locale/pt-BR";
 import api from "../../Services/api";
 import "animate.css";
 import { AMessageError, AMessageSuccess } from "../../Components/Messages";
-import moment from "moment";
 registerLocale("ptbr", ptbr);
 
 interface EnviosProps {
-  idEnvio: number;
   dataEnvio: Date;
+  cicloId: number|undefined;
   loteId: string;
   incubaveis: string;
   comerciais: string;
   totalEnvio: number;
 }
 
-const EditEnvio = () => {
-  const location = useLocation().state as EnviosProps;
+const AddMortalidade = () => {
 
   const navigate = useNavigate();
   const { loading } = useContext(AppContext);
@@ -37,6 +35,7 @@ const EditEnvio = () => {
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
   const [listLotes, setListLotes] = useState([]);
   const [activeCiclo, setActiveCiclo] = useState<any>();
+  const [idCicloAtivo, setIdCicloAtivo] = useState();
 
   const DatePickerField = ({ ...props }: any) => {
     const { setFieldValue } = useFormikContext();
@@ -70,6 +69,7 @@ const EditEnvio = () => {
       await api.get('ciclos')
         .then((res) => {
           const active = res.data.data.filter((act: any) => (act.ativo === true));
+          setIdCicloAtivo(active[0].idCiclo);
           setActiveCiclo(active.length > 0 ? true : false);
           if (active.length > 0) {
             if (active[0].ativo) {
@@ -81,15 +81,16 @@ const EditEnvio = () => {
     getCiclos();
   }, []);
 
-  const onsubmit = async (values: any) => {
+  const onsubmit = async (values: EnviosProps, {resetForm}: any) => {
     setLoadingSaveButton(true);
-    api.patch('envios', {
+    api.post('envios', {
       values: values
     }).then((response) => {
       setTimeout(() => {
         setLoadingSaveButton(false);
         setPostMessageErro(false)
         setPostMessageSuccess(response.data.message);
+        resetForm();
       }, 500);
     }).catch((err) => {
       setPostMessageErro(false)
@@ -97,7 +98,7 @@ const EditEnvio = () => {
     });
   };
 
-  const handleKeyPress = (e: any) => {
+  const handleKeyPress = (e:any) => {
     if (e.key === "Enter") {
       var form = e.target.form;
       var index = Array.prototype.indexOf.call(form, e.target);
@@ -165,12 +166,12 @@ const EditEnvio = () => {
             validationSchema={schema}
             onSubmit={onsubmit}
             initialValues={{
-              idEnvio: location.idEnvio,
-              dataEnvio: moment(location.dataEnvio),
-              loteId: location.loteId,
-              incubaveis: location.incubaveis,
-              comerciais: location.comerciais,
-              totalEnvio: location.totalEnvio,
+              dataEnvio: new Date(),
+              cicloId: idCicloAtivo,
+              loteId: '',
+              incubaveis: '',
+              comerciais: '',
+              totalEnvio: 0,
             }}
           >
             {({ errors, isValid, values, handleChange, handleBlur }) => (
@@ -263,7 +264,7 @@ const EditEnvio = () => {
                         type="text"
                         onFocus={(e: any) => e.target.value}
                         onKeyPress={(e: any) => handleKeyPress(e)}
-                        value={values.totalEnvio = parseInt(values.incubaveis ? values.incubaveis : '0') + parseInt(values.comerciais ? values.comerciais : '0')}
+                        value={values.totalEnvio = parseInt(values.incubaveis?values.incubaveis:'0') + parseInt(values.comerciais?values.comerciais:'0')}
                       />
                       {errors.totalEnvio &&
                         <AMessageError className="rounded-b-lg">{errors.totalEnvio}</AMessageError>
@@ -284,4 +285,4 @@ const EditEnvio = () => {
   )
 }
 
-export default EditEnvio;
+export default AddMortalidade;
