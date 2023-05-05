@@ -218,9 +218,12 @@ const Mortalidade = () => {
                 <STr head={true}>
                   <>
                     <STh><span>#ID</span></STh>
-                    <STh><span>Incubáveis</span></STh>
+                    <STh><span>Aviário</span></STh>
                     <STh><span>Comerciais</span></STh>
-                    <STh><span>Total enviados</span></STh>
+                    <STh><span>Fêmeas</span></STh>
+                    <STh><span>Machos</span></STh>
+                    <STh><span>Total aves</span></STh>
+                    <STh><span>Causa</span></STh>
                     <STh><span>Cadastro</span></STh>
                     <STh><span></span></STh>
                   </>
