@@ -185,7 +185,7 @@ const EditColeta = () => {
                 Coletas
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
-              <span className="text-gray-600 ">Adicionar</span>
+              <span className="text-gray-600 ">Alterar</span>
             </div>
 
           </SubBarRight>
@@ -243,7 +243,7 @@ const EditColeta = () => {
                 }
 
                 <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                  <h1 className="font-lg text-white font-medium uppercase">Cadastro de coletas</h1>
+                  <h1 className="font-lg text-white font-medium uppercase">Alterar coleta</h1>
                 </div>
 
                 <div className="md:grid md:grid-cols-4 md:gap-4 border border-gray-200 p-4 rounded-lg bg-gray-100">

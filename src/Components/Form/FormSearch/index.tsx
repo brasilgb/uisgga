@@ -58,7 +58,6 @@ export const SFormSearch = ({ loading, handleSubmit, refSearch, required }: Prop
     )
 };
 
-
 export const SFormSearchData = ({ loading, selected, onChange, onclick }: PropsSearchDate) => {
 
     return (

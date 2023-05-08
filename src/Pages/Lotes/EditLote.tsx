@@ -130,7 +130,7 @@ const EditLote = () => {
                   Lotes
                 </button>
                 <span className="mx-2 text-gray-500 ">/</span>
-                <span className="text-gray-600 ">Editar</span>
+                <span className="text-gray-600 ">Alterar</span>
               </div>
 
             </SubBarRight>
@@ -169,13 +169,13 @@ const EditLote = () => {
                   }
 
                   <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                    <h1 className="font-lg text-white font-medium uppercase">Editar lote</h1>
+                    <h1 className="font-lg text-white font-medium uppercase">Alterar lote</h1>
                   </div>
                   <Field id="idLote" name="idLote" type="hidden" />
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="lote">Identificador do lote</label>
                     <Field
-                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.lote || loteExist ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.lote ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="lote"
                       name="lote"
                       type="text"
@@ -192,7 +192,7 @@ const EditLote = () => {
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataEntrada">Data de chegada</label>
                     <DatePickerField
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataEntrada ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataEntrada ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="dataEntrada"
                       name="dataEntrada"
                       dateFormat="dd/MM/yyyy"
@@ -203,7 +203,7 @@ const EditLote = () => {
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="femea">Número de fêmeas</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.femea ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="femea"
                       name="femea"
                       type="text"
@@ -216,7 +216,7 @@ const EditLote = () => {
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="macho">Número de machos</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.macho ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="macho"
                       name="macho"
                       type="text"
@@ -239,7 +239,7 @@ const EditLote = () => {
                     <div className="mt-4">
                       <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataCapitalizada">Data de capitalização</label>
                       <DatePickerField
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataCapitalizada ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataCapitalizada ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="dataCapitalizada"
                         name="dataCapitalizada"
                         dateFormat="dd/MM/yyyy"
@@ -250,7 +250,7 @@ const EditLote = () => {
                     <div className="mt-4">
                       <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="femeaCapitalizada">Fêmeas capitalizadas</label>
                       <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.femeaCapitalizada ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.femeaCapitalizada ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="femeaCapitalizada"
                         name="femeaCapitalizada"
                         type="text"
@@ -263,7 +263,7 @@ const EditLote = () => {
                     <div className="mt-4">
                       <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="machoCapitalizado">Machos capitalizados</label>
                       <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.machoCapitalizado ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.machoCapitalizado ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="machoCapitalizado"
                         name="machoCapitalizado"
                         type="text"

@@ -1,10 +1,9 @@
 import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
-
 import { IconContext } from 'react-icons';
-import { IoArrowBack, IoArrowForward, IoCheckmark, IoClose, IoHome, IoFileTrayStackedOutline } from 'react-icons/io5';
+import { IoArrowBack, IoArrowForward, IoHome, IoFileTrayStackedOutline } from 'react-icons/io5';
 import { GiLargePaintBrush } from "react-icons/gi";
 import { SAddButtom, SDlButtom, SEdButtom } from '../../Components/Buttons';
-import { SFormSearch, SFormSearchData } from '../../Components/Form/FormSearch';
+import { SFormSearch } from '../../Components/Form/FormSearch';
 import SLoading from '../../Components/Loading';
 import ReactPaginate from 'react-paginate';
 import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
@@ -13,7 +12,6 @@ import { AppContext } from '../../Contexts/AppContext';
 import 'animate.css';
 import api from '../../Services/api';
 import { ModalDelete, ModalConfirm } from '../../Components/ModalDelete';
-import { CgSpinnerTwo } from 'react-icons/cg';
 import moment from 'moment';
 import { ABoxAll } from '../../Components/Boxes';
 import { useNavigate } from "react-router-dom";
@@ -25,7 +23,6 @@ const Lotes = () => {
   const { setLoading, loading, cicloActive } = useContext(AppContext);
   const [allLotes, setAllLotes] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [searchInput, setSearchInput] = useState(false);

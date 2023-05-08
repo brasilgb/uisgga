@@ -142,7 +142,7 @@ const AddLote = () => {
           </div>
         </div>
         {!activeCiclo
-          ? <AMessageError className="rounded-t-lg">Para cadastrar lotes os ciclos deverão estar cadastrados e ativos</AMessageError>
+          ? <AMessageError className="rounded-t-lg">Para adicionar lotes os ciclos deverão estar cadastrados e ativos</AMessageError>
           : <Formik
             validationSchema={schema}
             onSubmit={onsubmit}
@@ -165,13 +165,13 @@ const AddLote = () => {
                   }
 
                   <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                    <h1 className="font-lg text-white font-medium uppercase">Cadastrar lote</h1>
+                    <h1 className="font-lg text-white font-medium uppercase">Adicionar lote</h1>
                   </div>
                   <Field id="idLote" name="idLote" type="hidden" />
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="lote">Identificador do lote</label>
                     <Field
-                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.lote || loteExist ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.lote ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="lote"
                       name="lote"
                       type="text"
@@ -189,7 +189,7 @@ const AddLote = () => {
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataEntrada">Data do cadastro</label>
                     <DatePickerField
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataEntrada ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataEntrada ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="dataEntrada"
                       name="dataEntrada"
                       dateFormat="dd/MM/yyyy"
@@ -200,7 +200,7 @@ const AddLote = () => {
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="femea">Número de fêmeas</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.femea ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="femea"
                       name="femea"
                       type="text"
@@ -213,7 +213,7 @@ const AddLote = () => {
                   <div className="mt-4">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="macho">Número de machos</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.macho ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="macho"
                       name="macho"
                       type="text"

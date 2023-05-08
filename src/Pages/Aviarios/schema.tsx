@@ -12,5 +12,4 @@ export default Yup.object().shape({
     box2Macho: Yup.number().typeError("Digite somente números").notRequired(),
     box3Macho: Yup.number().typeError("Digite somente números").notRequired(),
     box4Macho: Yup.number().typeError("Digite somente números").notRequired(),
-
 });

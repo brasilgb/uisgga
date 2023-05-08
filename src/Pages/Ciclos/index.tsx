@@ -127,7 +127,7 @@ const Ciclos = () => {
           <STd>{ciclo.semanaInicial}</STd>
           <STd>
             {
-              ciclo.metas.sort((s:any,m:any) => (s.semana < m.semana ? -1 : 1) ).slice(-1)[0].semana
+              ciclo.metas.sort((s: any, m: any) => (s.semana < m.semana ? -1 : 1)).slice(-1)[0].semana
             }
           </STd>
           <STd>{ciclo.metas.length}</STd>

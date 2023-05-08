@@ -187,7 +187,7 @@ const AddEnvio = () => {
                   }
 
                   <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                    <h1 className="font-lg text-white font-medium uppercase">Cadastro de coletas</h1>
+                    <h1 className="font-lg text-white font-medium uppercase">Adicionar envio</h1>
                   </div>
 
                   <div className="md:grid md:grid-cols-2 md:gap-4 border border-gray-200 p-4 rounded-lg bg-gray-100">
@@ -223,7 +223,6 @@ const AddEnvio = () => {
                         <AMessageError className="rounded-b-lg">{errors.loteId}</AMessageError>
                       }
                     </div>
-
                   </div>
 
                   <div className="md:grid md:grid-cols-3 md:gap-4 mt-4 border border-gray-200 p-4 rounded-lg bg-gray-100">

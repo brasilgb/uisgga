@@ -17,27 +17,27 @@ import { AMessageError, AMessageSuccess } from "../../Components/Messages";
 registerLocale("ptbr", ptbr);
 interface FormProps {
   dataColeta: Date,
-  loteId: string | undefined;
-  aviarioId: string | undefined;
-  coleta: string | undefined;
-  limposNinho: string | undefined;
-  sujosNinho: string | undefined;
-  ovosCama: string | undefined;
-  duasGemas: string | undefined;
-  refugos: string | undefined;
-  pequenos: string | undefined;
-  cascaFina: string | undefined;
-  frios: string | undefined;
-  esmagadosQuebrados: string | undefined;
-  camaNaoIncubaveis: string | undefined;
-  deformados: string | undefined;
-  sujosDeCama: string | undefined;
-  trincados: string | undefined;
-  eliminados: string | undefined;
-  incubaveisBons: number | undefined,
-  incubaveis: number | undefined,
-  comerciais: number | undefined,
-  posturaDia: number | undefined,
+  loteId: string;
+  aviarioId: string;
+  coleta: string;
+  limposNinho: string;
+  sujosNinho: string;
+  ovosCama: string;
+  duasGemas: string;
+  refugos: string;
+  pequenos: string;
+  cascaFina: string;
+  frios: string;
+  esmagadosQuebrados: string;
+  camaNaoIncubaveis: string;
+  deformados: string;
+  sujosDeCama: string;
+  trincados: string;
+  eliminados: string;
+  incubaveisBons: number,
+  incubaveis: number,
+  comerciais: number,
+  posturaDia: number,
 }
 const AddColeta = () => {
   const navigate = useNavigate();
@@ -45,9 +45,9 @@ const AddColeta = () => {
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
-  const [allValuesForm, setAllValuesForm] = useState<any>();
   const [lotesAll, setLotesAll] = useState([]);
   const [aviarioLote, setAviarioLote] = useState([]);
+  const [allValuesForm, setAllValuesForm] = useState<any>();
   const [coletasAviario, setColetasAviario] = useState('0');
 
   const DatePickerField = ({ ...props }: any) => {
@@ -91,7 +91,6 @@ const AddColeta = () => {
 
   useEffect(() => {
     const getColetasAviario = (async () => {
-
       if (allValuesForm && allValuesForm.aviarioId !== "") {
         await api.get('coletas')
           .then((response) => {
@@ -121,7 +120,15 @@ const AddColeta = () => {
     });
   };
 
-  const handleKeyPress = (e:any) => {
+  const FormObserver = () => {
+    const { values } = useFormikContext();
+    useEffect(() => {
+      setAllValuesForm(values);
+    }, [values]);
+    return null;
+  };
+
+  const handleKeyPress = (e: any) => {
     if (e.key === "Enter") {
       var form = e.target.form;
       var index = Array.prototype.indexOf.call(form, e.target);
@@ -220,7 +227,7 @@ const AddColeta = () => {
         >
           {({ errors, isValid, values }) => (
             <Form autoComplete="off">
-
+              <FormObserver />
               <div className="bg-white rounded-t-lg border overflow-auto py-8 px-2">
                 {postMessageErro &&
                   <div>{<AMessageError className="rounded-lg">{postMessageErro}</AMessageError>}</div>
@@ -230,7 +237,7 @@ const AddColeta = () => {
                 }
 
                 <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                  <h1 className="font-lg text-white font-medium uppercase">Cadastro de coletas</h1>
+                  <h1 className="font-lg text-white font-medium uppercase">Adicionar coletas</h1>
                 </div>
 
                 <div className="md:grid md:grid-cols-4 md:gap-4 border border-gray-200 p-4 rounded-lg bg-gray-100">
@@ -241,7 +248,7 @@ const AddColeta = () => {
                       id="dataColeta"
                       name="dataColeta"
                       dateFormat="dd/MM/yyyy HH:mm:ss"
-                      onFocus={(e:any) => e.target.blur()}
+                      onFocus={(e: any) => e.target.blur()}
                       showTimeSelect
                       timeFormat="HH:mm"
                       timeIntervals={5}
@@ -259,13 +266,14 @@ const AddColeta = () => {
                     >
                       <option value="">Selecione o Lote</option>
                       {lotesAll.map((lt: any, ilt: any) => (
-                        <option value={lt.idLote}>{lt.lote}</option>
+                        <option key={ilt} value={lt.idLote}>{lt.lote}</option>
                       ))}
                     </Field>
                     {errors.loteId &&
                       <AMessageError className="rounded-b-lg">{errors.loteId}</AMessageError>
                     }
                   </div>
+
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="aviarioId">Aviário</label>
                     <Field
@@ -277,7 +285,7 @@ const AddColeta = () => {
                     >
                       <option value="0">Selecione o aviário</option>
                       {aviarioLote.map((av: any, iav: any) => (
-                        <option value={av.idAviario}>{av.aviario}</option>
+                        <option key={iav} value={av.idAviario}>{av.aviario}</option>
                       ))}
                     </Field>
                     {errors.aviarioId &&
@@ -310,8 +318,8 @@ const AddColeta = () => {
                       id="limposNinho"
                       name="limposNinho"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.limposNinho &&
                       <AMessageError className="rounded-b-lg">{errors.limposNinho}</AMessageError>
@@ -324,8 +332,8 @@ const AddColeta = () => {
                       id="sujosNinho"
                       name="sujosNinho"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.sujosNinho &&
                       <AMessageError className="rounded-b-lg">{errors.sujosNinho}</AMessageError>
@@ -338,8 +346,8 @@ const AddColeta = () => {
                       id="ovosCama"
                       name="ovosCama"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.ovosCama &&
                       <AMessageError className="rounded-b-lg">{errors.ovosCama}</AMessageError>
@@ -353,8 +361,8 @@ const AddColeta = () => {
                       id="duasGemas"
                       name="duasGemas"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.duasGemas &&
                       <AMessageError className="rounded-b-lg">{errors.duasGemas}</AMessageError>
@@ -367,8 +375,8 @@ const AddColeta = () => {
                       id="pequenos"
                       name="pequenos"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.pequenos &&
                       <AMessageError className="rounded-b-lg">{errors.pequenos}</AMessageError>
@@ -381,8 +389,8 @@ const AddColeta = () => {
                       id="trincados"
                       name="trincados"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.trincados &&
                       <AMessageError className="rounded-b-lg">{errors.trincados}</AMessageError>
@@ -395,8 +403,8 @@ const AddColeta = () => {
                       id="cascaFina"
                       name="cascaFina"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.cascaFina &&
                       <AMessageError className="rounded-b-lg">{errors.cascaFina}</AMessageError>
@@ -409,8 +417,8 @@ const AddColeta = () => {
                       id="deformados"
                       name="deformados"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.deformados &&
                       <AMessageError className="rounded-b-lg">{errors.deformados}</AMessageError>
@@ -423,8 +431,8 @@ const AddColeta = () => {
                       id="frios"
                       name="frios"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.frios &&
                       <AMessageError className="rounded-b-lg">{errors.frios}</AMessageError>
@@ -437,8 +445,8 @@ const AddColeta = () => {
                       id="sujosDeCama"
                       name="sujosDeCama"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.sujosDeCama &&
                       <AMessageError className="rounded-b-lg">{errors.sujosDeCama}</AMessageError>
@@ -451,8 +459,8 @@ const AddColeta = () => {
                       id="esmagadosQuebrados"
                       name="esmagadosQuebrados"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.esmagadosQuebrados &&
                       <AMessageError className="rounded-b-lg">{errors.esmagadosQuebrados}</AMessageError>
@@ -466,8 +474,8 @@ const AddColeta = () => {
                       id="camaNaoIncubaveis"
                       name="camaNaoIncubaveis"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.camaNaoIncubaveis &&
                       <AMessageError className="rounded-b-lg">{errors.camaNaoIncubaveis}</AMessageError>
@@ -481,8 +489,8 @@ const AddColeta = () => {
                       id="eliminados"
                       name="eliminados"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.eliminados &&
                       <AMessageError className="rounded-b-lg">{errors.eliminados}</AMessageError>
@@ -496,8 +504,8 @@ const AddColeta = () => {
                       id="refugos"
                       name="refugos"
                       type="text"
-                      onFocus={(e:any) => e.target.value}
-                      onKeyPress={(e:any) => handleKeyPress(e)}
+                      onFocus={(e: any) => e.target.value}
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.refugos &&
                       <AMessageError className="rounded-b-lg">{errors.refugos}</AMessageError>
@@ -514,10 +522,10 @@ const AddColeta = () => {
                       name="incubaveisBons"
                       type="text"
                       readonly="true"
-                      value={ values.incubaveisBons =
+                      value={values.incubaveisBons =
                         (
-                          parseInt(values.limposNinho?values.limposNinho:'0') +
-                          parseInt(values.sujosNinho?values.sujosNinho:'0')
+                          parseInt(values.limposNinho ? values.limposNinho : '0') +
+                          parseInt(values.sujosNinho ? values.sujosNinho : '0')
                         )
                       }
                     />
@@ -534,11 +542,11 @@ const AddColeta = () => {
                       name="incubaveis"
                       type="text"
                       readonly="true"
-                      value={ values.incubaveis =
+                      value={values.incubaveis =
                         (
-                          parseInt(values.limposNinho?values.limposNinho:'0') +
-                          parseInt(values.sujosNinho?values.sujosNinho:'0') +
-                          parseInt(values.ovosCama?values.ovosCama:'0')
+                          parseInt(values.limposNinho ? values.limposNinho : '0') +
+                          parseInt(values.sujosNinho ? values.sujosNinho : '0') +
+                          parseInt(values.ovosCama ? values.ovosCama : '0')
                         )
                       }
                     />
@@ -555,17 +563,17 @@ const AddColeta = () => {
                       name="comerciais"
                       type="text"
                       readonly="true"
-                      value={ values.comerciais = 
+                      value={values.comerciais =
                         (
-                          parseInt(values.duasGemas?values.duasGemas:'0') +
-                          parseInt(values.pequenos?values.pequenos:'0') +
-                          parseInt(values.trincados?values.trincados:'0') +
-                          parseInt(values.cascaFina?values.cascaFina:'0') +
-                          parseInt(values.deformados?values.deformados:'0') +
-                          parseInt(values.frios?values.frios:'0') +
-                          parseInt(values.sujosDeCama?values.sujosDeCama:'0') +
-                          parseInt(values.camaNaoIncubaveis?values.camaNaoIncubaveis:'0') +
-                          parseInt(values.refugos?values.refugos:'0')
+                          parseInt(values.duasGemas ? values.duasGemas : '0') +
+                          parseInt(values.pequenos ? values.pequenos : '0') +
+                          parseInt(values.trincados ? values.trincados : '0') +
+                          parseInt(values.cascaFina ? values.cascaFina : '0') +
+                          parseInt(values.deformados ? values.deformados : '0') +
+                          parseInt(values.frios ? values.frios : '0') +
+                          parseInt(values.sujosDeCama ? values.sujosDeCama : '0') +
+                          parseInt(values.camaNaoIncubaveis ? values.camaNaoIncubaveis : '0') +
+                          parseInt(values.refugos ? values.refugos : '0')
                         )
                       }
                     />
@@ -583,22 +591,22 @@ const AddColeta = () => {
                       name="posturaDia"
                       type="text"
                       readonly="true"
-                      value={ values.posturaDia = 
+                      value={values.posturaDia =
                         (
-                          parseInt(values.limposNinho?values.limposNinho:'0') +
-                          parseInt(values.sujosNinho?values.sujosNinho:'0') +
-                          parseInt(values.ovosCama?values.ovosCama:'0') +
-                          parseInt(values.duasGemas?values.duasGemas:'0') +
-                          parseInt(values.pequenos?values.pequenos:'0') +
-                          parseInt(values.trincados?values.trincados:'0') +
-                          parseInt(values.cascaFina?values.cascaFina:'0') +
-                          parseInt(values.deformados?values.deformados:'0') +
-                          parseInt(values.frios?values.frios:'0') +
-                          parseInt(values.sujosDeCama?values.sujosDeCama:'0') +
-                          parseInt(values.esmagadosQuebrados?values.esmagadosQuebrados:'0') +
-                          parseInt(values.camaNaoIncubaveis?values.camaNaoIncubaveis:'0') +
-                          parseInt(values.eliminados?values.eliminados:'0') +
-                          parseInt(values.refugos?values.refugos:'0')
+                          parseInt(values.limposNinho ? values.limposNinho : '0') +
+                          parseInt(values.sujosNinho ? values.sujosNinho : '0') +
+                          parseInt(values.ovosCama ? values.ovosCama : '0') +
+                          parseInt(values.duasGemas ? values.duasGemas : '0') +
+                          parseInt(values.pequenos ? values.pequenos : '0') +
+                          parseInt(values.trincados ? values.trincados : '0') +
+                          parseInt(values.cascaFina ? values.cascaFina : '0') +
+                          parseInt(values.deformados ? values.deformados : '0') +
+                          parseInt(values.frios ? values.frios : '0') +
+                          parseInt(values.sujosDeCama ? values.sujosDeCama : '0') +
+                          parseInt(values.esmagadosQuebrados ? values.esmagadosQuebrados : '0') +
+                          parseInt(values.camaNaoIncubaveis ? values.camaNaoIncubaveis : '0') +
+                          parseInt(values.eliminados ? values.eliminados : '0') +
+                          parseInt(values.refugos ? values.refugos : '0')
                         )
                       }
                     />

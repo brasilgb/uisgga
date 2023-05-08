@@ -137,7 +137,7 @@ const EditAviario = () => {
                 Aviários
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
-              <span className="text-gray-600 ">Editar</span>
+              <span className="text-gray-600 ">Alterar</span>
             </div>
 
           </SubBarRight>
@@ -179,13 +179,13 @@ const EditAviario = () => {
                 }
 
                 <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                  <h1 className="font-lg text-white font-medium uppercase">Editar aviário</h1>
+                  <h1 className="font-lg text-white font-medium uppercase">Alterar aviário</h1>
                 </div>
                 <Field id="idLote" name="idLote" type="hidden" />
                 <div className="mt-4">
                   <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="aviario">Identificador do aviário</label>
                   <Field
-                    className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.aviario ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                    className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.aviario ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                     id="aviario"
                     name="aviario"
                     type="text"
@@ -199,7 +199,7 @@ const EditAviario = () => {
                 <div className="mt-4">
                   <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataEntrada">Data de chegada</label>
                   <DatePickerField
-                    className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataEntrada ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                    className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataEntrada ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                     id="dataEntrada"
                     name="dataEntrada"
                     dateFormat="dd/MM/yyyy"
@@ -211,7 +211,7 @@ const EditAviario = () => {
                   <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="loteId">Lotes</label>
                   <Field
                     as="select"
-                    className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.loteId ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                    className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.loteId ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                     id="loteId"
                     name="loteId"
                   >
@@ -233,7 +233,7 @@ const EditAviario = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box1Femea">Box 1</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box1Femea ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box1Femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="box1Femea"
                       name="box1Femea"
                       type="text"
@@ -246,7 +246,7 @@ const EditAviario = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box2Femea">Box 2</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box2Femea ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box2Femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="box2Femea"
                       name="box2Femea"
                       type="text"
@@ -259,7 +259,7 @@ const EditAviario = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box3Femea">Box 3</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box3Femea ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box3Femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="box3Femea"
                       name="box3Femea"
                       type="text"
@@ -272,7 +272,7 @@ const EditAviario = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box4Femea">Box 4</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box4Femea ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box4Femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="box4Femea"
                       name="box4Femea"
                       type="text"
@@ -291,7 +291,7 @@ const EditAviario = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box1Macho">Box 1</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box1Macho ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box1Macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="box1Macho"
                       name="box1Macho"
                       type="text"
@@ -303,7 +303,7 @@ const EditAviario = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box2Macho">Box 2</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box2Macho ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box2Macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="box2Macho"
                       name="box2Macho"
                       type="text"
@@ -315,7 +315,7 @@ const EditAviario = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box3Macho">Box 3</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box3Macho ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box3Macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="box3Macho"
                       name="box3Macho"
                       type="text"
@@ -327,7 +327,7 @@ const EditAviario = () => {
                   <div>
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box4Macho">Box 4</label>
                     <Field
-                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box4Macho ? 'rounded-t-md' : 'rounded-md'} focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box4Macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                       id="box4Macho"
                       name="box4Macho"
                       type="text"
