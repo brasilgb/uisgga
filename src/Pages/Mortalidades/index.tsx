@@ -95,7 +95,14 @@ const Mortalidade = () => {
           <STd>{mortalidade.totalFemeas}</STd>
           <STd>{mortalidade.totalMachos}</STd>
           <STd>{mortalidade.totalAves}</STd>
-          <STd>{causas.filter((fc:any) => (fc.idx === mortalidade.causaMorte)).map((c:any) => (c.causa))}</STd>
+          <STd>
+            <span
+              title={mortalidade.causaMorte == 99 ? mortalidade.outraCausa : ''}
+              className={`${mortalidade.causaMorte == 99 ? "border-b border-red-400 border-dashed cursor-help" : ""}`}
+            >
+              {causas.filter((fc: any) => (fc.idx === mortalidade.causaMorte)).map((c: any) => (c.causa))}
+            </span>
+          </STd>
           <STd>{moment(mortalidade.dataMorte).format("DD/MM/YYYY")}</STd>
           <STd>
             <div className='flex items-center justify-end'>
@@ -111,11 +118,11 @@ const Mortalidade = () => {
   // -> sistema de busca
   async function handleSearch() {
     let date = moment(startDate).format('YYYY-MM-DD');
-
     await api.post(`searchmortalidade`, {
       date: date
     })
       .then((response) => {
+        console.log(response);
         setLoadingSearch(true);
         setTimeout(() => {
           if (response.data.data.length > 0) {

@@ -54,7 +54,7 @@ export const SFormSearch = ({ loading, handleSubmit, refSearch, required }: Prop
                     placeholder="Buscar por lote..."
                 />
             </div>
-        </Fragment >
+        </Fragment>
     )
 };
 
@@ -62,7 +62,6 @@ export const SFormSearchData = ({ loading, selected, onChange, onclick }: PropsS
 
     return (
         <Fragment>
-
             <div className="flex bg-white rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-400">
                 <div
                     className="inline-flex items-center justify-center left-0 top-0 text-gray-400"
