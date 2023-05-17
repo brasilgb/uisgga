@@ -8,6 +8,7 @@ import {
   AddEnvio,
   AddLote,
   AddMortalidade,
+  AddPesagem,
   Aviarios,
   Ciclos,
   Coletas,
@@ -16,10 +17,12 @@ import {
   EditEnvio,
   EditLote,
   EditMortalidade,
+  EditPesagem,
   Envios,
   Home,
   Lotes, 
-  Mortalidades
+  Mortalidades,
+  Pesagens
 } from "../Pages";
 
 
@@ -46,6 +49,9 @@ function BackRoutes() {
         <Route path='/mortalidades' element={<Mortalidades />} />
         <Route path='/mortalidades/addmortalidade' element={<AddMortalidade />} />
         <Route path='/mortalidades/editmortalidade' element={<EditMortalidade />} />
+        <Route path='/pesagens' element={<Pesagens />} />
+        <Route path='/pesagens/addpesagem' element={<AddPesagem />} />
+        <Route path='/pesagens/editpesagem' element={<EditPesagem />} />
       </Route>
       
     </Routes>

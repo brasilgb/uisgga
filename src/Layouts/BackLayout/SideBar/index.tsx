@@ -142,7 +142,7 @@ const SideBar = () => {
                         <li className="my-0.5">
                             <div
                                 onClick={() => handleToggle(clicked === 1 ? 0 : 1)}
-                                className={`flex items-center h-10 justify-between px-3 hover:bg-slate-500 hover:cursor-pointer text-slate-300 mt-0.5 ${clicked === 1 ? "bg-slate-500 mb-0.5 rounded-t-lg hover:rounded-t-lg" : " hover:rounded-lg"}`}
+                                className={`flex items-center h-10 justify-between px-3  hover:bg-slate-500 hover:cursor-pointer text-slate-300 mt-0.5 ${clicked === 1 ? "bg-slate-500 mb-0.5 rounded-t-lg hover:rounded-t-lg" : " hover:rounded-lg"}`}
                             >
                                 <div className="flex items-center justify-center text-lg">
                                     <IconContext.Provider value={{ className: "text-xl" }} >
@@ -154,7 +154,7 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                        {clicked === 1 ? <IoChevronUp /> : <IoChevronDown />}
+                                    <IoChevronDown className={`${clicked === 1 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
                             </div>
@@ -175,7 +175,7 @@ const SideBar = () => {
                                             to="/pesagens"
                                             className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
                                         >
-                                            <span className="pl-6">Pesagem</span>
+                                            <span className="pl-6">Pesagens</span>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -197,7 +197,7 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                        {clicked === 2 ? <IoChevronUp /> : <IoChevronDown />}
+                                    <IoChevronDown className={`${clicked === 2 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 
@@ -240,7 +240,7 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                        {clicked === 3 ? <IoChevronUp /> : <IoChevronDown />}
+                                    <IoChevronDown className={`${clicked === 3 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 
@@ -283,7 +283,7 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                        {clicked === 4 ? <IoChevronUp /> : <IoChevronDown />}
+                                    <IoChevronDown className={`${clicked === 4 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 
@@ -326,7 +326,7 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                        {clicked === 5 ? <IoChevronUp /> : <IoChevronDown />}
+                                    <IoChevronDown className={`${clicked === 5 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 
@@ -378,7 +378,7 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                        {clicked === 6 ? <IoChevronUp /> : <IoChevronDown />}
+                                    <IoChevronDown className={`${clicked === 6 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 

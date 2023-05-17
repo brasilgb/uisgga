@@ -22,6 +22,10 @@ import Mortalidades from "./Mortalidades";
 import AddMortalidade from "./Mortalidades/AddMortalidade";
 import EditMortalidade from "./Mortalidades/EditMortalidade";
 
+import Pesagens from "./Pesagens";
+import AddPesagem from "./Pesagens/AddPesagem";
+import EditPesagem from "./Pesagens/EditPesagem";
+
 export {
     Home,
     Ciclos,
@@ -40,5 +44,8 @@ export {
     EditEnvio,
     Mortalidades,
     AddMortalidade,
-    EditMortalidade
+    EditMortalidade,
+    Pesagens,
+    AddPesagem,
+    EditPesagem
 };
