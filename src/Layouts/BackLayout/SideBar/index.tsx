@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IconContext } from 'react-icons';
-import { IoBarChartOutline, IoCartOutline, IoChevronDown, IoChevronUp, IoCogOutline, IoFileTrayOutline, IoFileTrayStackedOutline, IoHomeOutline, IoLockOpenOutline, IoNotificationsOutline, IoPeopleOutline, IoTimerOutline } from 'react-icons/io5';
+import { IoBarChartOutline, IoCartOutline, IoChevronDown, IoChevronForward, IoChevronUp, IoCogOutline, IoFileTrayOutline, IoFileTrayStackedOutline, IoHomeOutline, IoLockOpenOutline, IoNotificationsOutline, IoPeopleOutline, IoTimerOutline } from 'react-icons/io5';
 import { HiOutlineTruck } from 'react-icons/hi';
 import { NavLink } from 'react-router-dom';
 import { GiChicken, GiHandTruck } from "react-icons/gi";
@@ -21,23 +21,27 @@ const SideBar = () => {
     }
 
     const activeLink = {
-        active: 'flex flex-row items-center h-10 px-3 rounded-lg text-slate-50 bg-slate-500',
-        inactive: 'flex flex-row items-center h-10 px-3 rounded-lg text-slate-300 hover:bg-slate-500 hover:text-slate-700'
+        active: 'flex flex-row items-center h-10 px-3 rounded-lg text-secundary-blue bg-gray-light',
+        inactive: 'flex flex-row items-center h-10 px-3 rounded-lg text-gray-light hover:bg-gray-light hover:text-secundary-blue',
+        subActive: 'flex flex-row items-center h-10 px-3 rounded-lg text-secundary-blue bg-white',
+        subInactive: 'flex flex-row items-center h-10 px-3 rounded-lg text-secundary-blue hover:bg-gray-light hover:text-secundary-blue'
     }
 
     return (
-        <aside className='min-h-screen w-64 sm:relative bg-slate-600 shadow md:h-full flex-col justify-between hidden sm:flex'>
+        <aside className='min-h-screen w-64 sm:relative bg-primary-blue shadow md:h-full flex-col justify-between hidden sm:flex'>
             <div className="px-2 h-full flex flex-col flex-grow">
                 <div className="sidebar-header flex items-center justify-center py-4">
                     <div className="inline-flex">
-                        <a href="#" className="inline-flex flex-row items-center">
+                        <NavLink
+                            onClick={() => setClicked(0)}
+                            to="/" className="inline-flex flex-row items-center">
                             <IconContext.Provider value={{ className: "text-2xl text-gray-50" }}>
                                 <div>
                                     <IoBarChartOutline />
                                 </div>
                             </IconContext.Provider>
                             <span className="leading-10 text-gray-100 text-2xl font-bold ml-1 uppercase">Brandname</span>
-                        </a>
+                        </NavLink>
                     </div>
                 </div>
                 <div className="sidebar-content py-6">
@@ -45,6 +49,7 @@ const SideBar = () => {
 
                         <li className="my-0.5">
                             <NavLink
+                                onClick={() => setClicked(0)}
                                 to="/"
                                 className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
                             >
@@ -61,6 +66,7 @@ const SideBar = () => {
 
                         <li className="my-0.5">
                             <NavLink
+                                onClick={() => setClicked(0)}
                                 to="/ciclos"
                                 className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
                             >
@@ -77,6 +83,7 @@ const SideBar = () => {
 
                         <li className="my-0.5">
                             <NavLink
+                                onClick={() => setClicked(0)}
                                 to="/lotes"
                                 className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
                             >
@@ -93,6 +100,7 @@ const SideBar = () => {
 
                         <li className="my-0.5">
                             <NavLink
+                                onClick={() => setClicked(0)}
                                 to="/aviarios"
                                 className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
                             >
@@ -109,6 +117,7 @@ const SideBar = () => {
 
                         <li className="my-0.5">
                             <NavLink
+                                onClick={() => setClicked(0)}
                                 to="/coletas"
                                 className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
                             >
@@ -125,6 +134,7 @@ const SideBar = () => {
 
                         <li className="my-0.5">
                             <NavLink
+                                onClick={() => setClicked(0)}
                                 to="/envios"
                                 className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
                             >
@@ -142,7 +152,7 @@ const SideBar = () => {
                         <li className="my-0.5">
                             <div
                                 onClick={() => handleToggle(clicked === 1 ? 0 : 1)}
-                                className={`flex items-center h-10 justify-between px-3  hover:bg-slate-500 hover:cursor-pointer text-slate-300 mt-0.5 ${clicked === 1 ? "bg-slate-500 mb-0.5 rounded-t-lg hover:rounded-t-lg" : " hover:rounded-lg"}`}
+                                className={`flex items-center h-10 justify-between px-3 hover:bg-gray-light hover:text-secundary-blue hover:cursor-pointer text-gray-light mt-0.5 ${clicked === 1 ? "bg-gray-light text-secundary-blue mb-0.5 rounded-t-lg hover:rounded-t-lg border border-white shadow-md" : "hover:rounded-lg"}`}
                             >
                                 <div className="flex items-center justify-center text-lg">
                                     <IconContext.Provider value={{ className: "text-xl" }} >
@@ -154,28 +164,42 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                    <IoChevronDown className={`${clicked === 1 ? '-rotate-180' : 'rotate-0'} duration-300`} />
+                                        <IoChevronDown className={`${clicked === 1 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
                             </div>
 
                             {clicked === 1 &&
-                                <ul className="p-1 pl-2 rounded-b-lg bg-slate-500 animate__animated animate__fadeIn">
+                                <ul className="p-1 pl-2 rounded-b-lg bg-gray-light border border-white shadow-md animate__animated animate__fadeIn">
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/mortalidades"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Mortalidades</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Mortalidades</span>
                                         </NavLink>
                                     </li>
 
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/pesagens"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Pesagens</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Pesagens</span>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -185,7 +209,7 @@ const SideBar = () => {
                         <li className="my-0.5">
                             <div
                                 onClick={() => handleToggle(clicked === 2 ? 0 : 2)}
-                                className={`flex items-center h-10 justify-between px-3 hover:bg-slate-500 hover:cursor-pointer text-slate-300 mt-0.5 ${clicked === 2 ? "bg-slate-500 mb-0.5 rounded-t-lg hover:rounded-t-lg" : " hover:rounded-lg"}`}
+                                className={`flex items-center h-10 justify-between px-3 hover:bg-gray-light hover:text-secundary-blue hover:cursor-pointer text-gray-light mt-0.5 ${clicked === 2 ? "bg-gray-light text-secundary-blue mb-0.5 rounded-t-lg hover:rounded-t-lg border border-white shadow-md" : " hover:rounded-lg"}`}
                             >
                                 <div className="flex items-center justify-center text-lg">
                                     <IconContext.Provider value={{ className: "text-xl" }} >
@@ -197,28 +221,42 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                    <IoChevronDown className={`${clicked === 2 ? '-rotate-180' : 'rotate-0'} duration-300`} />
+                                        <IoChevronDown className={`${clicked === 2 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 
                             </div>
                             {clicked === 2 &&
-                                <ul className="p-1 pl-2 rounded-b-lg bg-slate-500 animate__animated animate__fadeIn">
+                                <ul className="p-1 pl-2 rounded-b-lg bg-gray-light border border-white shadow-md animate__animated animate__fadeIn">
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/mortalidades"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Recebimento</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Recebimento</span>
                                         </NavLink>
                                     </li>
 
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/pesagens"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Consumo</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Consumo</span>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -228,7 +266,7 @@ const SideBar = () => {
                         <li className="my-0.5">
                             <div
                                 onClick={() => handleToggle(clicked === 3 ? 0 : 3)}
-                                className={`flex items-center h-10 justify-between px-3 hover:bg-slate-500 hover:cursor-pointer text-slate-300 mt-0.5 ${clicked === 3 ? "bg-slate-500 mb-0.5 rounded-t-lg hover:rounded-t-lg" : " hover:rounded-lg"}`}
+                                className={`flex items-center h-10 justify-between px-3 hover:bg-gray-light hover:text-secundary-blue hover:cursor-pointer text-gray-light mt-0.5 ${clicked === 3 ? "bg-gray-light text-secundary-blue mb-0.5 rounded-t-lg hover:rounded-t-lg border border-white shadow-md" : " hover:rounded-lg"}`}
                             >
                                 <div className="flex items-center justify-center text-lg">
                                     <IconContext.Provider value={{ className: "text-xl" }} >
@@ -240,28 +278,42 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                    <IoChevronDown className={`${clicked === 3 ? '-rotate-180' : 'rotate-0'} duration-300`} />
+                                        <IoChevronDown className={`${clicked === 3 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 
                             </div>
                             {clicked === 3 &&
-                                <ul className="p-1 pl-2 rounded-b-lg bg-slate-500 animate__animated animate__fadeIn">
+                                <ul className="p-1 pl-2 rounded-b-lg bg-gray-light border border-white shadow-md animate__animated animate__fadeIn">
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/mortalidades"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Tarefas gerais</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Tarefas gerais</span>
                                         </NavLink>
                                     </li>
 
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/pesagens"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Controle diário</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Controle diário</span>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -271,7 +323,7 @@ const SideBar = () => {
                         <li className="my-0.5">
                             <div
                                 onClick={() => handleToggle(clicked === 4 ? 0 : 4)}
-                                className={`flex items-center h-10 justify-between px-3 hover:bg-slate-500 hover:cursor-pointer text-slate-300 mt-0.5 ${clicked === 4 ? "bg-slate-500 mb-0.5 rounded-t-lg hover:rounded-t-lg" : " hover:rounded-lg"}`}
+                                className={`flex items-center h-10 justify-between px-3 hover:bg-gray-light hover:text-secundary-blue hover:cursor-pointer text-gray-light mt-0.5 ${clicked === 4 ? "bg-gray-light text-secundary-blue mb-0.5 rounded-t-lg hover:rounded-t-lg border border-white shadow-md" : " hover:rounded-lg"}`}
                             >
                                 <div className="flex items-center justify-center text-lg">
                                     <IconContext.Provider value={{ className: "text-xl" }} >
@@ -283,28 +335,42 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                    <IoChevronDown className={`${clicked === 4 ? '-rotate-180' : 'rotate-0'} duration-300`} />
+                                        <IoChevronDown className={`${clicked === 4 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 
                             </div>
                             {clicked === 4 &&
-                                <ul className="p-1 pl-2 rounded-b-lg bg-slate-500 animate__animated animate__fadeIn">
+                                <ul className="p-1 pl-2 rounded-b-lg bg-gray-light border border-white shadow-md animate__animated animate__fadeIn">
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/mortalidades"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Despesas</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Despesas</span>
                                         </NavLink>
                                     </li>
 
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/pesagens"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Entradas</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Entradas</span>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -314,7 +380,7 @@ const SideBar = () => {
                         <li className="my-0.5">
                             <div
                                 onClick={() => handleToggle(clicked === 5 ? 0 : 5)}
-                                className={`flex items-center h-10 justify-between px-3 hover:bg-slate-500 hover:cursor-pointer text-slate-300 mt-0.5 ${clicked === 5 ? "bg-slate-500 mb-0.5 rounded-t-lg hover:rounded-t-lg" : " hover:rounded-lg"}`}
+                                className={`flex items-center h-10 justify-between px-3 hover:bg-gray-light hover:text-secundary-blue hover:cursor-pointer text-gray-light mt-0.5 ${clicked === 5 ? "bg-gray-light text-secundary-blue mb-0.5 rounded-t-lg hover:rounded-t-lg border border-white shadow-md" : " hover:rounded-lg"}`}
                             >
                                 <div className="flex items-center justify-center text-lg">
                                     <IconContext.Provider value={{ className: "text-xl" }} >
@@ -326,37 +392,58 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                    <IoChevronDown className={`${clicked === 5 ? '-rotate-180' : 'rotate-0'} duration-300`} />
+                                        <IoChevronDown className={`${clicked === 5 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 
                             </div>
                             {clicked === 5 &&
-                                <ul className="p-1 pl-2 rounded-b-lg bg-slate-500 animate__animated animate__fadeIn">
+                                <ul className="p-1 pl-2 rounded-b-lg bg-gray-light border border-white shadow-md animate__animated animate__fadeIn">
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/mortalidades"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Eclosão</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Eclosão</span>
                                         </NavLink>
                                     </li>
 
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/pesagens"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Fertilidade</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Fertilidade</span>
                                         </NavLink>
                                     </li>
 
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/pesagens"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Produção</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Produção</span>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -366,7 +453,7 @@ const SideBar = () => {
                         <li className="my-0.5">
                             <div
                                 onClick={() => handleToggle(clicked === 6 ? 0 : 6)}
-                                className={`flex items-center h-10 justify-between px-3 hover:bg-slate-500 hover:cursor-pointer text-slate-300 mt-0.5 ${clicked === 6 ? "bg-slate-500 mb-0.5 rounded-t-lg hover:rounded-t-lg" : " hover:rounded-lg"}`}
+                                className={`flex items-center h-10 justify-between px-3 hover:bg-gray-light hover:text-secundary-blue hover:cursor-pointer text-gray-light mt-0.5 ${clicked === 6 ? "bg-gray-light text-secundary-blue mb-0.5 rounded-t-lg hover:rounded-t-lg border border-white shadow-md" : " hover:rounded-lg"}`}
                             >
                                 <div className="flex items-center justify-center text-lg">
                                     <IconContext.Provider value={{ className: "text-xl" }} >
@@ -378,37 +465,58 @@ const SideBar = () => {
                                 </div>
                                 <IconContext.Provider value={{ className: "text-base" }} >
                                     <div>
-                                    <IoChevronDown className={`${clicked === 6 ? '-rotate-180' : 'rotate-0'} duration-300`} />
+                                        <IoChevronDown className={`${clicked === 6 ? '-rotate-180' : 'rotate-0'} duration-300`} />
                                     </div>
                                 </IconContext.Provider>
 
                             </div>
                             {clicked === 6 &&
-                                <ul className="p-1 pl-2 rounded-b-lg bg-slate-500 animate__animated animate__fadeIn">
+                                <ul className="p-1 pl-2 rounded-b-lg bg-gray-light border border-white shadow-md animate__animated animate__fadeIn">
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/mortalidades"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Backup</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Backup</span>
                                         </NavLink>
                                     </li>
 
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/pesagens"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">E-mail</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">E-mail</span>
                                         </NavLink>
                                     </li>
 
                                     <li className="my-0.5">
                                         <NavLink
                                             to="/pesagens"
-                                            className={({ isActive }) => isActive ? activeLink.active : activeLink.inactive}
+                                            className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
-                                            <span className="pl-6">Empresa</span>
+                                            <span className="flex items-center justify-center text-lg">
+                                                <IconContext.Provider value={{ className: "text-sm" }} >
+                                                    <div>
+                                                        <IoChevronForward />
+                                                    </div>
+                                                </IconContext.Provider>
+                                            </span>
+                                            <span className="pl-2">Empresa</span>
                                         </NavLink>
                                     </li>
                                 </ul>
