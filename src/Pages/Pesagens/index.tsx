@@ -169,7 +169,6 @@ const Pesagens = () => {
           } else {
             setLoteExists(false);
           }
-
         })
     });
     getLoteExists();
@@ -215,7 +214,7 @@ const Pesagens = () => {
 
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SAddButtom active={!cicloActive || !loteExists} onClick={() => navigate('/pesagens/addaviario')} />
+            <SAddButtom active={!cicloActive || !loteExists} onClick={() => navigate('/pesagens/addpesagem')} />
           </div>
           {!cicloActive &&
             <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">ciclos</span> deverão estar cadastrados e ativos</AMessageError>

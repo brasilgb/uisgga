@@ -82,9 +82,9 @@ const AddPesagem = () => {
     api.post('aviarios', {
       cicloId: idCicloAtivo,
       loteId: values.loteId,
-      aviario: values.aviario,
+      aviarioId: values.aviarioId,
       dataEntrada: values.dataEntrada,
-      box1Femea: values.box1Femea,
+      semana: values.box1Femea,
       box2Femea: values.box2Femea,
       box3Femea: values.box3Femea,
       box4Femea: values.box4Femea,
@@ -137,10 +137,10 @@ const AddPesagem = () => {
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
               <button
-                onClick={() => navigate('/aviarios')}
+                onClick={() => navigate('/consumos')}
                 className="text-gray-600  hover:underline"
               >
-                Aviários
+                Consumo
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
               <span className="text-gray-600 ">Adicionar</span>
@@ -153,7 +153,7 @@ const AddPesagem = () => {
       <ABoxAll>
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SBackButtom onClick={() => navigate('/aviarios')} />
+            <SBackButtom onClick={() => navigate('/consumos')} />
           </div>
         </div>
 
@@ -166,8 +166,9 @@ const AddPesagem = () => {
             initialValues={{
               cicloId: '',
               loteId: '',
-              aviario: '',
+              aviarioId: '',
               dataEntrada: new Date(),
+              semana: '',
               box1Femea: '',
               box2Femea: '',
               box3Femea: '',
@@ -195,16 +196,16 @@ const AddPesagem = () => {
                   </div>
                   <Field id="idLote" name="idLote" type="hidden" />
                   <div className="mt-4">
-                    <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="aviario">Identificador do aviário</label>
+                    <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="aviarioId">Identificador do aviário</label>
                     <Field
-                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.aviario ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                      id="aviario"
-                      name="aviario"
+                      className={`w-full px-4 py-2 uppercase text-gray-700 bg-gray-50 border border-gray-200 ${errors.aviarioId ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                      id="aviarioId"
+                      name="aviarioId"
                       type="text"
                       autoFocus
                     />
-                    {errors.aviario &&
-                      <AMessageError className="rounded-b-lg">{errors.aviario}</AMessageError>
+                    {errors.aviarioId &&
+                      <AMessageError className="rounded-b-lg">{errors.aviarioId}</AMessageError>
                     }
                   </div>
 
