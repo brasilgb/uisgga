@@ -2,35 +2,32 @@ import React, {
   Fragment,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { IconContext } from "react-icons";
-import { IoHome, IoFileTrayOutline } from "react-icons/io5";
+import { IoHome } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ABoxAll } from "../../Components/Boxes";
-import { SBackButtom, SSaveButtom } from "../../Components/Buttons";
-import SLoading from "../../Components/Loading";
-import { SubBar, SubBarLeft, SubBarRight } from "../../Components/SubBar";
-import { AppContext } from "../../Contexts/AppContext";
+import { ABoxAll } from "../../../Components/Boxes";
+import { SBackButtom, SSaveButtom } from "../../../Components/Buttons";
+import SLoading from "../../../Components/Loading";
+import { SubBar, SubBarLeft, SubBarRight } from "../../../Components/SubBar";
+import { AppContext } from "../../../Contexts/AppContext";
 import {
   Formik,
   Field,
   Form,
   useFormikContext,
-  useField,
-  useFormik,
-  FormikHelpers,
-  FormikValues,
+  useField
 } from "formik";
 import schema from "./schema";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.min.css";
 import ptbr from "date-fns/locale/pt-BR";
-import api from "../../Services/api";
+import api from "../../../Services/api";
 import "animate.css";
-import { AMessageError, AMessageSuccess } from "../../Components/Messages";
-import { causas } from "../../Constants";
+import { AMessageError, AMessageSuccess } from "../../../Components/Messages";
+import { causas } from "../../../Constants";
+import { GiChicken } from "react-icons/gi";
 import moment from "moment";
 
 registerLocale("ptbr", ptbr);
@@ -68,9 +65,6 @@ const EditMortalidade = () => {
   const [idCicloAtivo, setIdCicloAtivo] = useState();
   const [aviarioLote, setAviarioLote] = useState([]);
   const [allValuesForm, setAllValuesForm] = useState<any>();
-  const [selectedLoteId, setSelectedLoteId] = useState<any>();
-
-  const loteIdRef = useRef();
 
   const DatePickerField = ({ ...props }: any) => {
     const { setFieldValue } = useFormikContext();
@@ -128,7 +122,7 @@ const EditMortalidade = () => {
     getAviarioLote();
   }, [allValuesForm]);
 
-  const onsubmit = async (values: MortalidadeProps, { resetForm }: any) => {
+  const onsubmit = async (values: MortalidadeProps) => {
     setLoadingSaveButton(true);
     api
       .patch("mortalidades", {
@@ -139,7 +133,6 @@ const EditMortalidade = () => {
           setLoadingSaveButton(false);
           setPostMessageErro(false);
           setPostMessageSuccess(response.data.message);
-          resetForm();
         }, 500);
       })
       .catch((err) => {
@@ -175,7 +168,7 @@ const EditMortalidade = () => {
             <>
               <IconContext.Provider value={{ className: "text-3xl" }}>
                 <div>
-                  <IoFileTrayOutline />
+                <GiChicken />
                 </div>
               </IconContext.Provider>
               <h1 className="text-2xl ml-1 font-medium">Mortalidades</h1>
@@ -290,6 +283,7 @@ const EditMortalidade = () => {
                         id="dataMorte"
                         name="dataMorte"
                         dateFormat="dd/MM/yyyy"
+                        value={moment(values.dataMorte).format("DD/MM/YYYY")}
                         onFocus={(e: any) => e.target.blur()}
                       />
                     </div>

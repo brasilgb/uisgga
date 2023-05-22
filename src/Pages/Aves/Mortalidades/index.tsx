@@ -1,21 +1,21 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { IconContext } from 'react-icons';
 import { IoArrowBack, IoArrowForward, IoHome, IoFileTrayOutline } from 'react-icons/io5';
-import { GiLargePaintBrush } from "react-icons/gi";
-import { SAddButtom, SDlButtom, SEdButtom } from '../../Components/Buttons';
-import { SFormSearchData } from '../../Components/Form/FormSearch';
-import SLoading from '../../Components/Loading';
+import { GiChicken, GiLargePaintBrush } from "react-icons/gi";
+import { SAddButtom, SDlButtom, SEdButtom } from '../../../Components/Buttons';
+import { SFormSearchData } from '../../../Components/Form/FormSearch';
+import SLoading from '../../../Components/Loading';
 import ReactPaginate from 'react-paginate';
-import { SubBar, SubBarLeft, SubBarRight } from '../../Components/SubBar';
-import { STable, STd, STh, STr } from '../../Components/Tables';
-import { AppContext } from '../../Contexts/AppContext';
+import { SubBar, SubBarLeft, SubBarRight } from '../../../Components/SubBar';
+import { STable, STd, STh, STr } from '../../../Components/Tables';
+import { AppContext } from '../../../Contexts/AppContext';
 import 'animate.css';
-import api from '../../Services/api';
-import { ModalDelete } from '../../Components/ModalDelete';
+import api from '../../../Services/api';
+import { ModalDelete } from '../../../Components/ModalDelete';
 import moment from 'moment';
-import { ABoxAll } from '../../Components/Boxes';
+import { ABoxAll } from '../../../Components/Boxes';
 import { useNavigate } from "react-router-dom";
-import { ITENS_PER_PAGE, causas } from "../../Constants";
+import { ITENS_PER_PAGE, causas } from "../../../Constants";
 
 const Mortalidade = () => {
   const navigate = useNavigate();
@@ -164,7 +164,7 @@ const Mortalidade = () => {
             <>
               <IconContext.Provider value={{ className: 'text-3xl' }} >
                 <div>
-                  <IoFileTrayOutline />
+                <GiChicken />
                 </div>
               </IconContext.Provider>
               <h1 className='text-2xl ml-1 font-medium'>Mortalidades</h1>

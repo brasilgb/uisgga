@@ -273,7 +273,7 @@ const AddColeta = () => {
                       <AMessageError className="rounded-b-lg">{errors.loteId}</AMessageError>
                     }
                   </div>
-
+ 
                   <div className="mt-4 md:mt-0">
                     <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="aviarioId">Aviário</label>
                     <Field

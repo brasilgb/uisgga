@@ -2,35 +2,32 @@ import React, {
   Fragment,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { IconContext } from "react-icons";
-import { IoHome, IoFileTrayOutline } from "react-icons/io5";
+import { IoHome } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { ABoxAll } from "../../Components/Boxes";
-import { SBackButtom, SSaveButtom } from "../../Components/Buttons";
-import SLoading from "../../Components/Loading";
-import { SubBar, SubBarLeft, SubBarRight } from "../../Components/SubBar";
-import { AppContext } from "../../Contexts/AppContext";
+import { ABoxAll } from "../../../Components/Boxes";
+import { SBackButtom, SSaveButtom } from "../../../Components/Buttons";
+import SLoading from "../../../Components/Loading";
+import { SubBar, SubBarLeft, SubBarRight } from "../../../Components/SubBar";
+import { AppContext } from "../../../Contexts/AppContext";
 import {
   Formik,
   Field,
   Form,
   useFormikContext,
-  useField,
-  useFormik,
-  FormikHelpers,
-  FormikValues,
+  useField
 } from "formik";
 import schema from "./schema";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.min.css";
 import ptbr from "date-fns/locale/pt-BR";
-import api from "../../Services/api";
+import api from "../../../Services/api";
 import "animate.css";
-import { AMessageError, AMessageSuccess } from "../../Components/Messages";
-import { causas } from "../../Constants";
+import { AMessageError, AMessageSuccess } from "../../../Components/Messages";
+import { causas } from "../../../Constants";
+import { GiChicken } from "react-icons/gi";
 
 registerLocale("ptbr", ptbr);
 
@@ -64,9 +61,6 @@ const AddMortalidade = () => {
   const [idCicloAtivo, setIdCicloAtivo] = useState();
   const [aviarioLote, setAviarioLote] = useState([]);
   const [allValuesForm, setAllValuesForm] = useState<any>();
-  const [selectedLoteId, setSelectedLoteId] = useState<any>();
-
-  const loteIdRef = useRef();
 
   const DatePickerField = ({ ...props }: any) => {
     const { setFieldValue } = useFormikContext();
@@ -171,7 +165,7 @@ const AddMortalidade = () => {
             <>
               <IconContext.Provider value={{ className: "text-3xl" }}>
                 <div>
-                  <IoFileTrayOutline />
+                <GiChicken />
                 </div>
               </IconContext.Provider>
               <h1 className="text-2xl ml-1 font-medium">Mortalidades</h1>
@@ -279,8 +273,8 @@ const AddMortalidade = () => {
                       </label>
                       <DatePickerField
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataMorte
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="dataMorte"
                         name="dataMorte"
@@ -327,8 +321,8 @@ const AddMortalidade = () => {
                       <Field
                         as="select"
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.aviarioId
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="aviarioId"
                         name="aviarioId"
@@ -358,8 +352,8 @@ const AddMortalidade = () => {
                       <Field
                         as="select"
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.causaMorte
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="causaMorte"
                         name="causaMorte"
@@ -389,8 +383,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.outraCausa
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="outraCausa"
                         name="outraCausa"
@@ -450,8 +444,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box1Femea
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="box1Femea"
                         name="box1Femea"
@@ -474,8 +468,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box2Femea
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="box2Femea"
                         name="box2Femea"
@@ -498,8 +492,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box3Femea
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="box3Femea"
                         name="box3Femea"
@@ -522,8 +516,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box4Femea
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="box4Femea"
                         name="box4Femea"
@@ -581,8 +575,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box1Macho
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="box1Macho"
                         name="box1Macho"
@@ -604,8 +598,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box2Macho
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="box2Macho"
                         name="box2Macho"
@@ -627,8 +621,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box3Macho
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="box3Macho"
                         name="box3Macho"
@@ -650,8 +644,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box4Macho
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="box4Macho"
                         name="box4Macho"
@@ -681,8 +675,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.totalFemeas
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="totalFemeas"
                         name="totalFemeas"
@@ -717,8 +711,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.totalMachos
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="totalMachos"
                         name="totalMachos"
@@ -753,8 +747,8 @@ const AddMortalidade = () => {
                       </label>
                       <Field
                         className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.totalAves
-                            ? "border-red-400"
-                            : "border-gray-200"
+                          ? "border-red-400"
+                          : "border-gray-200"
                           } rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
                         id="totalAves"
                         name="totalAves"

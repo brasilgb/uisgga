@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { IoBarChartOutline, IoCartOutline, IoChevronDown, IoChevronForward, IoChevronUp, IoCogOutline, IoFileTrayOutline, IoFileTrayStackedOutline, IoHomeOutline, IoLockOpenOutline, IoNotificationsOutline, IoPeopleOutline, IoTimerOutline } from 'react-icons/io5';
 import { HiOutlineTruck } from 'react-icons/hi';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { GiChicken, GiHandTruck } from "react-icons/gi";
 import { FaTasks, FaCoins, FaCogs } from "react-icons/fa";
 import { TbTargetArrow } from "react-icons/tb";
@@ -10,15 +10,11 @@ import 'animate.css';
 
 const SideBar = () => {
 
-    const [openMenu, setOpenMenu] = useState(false);
     const [clicked, setClicked] = useState(0);
-
-    const handleToggle = (index: any) => {
-
+    const handleToggle = (async (index: any) => {
         setClicked(index);
-
-
-    }
+        
+    });
 
     const activeLink = {
         active: 'flex flex-row items-center h-10 px-3 rounded-lg text-secundary-blue bg-gray-light',
@@ -230,7 +226,7 @@ const SideBar = () => {
                                 <ul className="p-1 pl-2 rounded-b-lg bg-gray-light border border-white shadow-md animate__animated animate__fadeIn">
                                     <li className="my-0.5">
                                         <NavLink
-                                            to="/mortalidades"
+                                            to="/recebimentos"
                                             className={({ isActive }) => isActive ? activeLink.subActive : activeLink.subInactive}
                                         >
                                             <span className="flex items-center justify-center text-lg">
