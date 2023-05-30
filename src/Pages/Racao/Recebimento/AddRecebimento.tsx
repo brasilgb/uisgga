@@ -19,7 +19,7 @@ import { GiChicken } from "react-icons/gi";
 
 registerLocale("ptbr", ptbr);
 
-const AddPesagem = () => {
+const AddRecebimento = () => {
 
   const navigate = useNavigate();
   const { loading } = useContext(AppContext);
@@ -429,4 +429,4 @@ const AddPesagem = () => {
   )
 }
 
-export default AddPesagem;
+export default AddRecebimento;
