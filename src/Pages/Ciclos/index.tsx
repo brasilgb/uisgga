@@ -21,7 +21,7 @@ import { ITENS_PER_PAGE } from "../../Constants";
 
 const Ciclos = () => {
   const navigate = useNavigate();
-  const { setLoading, loading } = useContext(AppContext);
+  const { setLoading, loading, cicloActive, setCicloActive } = useContext(AppContext);
   const [allCiclos, setAllCiclos] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -78,6 +78,7 @@ const Ciclos = () => {
   const updateCiclo = (async (id: any, ativo: any, data: any, semana: any, semanafinal: any) => {
     setIdCiclo(id);
     setLoadingActive(true);
+    setCicloActive(ativo ? false : true);
     await api.patch('ciclos', {
       idCiclo: id,
       ativo: ativo ? false : true,
@@ -122,7 +123,6 @@ const Ciclos = () => {
     .map((ciclo: any, index: any) => (
       <STr key={index} head={false} colorRow={index % 2}>
         <>
-          <STd>{ciclo.idCiclo}</STd>
           <STd>{moment(ciclo.dataInicial).format("DD/MM/YYYY")}</STd>
           <STd>{ciclo.semanaInicial}</STd>
           <STd>
@@ -131,30 +131,24 @@ const Ciclos = () => {
             }
           </STd>
           <STd>{ciclo.metas.length}</STd>
-          <STd>{ciclo.dataFinal != null ? moment(ciclo.dataFinal).format("DD/MM/YYYY") : '-'}</STd>
-          <STd>{ciclo.semanaFinal != null ? ciclo.semanaFinal : '-'}</STd>
           <STd>{ciclo.lotes.length}</STd>
+          <STd>{ciclo.dataFinal != null ? moment(ciclo.dataFinal).format("DD/MM/YYYY") : "00/00/0000"}</STd>
+          <STd>{ciclo.semanaFinal != null ? ciclo.semanaFinal : "00"}</STd>
           <STd>
             <div className='flex items-center justify-end'>
               <button
                 onClick={() => updateCiclo(ciclo.idCiclo, ciclo.ativo, ciclo.dataInicial, ciclo.semanaInicial, ciclo.metas[ciclo.metas.length - 1].semana)}
+                title={ciclo.ativo ? "Desativar ciclo" : "Ativar ciclo"}
               >
-                {ciclo.ativo
-                  ? <span className='flex items-center justify-center h-8 w-8 bg-green-600 border-2 border-white text-white rounded-full mr-4'>
-                    <IconContext.Provider value={{ className: 'font-extrabold' }} >
-                      <div>
-                        {idCiclo === ciclo.idCiclo && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoCheckmark size={22} />}
-                      </div>
-                    </IconContext.Provider>
-                  </span>
-                  : <span className='flex items-center justify-center h-8 w-8 bg-red-600 border-2 border-white text-white rounded-full mr-4'>
-                    <IconContext.Provider value={{ className: 'font-extrabold' }} >
-                      <div>
-                        {idCiclo === ciclo.idCiclo && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoClose size={22} />}
-                      </div>
-                    </IconContext.Provider>
-                  </span>
-                }
+                <span className="flex items-center justify-center border border-gray-50 text-white rounded-full mr-4">
+                  <IconContext.Provider value={{ className: 'font-extrabold' }} >
+                    {ciclo.ativo
+                      ? <div className="rounded-full bg-green-600 p-1"> {idCiclo === ciclo.idCiclo && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoCheckmark size={22} />}</div>
+                      : <div className="rounded-full bg-red-600 p-1"> {idCiclo === ciclo.idCiclo && loadingActive ? <CgSpinnerTwo className='animate-spin' size={22} /> : <IoClose size={22} />}</div>
+                    }
+                  </IconContext.Provider>
+                </span>
+
               </button>
 
               <SDlButtom active={ciclo.ativo} onClick={() => toggleDelete(ciclo.idCiclo)} />
@@ -274,14 +268,13 @@ const Ciclos = () => {
 
                 <STr head={true}>
                   <>
-                    <STh><span>#ID</span></STh>
                     <STh><span>Data inicial</span></STh>
                     <STh><span>Semana inicial</span></STh>
                     <STh><span>Semana atual</span></STh>
                     <STh><span>Semanas percorridas</span></STh>
+                    <STh><span>Lotes</span></STh>
                     <STh><span>Data final</span></STh>
                     <STh><span>Semana final</span></STh>
-                    <STh><span>Lotes</span></STh>
                     <STh><span></span></STh>
                   </>
                 </STr>
@@ -309,7 +302,7 @@ const Ciclos = () => {
               nextLinkClassName="flex items-center justify-center ml-1 w-11 h-11 rounded-lg bg-gray-100 !border-2 !border-white shadow-md"
               disabledClassName="flex items-center text-gray-300 cursor-not-allowed bg-white"
               // pageClassName="border flex items-center justify-center bg-gray-200 mx-1 rounded-lg"
-              pageLinkClassName="mx-1 flex items-center justify-center w-11 h-11 text-gray-800 bg-gray-100 rounded-lg !border-2 !border-white shadow-md"
+              pageLinkClassName="mx-1 flex items-center justify-center w-11 h-11 text-gray-1000 bg-gray-100 rounded-lg !border-2 !border-white shadow-md"
               // activeClassName="border-0 flex items-center text-gray-50 bg-blue-500 rounded-lg"
               activeLinkClassName="flex items-center justify-center w-11 h-11 !text-gray-50 font-bold !bg-blue-500 rounded-lg !border-2 !border-white shadow-md"
             />

@@ -14,16 +14,16 @@ import api from '../../Services/api';
 import { ModalDelete } from '../../Components/ModalDelete';
 import moment from 'moment';
 import { ABoxAll } from '../../Components/Boxes';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE } from "../../Constants";
+import { AMessageError } from "../../Components/Messages";
 
 const Envio = () => {
   const navigate = useNavigate();
-  const { setLoading, loading } = useContext(AppContext);
+  const { setLoading, loading, cicloActive } = useContext(AppContext);
   const [allEnvios, setAllEnvios] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
-  const [cicloActive, setCicloActive] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [messageSearch, setMessageSearch] = useState<boolean>(false);
   
@@ -34,7 +34,6 @@ const Envio = () => {
     const getAllEnvios = async () => {
       await api.get('envios')
         .then((response) => {
-          setCicloActive(response.data.ciclos);
           setTimeout(() => {
             setAllEnvios(response.data.data.sort((a: any, b: any) => (a.idEnvio > b.idEnvio ? -1 : 1)));
             setLoading(false);
@@ -90,7 +89,6 @@ const Envio = () => {
     .map((envio: any, index: any) => (
       <STr key={index} head={false} colorRow={index % 2}>
         <>
-          <STd>{envio.idEnvio}</STd>
           <STd>{envio.incubaveis}</STd>
           <STd>{envio.comerciais}</STd>
           <STd>{envio.incubaveis + envio.comerciais}</STd>
@@ -185,7 +183,9 @@ const Envio = () => {
           <div>
             <SAddButtom active={!cicloActive} onClick={() => navigate('/envios/addenvio')} />
           </div>
-
+          {!cicloActive &&
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar envios de ovos os<Link className="underline font-bold mx-1 text-gray-500 hover:text-secundary-blue" to={'/ciclos'}>Ciclos</Link>deverão estar cadastrados e ativos.</AMessageError>
+          }
           {messageSearch &&
             <div className="flex items-center justify-start">
               <button onClick={() => handleReloadEnvios()} className="flex items-center justify-center" title="Limpar busca">
@@ -217,7 +217,6 @@ const Envio = () => {
 
                 <STr head={true}>
                   <>
-                    <STh><span>#ID</span></STh>
                     <STh><span>Incubáveis</span></STh>
                     <STh><span>Comerciais</span></STh>
                     <STh><span>Total enviados</span></STh>

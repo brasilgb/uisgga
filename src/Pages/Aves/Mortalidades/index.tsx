@@ -14,16 +14,16 @@ import api from '../../../Services/api';
 import { ModalDelete } from '../../../Components/ModalDelete';
 import moment from 'moment';
 import { ABoxAll } from '../../../Components/Boxes';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE, causas } from "../../../Constants";
+import { AMessageError } from "../../../Components/Messages";
 
-const Mortalidade = () => {
+const Mortalidades = () => {
   const navigate = useNavigate();
-  const { setLoading, loading } = useContext(AppContext);
+  const { setLoading, loading, cicloActive } = useContext(AppContext);
   const [allMortalidades, setAllMortalidades] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
-  const [cicloActive, setCicloActive] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [messageSearch, setMessageSearch] = useState<boolean>(false);
 
@@ -34,7 +34,6 @@ const Mortalidade = () => {
     const getAllMortalidades = async () => {
       await api.get('mortalidades')
         .then((response) => {
-          setCicloActive(response.data.ciclos);
           setTimeout(() => {
             setAllMortalidades(response.data.data.sort((a: any, b: any) => (a.idMortalidade > b.idMortalidade ? -1 : 1)));
             setLoading(false);
@@ -74,9 +73,11 @@ const Mortalidade = () => {
 
   // -> Pagination
   const [newMortalidade, setNewMortalidade] = useState(allMortalidades.slice(0, 50));
+  
   useEffect(() => {
     setNewMortalidade(allMortalidades.slice(0, 50));
   }, [allMortalidades])
+
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = ITENS_PER_PAGE;
   const pagesVisited = pageNumber * itemsPerPage;
@@ -194,7 +195,9 @@ const Mortalidade = () => {
           <div>
             <SAddButtom active={!cicloActive} onClick={() => navigate('/mortalidades/addmortalidade')} />
           </div>
-
+          {!cicloActive &&
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar mortalidades os<Link className="underline font-bold mx-1 text-gray-500 hover:text-secundary-blue" to={'/ciclos'}>Ciclos</Link>deverão estar cadastrados e ativos.</AMessageError>
+          }
           {messageSearch &&
             <div className="flex items-center justify-start">
               <button onClick={() => handleReloadMortalidades()} className="flex items-center justify-center" title="Limpar busca">
@@ -275,4 +278,4 @@ const Mortalidade = () => {
   )
 }
 
-export default Mortalidade;
+export default Mortalidades;

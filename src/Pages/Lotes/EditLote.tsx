@@ -33,7 +33,7 @@ const EditLote = () => {
   const navigate = useNavigate();
   const location = useLocation().state as LoteProps;
 
-  const { loading } = useContext(AppContext);
+  const { loading, handleKeyPress } = useContext(AppContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
@@ -207,6 +207,7 @@ const EditLote = () => {
                       id="femea"
                       name="femea"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.femea &&
                       <AMessageError className="rounded-b-lg">{errors.femea}</AMessageError>
@@ -220,6 +221,7 @@ const EditLote = () => {
                       id="macho"
                       name="macho"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.macho &&
                       <AMessageError className="rounded-b-lg">{errors.macho}</AMessageError>
@@ -254,6 +256,7 @@ const EditLote = () => {
                         id="femeaCapitalizada"
                         name="femeaCapitalizada"
                         type="text"
+                        onKeyPress={(e: any) => handleKeyPress(e)}
                       />
                       {errors.femeaCapitalizada &&
                         <AMessageError className="rounded-b-lg">{errors.femeaCapitalizada}</AMessageError>
@@ -267,6 +270,7 @@ const EditLote = () => {
                         id="machoCapitalizado"
                         name="machoCapitalizado"
                         type="text"
+                        onKeyPress={(e: any) => handleKeyPress(e)}
                       />
                       {errors.machoCapitalizado &&
                         <AMessageError className="rounded-b-lg">{errors.machoCapitalizado}</AMessageError>

@@ -20,7 +20,7 @@ registerLocale("ptbr", ptbr);
 
 const AddLote = () => {
   const navigate = useNavigate();
-  const { loading } = useContext(AppContext);
+  const { loading, handleKeyPress } = useContext(AppContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
@@ -204,6 +204,7 @@ const AddLote = () => {
                       id="femea"
                       name="femea"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.femea &&
                       <AMessageError className="rounded-b-lg">{errors.femea}</AMessageError>
@@ -217,6 +218,7 @@ const AddLote = () => {
                       id="macho"
                       name="macho"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.macho &&
                       <AMessageError className="rounded-b-lg">{errors.macho}</AMessageError>

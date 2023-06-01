@@ -37,7 +37,7 @@ const EditAviario = () => {
   const navigate = useNavigate();
   const location = useLocation().state as AviarioProps;
 
-  const { loading } = useContext(AppContext);
+  const { loading, handleKeyPress } = useContext(AppContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
@@ -237,6 +237,7 @@ const EditAviario = () => {
                       id="box1Femea"
                       name="box1Femea"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.box1Femea &&
                       <AMessageError className="rounded-b-lg">{errors.box1Femea}</AMessageError>
@@ -250,6 +251,7 @@ const EditAviario = () => {
                       id="box2Femea"
                       name="box2Femea"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.box2Femea &&
                       <AMessageError className="rounded-b-lg">{errors.box2Femea}</AMessageError>
@@ -263,6 +265,7 @@ const EditAviario = () => {
                       id="box3Femea"
                       name="box3Femea"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.box3Femea &&
                       <AMessageError className="rounded-b-lg">{errors.box3Femea}</AMessageError>
@@ -276,6 +279,7 @@ const EditAviario = () => {
                       id="box4Femea"
                       name="box4Femea"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.box4Femea &&
                       <AMessageError className="rounded-b-lg">{errors.box4Femea}</AMessageError>
@@ -295,6 +299,7 @@ const EditAviario = () => {
                       id="box1Macho"
                       name="box1Macho"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.box1Macho &&
                       <AMessageError className="rounded-b-lg">{errors.box1Macho}</AMessageError>
@@ -307,6 +312,7 @@ const EditAviario = () => {
                       id="box2Macho"
                       name="box2Macho"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.box2Macho &&
                       <AMessageError className="rounded-b-lg">{errors.box2Macho}</AMessageError>
@@ -319,6 +325,7 @@ const EditAviario = () => {
                       id="box3Macho"
                       name="box3Macho"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.box3Macho &&
                       <AMessageError className="rounded-b-lg">{errors.box3Macho}</AMessageError>
@@ -331,6 +338,7 @@ const EditAviario = () => {
                       id="box4Macho"
                       name="box4Macho"
                       type="text"
+                      onKeyPress={(e: any) => handleKeyPress(e)}
                     />
                     {errors.box4Macho &&
                       <AMessageError className="rounded-b-lg">{errors.box4Macho}</AMessageError>

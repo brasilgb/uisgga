@@ -31,7 +31,7 @@ const EditEnvio = () => {
   const location = useLocation().state as EnviosProps;
 
   const navigate = useNavigate();
-  const { loading } = useContext(AppContext);
+  const { loading, handleKeyPress } = useContext(AppContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
@@ -96,15 +96,6 @@ const EditEnvio = () => {
       setLoadingSaveButton(false);
     });
   };
-
-  const handleKeyPress = (e: any) => {
-    if (e.key === "Enter") {
-      var form = e.target.form;
-      var index = Array.prototype.indexOf.call(form, e.target);
-      form.elements[index + 1].focus();
-      e.preventDefault();
-    }
-  }
 
   return (
     <Fragment>

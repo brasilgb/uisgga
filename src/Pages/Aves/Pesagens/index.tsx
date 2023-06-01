@@ -14,7 +14,7 @@ import api from '../../../Services/api';
 import { ModalDelete } from '../../../Components/ModalDelete';
 import moment from 'moment';
 import { ABoxAll } from '../../../Components/Boxes';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE } from "../../../Constants";
 import { AMessageError } from '../../../Components/Messages';
 
@@ -96,7 +96,7 @@ const Pesagens = () => {
           <STd>{pesagem.aviario}</STd>
           <STd>{((pesagem.box1Femea + pesagem.box2Femea + pesagem.box3Femea + pesagem.box4Femea) / 4).toFixed(3)}</STd>
           <STd>{((pesagem.box1Macho + pesagem.box2Macho + pesagem.box3Macho + pesagem.box4Macho) / 4).toFixed(3)}</STd>
-          <STd>{moment(pesagem.dataEntrada).format("DD/MM/YYYY")}</STd>
+          <STd>{moment(pesagem.dataPesagem).format("DD/MM/YYYY")}</STd>
           <STd>
             <div className='flex items-center justify-end'>
               <SEdButtom onClick={() => navigate("/pesagens/editpesagem", { state: pesagem })} />
@@ -203,10 +203,7 @@ async function handleSearch() {
             <SAddButtom active={!cicloActive || !loteExists} onClick={() => navigate('/pesagens/addpesagem')} />
           </div>
           {!cicloActive &&
-            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">ciclos</span> deverão estar cadastrados e ativos</AMessageError>
-          }
-          {!loteExists &&
-            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">lotes</span> deverão estar cadastrados</AMessageError>
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar pesagens os<Link className="underline font-bold mx-1 text-gray-500 hover:text-secundary-blue" to={'/ciclos'}>Ciclos</Link>deverão estar cadastrados e ativos.</AMessageError>
           }
           {messageSearch &&
             <div className="flex items-center justify-start">
@@ -279,7 +276,7 @@ async function handleSearch() {
       </ABoxAll>
 
       {showDeleteModal &&
-        <ModalDelete info="este aviario" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
+        <ModalDelete info="esta pesagem" closemodal={() => setShowDeleteModal(!showDeleteModal)} deleterow={() => deleteRow(idDelete)} />
       }
     </Fragment>
   )

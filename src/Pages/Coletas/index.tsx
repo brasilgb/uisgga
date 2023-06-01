@@ -15,13 +15,15 @@ import api from '../../Services/api';
 import { ModalDelete } from '../../Components/ModalDelete';
 import moment from 'moment';
 import { ABoxAll } from '../../Components/Boxes';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE } from "../../Constants";
+import { AMessageError } from "../../Components/Messages";
 
 const Coletas = () => {
   const navigate = useNavigate();
   const { setLoading, loading, cicloActive } = useContext(AppContext);
   const [allColetas, setAllColetas] = useState<any>([]);
+  const [aviarioExists, setAviarioExists] = useState<any>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [idDelete, setIdDelete] = useState();
   const [loadingSearch, setLoadingSearch] = useState(false);
@@ -70,6 +72,23 @@ const Coletas = () => {
       });
   });
 
+    // Verify if lotes exists
+    useEffect(() => {
+      const getAviarioExists = (async () => {
+        await api.get('aviarios')
+          .then((response) => {
+            let exist = response.data.data;
+            if (exist.length > 0) {
+              setAviarioExists(true);
+            } else {
+              setAviarioExists(false);
+            }
+  
+          })
+      });
+      getAviarioExists();
+    }, [])
+console.log(aviarioExists);
   // -> Pagination
   const [newColeta, setNewColeta] = useState(allColetas.slice(0, 50));
   useEffect(() => {
@@ -87,7 +106,6 @@ const Coletas = () => {
     .map((coleta: any, index: any) => (
       <STr key={index} head={false} colorRow={index % 2}>
         <>
-          <STd>{coleta.idColeta}</STd>
           <STd>{coleta.lotes.lote}</STd>
           <STd>{coleta.aviarios.aviario}</STd>
           <STd>{coleta.coleta}</STd>
@@ -139,7 +157,7 @@ const Coletas = () => {
       setMessageSearch(false);
     }, 500)
   });
-
+console.log();
   return (
     <Fragment>
 
@@ -180,9 +198,11 @@ const Coletas = () => {
 
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SAddButtom active={!cicloActive} onClick={() => navigate('/coletas/addcoleta')} />
+            <SAddButtom active={!aviarioExists} onClick={() => navigate('/coletas/addcoleta')} />
           </div>
-
+          {!aviarioExists &&
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar coletas os<Link className="underline font-bold mx-1 text-gray-500 hover:text-secundary-blue" to={'/aviarios'}>Aviários</Link>deverão estar cadastrados e ativos.</AMessageError>
+          }
           {messageSearch &&
             <div className="flex items-center justify-start">
               <button onClick={() => handleReloadColetas()} className="flex items-center justify-center" title="Limpar busca">
@@ -214,7 +234,6 @@ const Coletas = () => {
 
                 <STr head={true}>
                   <>
-                    <STh><span>#ID</span></STh>
                     <STh><span>Lote</span></STh>
                     <STh><span>Aviário</span></STh>
                     <STh><span>Num. Coleta</span></STh>

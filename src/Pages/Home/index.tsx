@@ -24,16 +24,20 @@ const Home = () => {
           let activeCicle = res.filter((item: any) => (item.ativo === true));
           if (activeCicle.length > 0) {
             setCicloAtivo(true);
-            let metasExist = activeCicle[0].metas.filter((meta: any) => (meta.cicloId === activeCicle[0].idCiclo)).sort((a: any, b: any) => a > b ? -1 : 1);
+            let metasExist = activeCicle[0].metas.filter((meta: any) => (meta.cicloId === activeCicle[0].idCiclo)).sort((a: any, b: any) => a.semana > b.semana ? -1 : 1);
+            let dataCompare = moment(metasExist.slice(0)[0].dataInicial).add(7, 'day').format("YYYY-MM-DD");
             let dataAtual = moment().format("YYYY-MM-DD");
-            let dataCompare = moment(metasExist.slice(-1)[0].dataInicial).add(7, 'day').format("YYYY-MM-DD");
+            let dtcompare = moment(dataAtual).isAfter(moment(dataCompare));
 
-            if (dataCompare < dataAtual) {
+            if (dtcompare === true) {
+              console.log('passou');
               api.post('metas', {
-                cicloId: activeCicle[0].idCiclo,
-                semana: metasExist.slice(-1)[0].semana + 1,
-                dataInicial: dataCompare,
-                dataFinal: moment(dataCompare).add(6, 'day').format("YYYY-MM-DD")
+                data: {
+                  cicloId: activeCicle[0].idCiclo,
+                  semana: metasExist.slice(0)[0].semana + 1,
+                  dataInicial: dataCompare,
+                  dataFinal: moment(dataCompare).add(6, 'day').format("YYYY-MM-DD")
+                }
               }).then(() => {
                 api.get('ciclos').then((result) => {
                   let re = result.data.data;
@@ -44,12 +48,12 @@ const Home = () => {
 
           }
         });
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
+      setLoading(false);
     });
+
     const interval = setInterval(() => {
       getCiclos();
+
     }, 500);
     return () => clearInterval(interval);
   }, [])
@@ -93,9 +97,8 @@ const Home = () => {
         }
         {allCiclos.map((item: any, index: any) => (
           <div key={index}>
-            {item.idCiclo}
             {item.metas.map((im: any, ixm: any) => (
-              <div key={ixm} className="ml-4">{im.semana}</div>
+              <div key={ixm} className="ml-4">Ciclo {im.cicloId} | Semana {im.semana} de {moment(im.dataInicial).format("DD/MM/YYYY")} à {moment(im.dataFinal).format("DD/MM/YYYY")}</div>
             ))}
           </div>
         ))}

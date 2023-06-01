@@ -14,7 +14,7 @@ import api from '../../Services/api';
 import { ModalDelete } from '../../Components/ModalDelete';
 import moment from 'moment';
 import { ABoxAll } from '../../Components/Boxes';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE } from "../../Constants";
 import { AMessageError } from '../../Components/Messages';
 
@@ -90,7 +90,6 @@ const Aviarios = () => {
     .map((aviario: any, index: any) => (
       <STr key={index} head={false} colorRow={index % 2}>
         <>
-          <STd>{aviario.idAviario}</STd>
           <STd>{aviario.lote}</STd>
           <STd>{aviario.aviario}</STd>
           <STd>{(aviario.box1Femea + aviario.box2Femea + aviario.box2Femea + aviario.box2Femea)}</STd>
@@ -218,10 +217,12 @@ const Aviarios = () => {
             <SAddButtom active={!cicloActive || !loteExists} onClick={() => navigate('/aviarios/addaviario')} />
           </div>
           {!cicloActive &&
-            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">ciclos</span> deverão estar cadastrados e ativos</AMessageError>
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os<Link className="underline font-bold mx-1 text-gray-500 hover:text-secundary-blue" to={'/ciclos'}>Ciclos</Link>deverão estar cadastrados e ativos.</AMessageError>
           }
           {!loteExists &&
-            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">lotes</span> deverão estar cadastrados</AMessageError>
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os
+              <Link className="underline font-bold mx-1 text-gray-500 hover:text-secundary-blue" to={'/lotes'}>Lotes</Link>
+              deverão estar cadastrados.</AMessageError>
           }
           {messageSearch &&
             <div className="flex items-center justify-start">
@@ -254,7 +255,6 @@ const Aviarios = () => {
 
                 <STr head={true}>
                   <>
-                    <STh><span>#ID</span></STh>
                     <STh><span>Lote</span></STh>
                     <STh><span>Aviário</span></STh>
                     <STh><span>Fêmeas</span></STh>

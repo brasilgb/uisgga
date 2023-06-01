@@ -14,7 +14,7 @@ import api from '../../Services/api';
 import { ModalDelete, ModalConfirm } from '../../Components/ModalDelete';
 import moment from 'moment';
 import { ABoxAll } from '../../Components/Boxes';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ITENS_PER_PAGE } from "../../Constants";
 import { AMessageError } from '../../Components/Messages';
 
@@ -90,7 +90,6 @@ const Lotes = () => {
     .map((lote: any, index: any) => (
       <STr key={index} head={false} colorRow={index % 2}>
         <>
-          <STd>{lote.idLote}</STd>
           <STd>{lote.lote}</STd>
           <STd>{lote.femea}</STd>
           <STd>{lote.femeaCapitalizada}</STd>
@@ -198,7 +197,9 @@ const Lotes = () => {
           </div>
 
           {!cicloActive &&
-            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar aviários os <span className="bg-yellow-200 font-bold border border-red-400 p-1 rounded-full">ciclos</span> deverão estar cadastrados e ativos</AMessageError>
+            <AMessageError className="rounded-t-lg !mb-0">Para cadastrar lotes os
+            <Link className="underline font-bold mx-1 text-gray-500 hover:text-secundary-blue" to={'/ciclos'}>Ciclos</Link>
+            deverão estar cadastrados e ativos.</AMessageError>
           }
           
           {messageSearch &&
@@ -232,7 +233,6 @@ const Lotes = () => {
 
                 <STr head={true}>
                   <>
-                    <STh><span>#ID</span></STh>
                     <STh><span>Lote</span></STh>
                     <STh><span>Fêmeas</span></STh>
                     <STh><span>Capitalizadas</span></STh>
