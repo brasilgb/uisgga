@@ -55,9 +55,9 @@ const Recebimentos = () => {
     setIdDelete(id);
   }
 
-  // delete pesagens
+  // delete recebimentos
   const deleteRow = (async (id: any) => {
-    await api.delete('pesagens', {
+    await api.delete('recebimentos', {
       data: { idPesagem: id },
       headers: {
         'Content-Type': 'application/json',
@@ -89,18 +89,19 @@ const Recebimentos = () => {
 
   const DisplayItems = newPesagem
     .slice(pagesVisited, pagesVisited + itemsPerPage).sort((a: any, b: any) => (a < b ? -1 : 1))
-    .map((pesagem: any, index: any) => (
+    .map((recebimento: any, index: any) => (
       <STr key={index} head={false} colorRow={index % 2}>
         <>
-          <STd>{pesagem.lote}</STd>
-          <STd>{pesagem.femea}</STd>
-          <STd>{pesagem.macho}</STd>
-          <STd>{pesagem.femea + pesagem.macho}</STd>
-          <STd>{moment(pesagem.dataRecebimento).format("DD/MM/YYYY HH:mm:ss")}</STd>
+          <STd>{recebimento.lote}</STd>
+          <STd>{recebimento.femea}</STd>
+          <STd>{recebimento.macho}</STd>
+          <STd>{recebimento.femea + recebimento.macho}</STd>
+          <STd>{recebimento.notaFiscal}</STd>
+          <STd>{moment(recebimento.dataRecebimento).format("DD/MM/YYYY HH:mm:ss")}</STd>
           <STd>
             <div className='flex items-center justify-end'>
-              <SEdButtom onClick={() => navigate("/pesagens/editpesagem", { state: pesagem })} />
-              <SDlButtom active={pesagem.ativo} onClick={() => toggleDelete(pesagem.idPesagem)} />
+              <SEdButtom onClick={() => navigate("/recebimentos/editrecebimento", { state: recebimento })} />
+              <SDlButtom active={recebimento.ativo} onClick={() => toggleDelete(recebimento.idPesagem)} />
             </div>
           </STd>
         </>
@@ -111,7 +112,7 @@ const Recebimentos = () => {
 // -> sistema de busca
 async function handleSearch() {
   let date = moment(startDate).format('YYYY-MM-DD');
-  await api.post(`searchpesagem`, {
+  await api.post(`searchrecebimento`, {
     date: date
   })
     .then((response) => {
@@ -135,7 +136,7 @@ async function handleSearch() {
 };
   // Sistema de busca ->
 
-  // Reload pesagens
+  // Reload recebimentos
   const handleReloadRecebimentos = (() => {
     setLoading(true);
     setTimeout(() => {
@@ -242,6 +243,7 @@ async function handleSearch() {
                     <STh><span>Fêmea/Kg</span></STh>
                     <STh><span>Macho/Kg</span></STh>
                     <STh><span>Kg/Total</span></STh>
+                    <STh><span>NF</span></STh>
                     <STh><span>Recebimento</span></STh>
                     <STh><span></span></STh>
                   </>

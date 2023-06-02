@@ -120,7 +120,7 @@ const AddRecebimento = () => {
 
   const onsubmit = async (values: any) => {
     setLoadingSaveButton(true);
-    api.post('pesagens', {
+    api.post('recebimentos', {
       data: values
     }).then((response) => {
       setTimeout(() => {
@@ -146,10 +146,10 @@ const AddRecebimento = () => {
             <>
               <IconContext.Provider value={{ className: 'text-3xl' }} >
                 <div>
-                <GiChicken />
+                  <GiChicken />
                 </div>
               </IconContext.Provider>
-              <h1 className='text-2xl ml-1 font-medium'>Pesagens</h1>
+              <h1 className='text-2xl ml-1 font-medium'>Recebimentos</h1>
             </>
           </SubBarLeft>
           <SubBarRight>
@@ -167,10 +167,10 @@ const AddRecebimento = () => {
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
               <button
-                onClick={() => navigate('/pesagens')}
+                onClick={() => navigate('/recebimentos')}
                 className="text-gray-600  hover:underline"
               >
-                Pesagens
+                Recebimentos
               </button>
               <span className="mx-2 text-gray-500 ">/</span>
               <span className="text-gray-600 ">Adicionar</span>
@@ -183,12 +183,12 @@ const AddRecebimento = () => {
       <ABoxAll>
         <div className="flex items-center justify-between mb-2">
           <div>
-            <SBackButtom onClick={() => navigate('/pesagens')} />
+            <SBackButtom onClick={() => navigate('/recebimentos')} />
           </div>
         </div>
 
         {!activeCiclo
-          ? <AMessageError className="rounded-t-lg">Para cadastrar pesagens os ciclos deverão estar cadastrados e ativos</AMessageError>
+          ? <AMessageError className="rounded-t-lg">Para cadastrar recebimentos os ciclos deverão estar cadastrados e ativos</AMessageError>
           : <Formik
 
             validationSchema={schema}
@@ -197,16 +197,10 @@ const AddRecebimento = () => {
               cicloId: idCicloAtivo,
               loteId: '',
               aviarioId: '',
-              dataPesagem: new Date(),
-              semana: '',
-              box1Femea: '',
-              box2Femea: '',
-              box3Femea: '',
-              box4Femea: '',
-              box1Macho: '',
-              box2Macho: '',
-              box3Macho: '',
-              box4Macho: '',
+              dataRecebimento: new Date(),
+              notaFiscal: '',
+              femea: '',
+              macho: ''
             }}
           >
             {({ errors, isValid, values, handleChange, handleBlur }) => (
@@ -222,16 +216,16 @@ const AddRecebimento = () => {
                   }
 
                   <div className="mt-0 mb-6 py-2 pl-2 rounded-t-md border-b-2 border-white shadow bg-blue-500">
-                    <h1 className="font-lg text-white font-medium uppercase">Adicioanar pesagem</h1>
+                    <h1 className="font-lg text-white font-medium uppercase">Adicioanar recebimento</h1>
                   </div>
-                  <div className="grid grid-cols-4 gap-8">
+                  <div className="grid grid-cols-3 gap-8">
 
                     <div className="mt-4">
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataPesagem">Data de pesagem</label>
+                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="dataRecebimento">Data de recebimento</label>
                       <DatePickerField
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataPesagem ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="dataPesagem"
-                        name="dataPesagem"
+                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.dataRecebimento ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                        id="dataRecebimento"
+                        name="dataRecebimento"
                         dateFormat="dd/MM/yyyy"
                         onFocus={(e: any) => e.target.blur()}
                       />
@@ -273,148 +267,58 @@ const AddRecebimento = () => {
                         <AMessageError className="rounded-b-lg">{errors.aviarioId}</AMessageError>
                       }
                     </div>
-
-                    <div className="mt-4">
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="aviarioId">Semanas</label>
-                      <Field
-                        as="select"
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border ${errors.semana ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="semana"
-                        name="semana"
-                      >
-                        <option value="">Selecione a semana</option>
-                        {listMetas.map((me: any, ime: any) => (
-                          <option key={ime} value={me.semana}>{me.semana}</option>
-                        ))}
-                      </Field>
-                      {errors.semana &&
-                        <AMessageError className="rounded-b-lg">{errors.semana}</AMessageError>
-                      }
-                    </div>
-
-
+                    
                   </div>
                   {/* Cadastro aves fêmeas ************************************************************** */}
                   <div className="flex items-center mb-6 mt-10 pt-1 pl-2 rounded-t-md border-b-2 border-l-8 border-blue-600">
-                    <span className="text-gray-800 font-medium text-sm uppercase">Pesagem de fêmeas</span>
+                    <span className="text-gray-800 font-medium text-sm uppercase">Recebimento de ração</span>
 
                   </div>
-                  <div className="md:grid md:grid-cols-4 md:gap-8">
+                  <div className="md:grid md:grid-cols-3 md:gap-8">
                     <div>
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box1Femea">Box 1</label>
+                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="femea">Fêmea</label>
                       <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box1Femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="box1Femea"
-                        name="box1Femea"
+                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                        id="femea"
+                        name="femea"
                         type="text"
                         onKeyPress={(e: any) => handleKeyPress(e)}
                       />
-                      {errors.box1Femea &&
-                        <AMessageError className="rounded-b-lg">{errors.box1Femea}</AMessageError>
+                      {errors.femea &&
+                        <AMessageError className="rounded-b-lg">{errors.femea}</AMessageError>
                       }
                     </div>
 
                     <div>
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box2Femea">Box 2</label>
+                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="macho">Macho</label>
                       <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box2Femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="box2Femea"
-                        name="box2Femea"
+                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                        id="macho"
+                        name="macho"
                         type="text"
                         onKeyPress={(e: any) => handleKeyPress(e)}
                       />
-                      {errors.box2Femea &&
-                        <AMessageError className="rounded-b-lg">{errors.box2Femea}</AMessageError>
+                      {errors.macho &&
+                        <AMessageError className="rounded-b-lg">{errors.macho}</AMessageError>
                       }
                     </div>
 
                     <div>
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box3Femea">Box 3</label>
+                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="notaFiscal">Nota fiscal</label>
                       <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box3Femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="box3Femea"
-                        name="box3Femea"
+                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.notaFiscal ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
+                        id="notaFiscal"
+                        name="notaFiscal"
                         type="text"
                         onKeyPress={(e: any) => handleKeyPress(e)}
                       />
-                      {errors.box3Femea &&
-                        <AMessageError className="rounded-b-lg">{errors.box3Femea}</AMessageError>
+                      {errors.notaFiscal &&
+                        <AMessageError className="rounded-b-lg">{errors.notaFiscal}</AMessageError>
                       }
                     </div>
 
-                    <div>
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box4Femea">Box 4</label>
-                      <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box4Femea ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="box4Femea"
-                        name="box4Femea"
-                        type="text"
-                        onKeyPress={(e: any) => handleKeyPress(e)}
-                      />
-                      {errors.box4Femea &&
-                        <AMessageError className="rounded-b-lg">{errors.box4Femea}</AMessageError>
-                      }
-                    </div>
                   </div>
 
-                  {/* Cadastro aves machos ************************************************************** */}
-                  <div className="flex mb-6 mt-10 pt-1 pl-2 rounded-t-md border-b-2 border-l-8 border-blue-600">
-                    <span className="text-gray-800 font-medium text-sm uppercase">Pesagem de machos</span>
-                  </div>
-                  <div className="md:grid md:grid-cols-4 md:gap-8">
-                    <div>
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box1Macho">Box 1</label>
-                      <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box1Macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="box1Macho"
-                        name="box1Macho"
-                        type="text"
-                        onKeyPress={(e: any) => handleKeyPress(e)}
-                      />
-                      {errors.box1Macho &&
-                        <AMessageError className="rounded-b-lg">{errors.box1Macho}</AMessageError>
-                      }
-                    </div>
-                    <div>
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box2Macho">Box 2</label>
-                      <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box2Macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="box2Macho"
-                        name="box2Macho"
-                        type="text"
-                        onKeyPress={(e: any) => handleKeyPress(e)}
-                      />
-                      {errors.box2Macho &&
-                        <AMessageError className="rounded-b-lg">{errors.box2Macho}</AMessageError>
-                      }
-                    </div>
-                    <div>
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box3Macho">Box 3</label>
-                      <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box3Macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="box3Macho"
-                        name="box3Macho"
-                        type="text"
-                        onKeyPress={(e: any) => handleKeyPress(e)}
-                      />
-                      {errors.box3Macho &&
-                        <AMessageError className="rounded-b-lg">{errors.box3Macho}</AMessageError>
-                      }
-                    </div>
-                    <div>
-                      <label className="w-full mt-2 text-blue-800 font-medium" htmlFor="box4Macho">Box 4</label>
-                      <Field
-                        className={`w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-200 ${errors.box4Macho ? 'border-red-400' : 'border-gray-200'} rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:ring`}
-                        id="box4Macho"
-                        name="box4Macho"
-                        type="text"
-                        onKeyPress={(e: any) => handleKeyPress(e)}
-                      />
-                      {errors.box4Macho &&
-                        <AMessageError className="rounded-b-lg">{errors.box4Macho}</AMessageError>
-                      }
-                    </div>
-                  </div>
                 </div>
 
                 <div className="flex items-center justify-end bg-white border-x border-b rounded-b-lg py-2 pr-2">
