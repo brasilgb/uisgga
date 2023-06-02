@@ -14,7 +14,6 @@ const Home = () => {
   const { setLoading, loading } = useContext(AppContext);
   const [allCiclos, setAllCiclos] = useState<any>([]);
   const [cicloAtivo, setCicloAtivo] = useState<boolean>(true);
-
   useEffect(() => {
     const getCiclos = (async () => {
       await api.get('ciclos')
@@ -30,7 +29,6 @@ const Home = () => {
             let dtcompare = moment(dataAtual).isAfter(moment(dataCompare));
 
             if (dtcompare === true) {
-              console.log('passou');
               api.post('metas', {
                 data: {
                   cicloId: activeCicle[0].idCiclo,
@@ -53,7 +51,6 @@ const Home = () => {
 
     const interval = setInterval(() => {
       getCiclos();
-
     }, 500);
     return () => clearInterval(interval);
   }, [])

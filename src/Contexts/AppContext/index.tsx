@@ -25,6 +25,7 @@ export const AppProvider = ({ children }: ContextProps) => {
       await api.get('ciclos')
         .then((response) => {
           const exists = response.data.data.filter((ex: any) => (ex.ativo === true));
+          
           if (exists.length > 0) {
             setCicloActive(true);
           } else {
