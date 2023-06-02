@@ -19,7 +19,7 @@ registerLocale("ptbr", ptbr);
 
 const AddCiclo = () => {
   const navigate = useNavigate();
-  const { loading } = useContext(AppContext);
+  const { loading, setCicloActive } = useContext(AppContext);
   const [loadingSaveButton, setLoadingSaveButton] = useState<boolean>(false);
   const [postMessageErro, setPostMessageErro] = useState<any>(false);
   const [postMessageSuccess, setPostMessageSuccess] = useState<any>(false);
@@ -50,7 +50,6 @@ const AddCiclo = () => {
     })
       .then((result) => {
         const response = result.data.data
-
         if (response.length > 0) {
           setLoadingSaveButton(false);
           setPostMessageSuccess(false);
@@ -69,6 +68,7 @@ const AddCiclo = () => {
           })
             .then((response) => {
               setTimeout(() => {
+                setCicloActive(true);
                 setLoadingSaveButton(false);
                 setPostMessageErro(false)
                 setPostMessageSuccess(response.data.message);
@@ -76,10 +76,8 @@ const AddCiclo = () => {
             }).catch((err) => {
               setPostMessageErro(false)
               setLoadingSaveButton(false);
-
             });
         }
-
       })
       .catch((error) => {
         console.log(error);
